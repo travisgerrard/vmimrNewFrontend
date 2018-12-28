@@ -65,16 +65,12 @@ const CREATE_CARD_MUTATION = gql`
     $tags: [String]!
     $title: String!
     $whatWasLearned: String!
-    $dateWasLearned: String!
-    $wasLearnedWith: String!
     $taggedUser: [User]
   ) {
     createCard(
       tags: $tags
       title: $title
       whatWasLearned: $whatWasLearned
-      dateWasLearned: $dateWasLearned
-      wasLearnedWith: $wasLearnedWith
       taggedUser: $taggedUSer
     )
   }

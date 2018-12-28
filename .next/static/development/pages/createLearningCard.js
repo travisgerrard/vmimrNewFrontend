@@ -61,7 +61,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n  mutation CREATE_CARD_MUTATION(\n    $tags: [String]!\n    $title: String!\n    $whatWasLearned: String!\n    $dateWasLearned: String!\n    $wasLearnedWith: String!\n    $taggedUser: [User]\n  ) {\n    createCard(\n      tags: $tags\n      title: $title\n      whatWasLearned: $whatWasLearned\n      dateWasLearned: $dateWasLearned\n      wasLearnedWith: $wasLearnedWith\n      taggedUser: $taggedUSer\n    )\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  mutation CREATE_CARD_MUTATION(\n    $tags: [String]!\n    $title: String!\n    $whatWasLearned: String!\n    $taggedUser: [User]\n  ) {\n    createCard(\n      tags: $tags\n      title: $title\n      whatWasLearned: $whatWasLearned\n      taggedUser: $taggedUSer\n    )\n  }\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -542,7 +542,7 @@ function (_React$Component) {
         variables: this.state,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 384
+          lineNumber: 380
         },
         __self: this
       }, function (createCard, _ref) {
@@ -587,14 +587,14 @@ function (_React$Component) {
           }(),
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 386
+            lineNumber: 382
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
           error: error,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 398
+            lineNumber: 394
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("fieldset", {
@@ -602,14 +602,14 @@ function (_React$Component) {
           "aria-busy": loading,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 399
+            lineNumber: 395
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "title",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 400
+            lineNumber: 396
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
@@ -622,21 +622,21 @@ function (_React$Component) {
           onChange: _this2.handleChange,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 401
+            lineNumber: 397
           },
           __self: this
         })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "whatWasLearned",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 412
+            lineNumber: 408
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Query"], {
           query: ALL_USERS_QUERY,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 413
+            lineNumber: 409
           },
           __self: this
         }, function (_ref3) {
@@ -646,7 +646,7 @@ function (_React$Component) {
           if (loading) return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 415
+              lineNumber: 411
             },
             __self: this
           }, "Loading...");
@@ -668,7 +668,7 @@ function (_React$Component) {
             markdownButtonPressed: _this2.markdownButtonPressed,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 427
+              lineNumber: 423
             },
             __self: this
           }), _this2.state.preview ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_markdown__WEBPACK_IMPORTED_MODULE_9___default.a, {
@@ -676,7 +676,7 @@ function (_React$Component) {
             source: _this2.state.whatWasLearned,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 433
+              lineNumber: 429
             },
             __self: this
           }) : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Mentions__WEBPACK_IMPORTED_MODULE_8__["default"], {
@@ -688,7 +688,7 @@ function (_React$Component) {
             usersAdded: _this2.usersAdded,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 438
+              lineNumber: 434
             },
             __self: this
           }));
@@ -696,7 +696,7 @@ function (_React$Component) {
           type: "submit",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 453
+            lineNumber: 449
           },
           __self: this
         }, "Submit")));
