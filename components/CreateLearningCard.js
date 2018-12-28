@@ -5,9 +5,9 @@ import gql from 'graphql-tag';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import Router from 'next/router';
-//import MarkdownEditor from './MarkdownEditor';
-//import DraftEditor from './DraftEditor';
+import MarkdownEditor from './MarkdownEditor';
 import Mentions from './Mentions';
+import ReactMarkdown from 'react-markdown';
 
 const possibleRotationTypes = [
   { value: 'Wards', label: 'Wards' },
@@ -83,19 +83,35 @@ const CREATE_CARD_MUTATION = gql`
 class CreateLearningCard extends React.Component {
   state = {
     title: '',
-    whatWasLearned: 'Learned with attending _ on date _'
+    whatWasLearned: 'Learned with attending _ on date _',
+    tags: [],
+    taggedUser: [],
+    preview: false
+  };
+
+  tagsAdded = id => {
+    this.setState({ tags: [...this.state.tags, id] }, () =>
+      console.log(this.state.tags)
+    );
+  };
+
+  usersAdded = id => {
+    this.setState({ taggedUser: [...this.state.taggedUser, id] }, () =>
+      console.log(this.state.taggedUser)
+    );
+  };
+
+  previewChange = () => {
+    const currentPreview = this.state.preview;
+
+    this.setState({ preview: !currentPreview });
   };
 
   handleChange = e => {
-    console.log(e.target);
-
     const { name, type, value } = e.target;
+
     const val = type === 'number' ? parseFloat(value) : value;
     this.setState({ [name]: val });
-  };
-
-  handelSelectChange = (e, name) => {
-    this.setState({ [name]: e });
   };
 
   indiciesForWordToLeft = (whatWasLearnedText, startPosition) => {
@@ -180,6 +196,7 @@ class CreateLearningCard extends React.Component {
         break;
       case 'bold':
         newText = `${leftText}**${word}**${rightText}`;
+        console.log(newText);
 
         this.setState({ whatWasLearned: newText }, () => {
           this.setCaretPosition('whatWasLearned', leftIndex + 2);
@@ -256,10 +273,15 @@ class CreateLearningCard extends React.Component {
   };
 
   markdownButtonPressed = value => {
+    console.log(value);
+
     const whatWasLearnedText = this.state.whatWasLearned;
     const whatWasLearnedTextArea = document.getElementById('whatWasLearned');
+    console.log(whatWasLearnedTextArea);
+
     const startPosition = whatWasLearnedTextArea.selectionStart;
     const endPosition = whatWasLearnedTextArea.selectionEnd;
+    console.log(startPosition, endPosition);
 
     if (startPosition == endPosition) {
       const prev = whatWasLearnedText.slice(startPosition - 1, startPosition);
@@ -376,7 +398,6 @@ class CreateLearningCard extends React.Component {
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
               <label htmlFor="title">
-                Title
                 <input
                   type="text"
                   id="title"
@@ -387,45 +408,8 @@ class CreateLearningCard extends React.Component {
                   onChange={this.handleChange}
                 />
               </label>
-              {/* <label htmlFor="dateWasLearned">
-                Date this was learned
-                <input
-                  type="text"
-                  id="dateWasLearned"
-                  name="dateWasLearned"
-                  placeholder="Date this was learned"
-                  required
-                  value={this.state.dateWasLearned}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <label>
-                Rotation Tags
-                <Select
-                  instanceId="tags"
-                  classNamePrefix="tagSelect"
-                  value={this.state.tags}
-                  onChange={e => this.handelSelectChange(e, 'tags')}
-                  options={possibleRotationTypes}
-                  isMulti
-                  isSearchable
-                />
-              </label>
 
-              <label htmlFor="wasLearnedWith">
-                Attending (To reference patient off Attending;s schedule later)
-                <input
-                  type="text"
-                  id="wasLearnedWith"
-                  name="wasLearnedWith"
-                  placeholder="Attending you learned this with"
-                  value={this.state.wasLearnedWith}
-                  onChange={this.handleChange}
-                />
-              </label> */}
-              <label />
               <label htmlFor="whatWasLearned">
-                Learning point
                 <Query query={ALL_USERS_QUERY}>
                   {({ data, loading, error }) => {
                     if (loading) return <p>Loading...</p>;
@@ -439,15 +423,28 @@ class CreateLearningCard extends React.Component {
                     );
 
                     return (
-                      <Mentions users={userArray} rotations={rotationArray} />
-                      // <DraftEditor residents={userArray} />
-                      // <MarkdownEditor
-                      //   residents={userArray}
-                      //   rotationTags={possibleRotationTypes}
-                      //   whatWasLearned={this.state.whatWasLearned}
-                      //   handleChange={this.handleChange}
-                      //   markdownButtonPressed={this.markdownButtonPressed}
-                      // />
+                      <>
+                        <MarkdownEditor
+                          preview={this.state.preview}
+                          previewChange={this.previewChange}
+                          markdownButtonPressed={this.markdownButtonPressed}
+                        />
+                        {this.state.preview ? (
+                          <ReactMarkdown
+                            className="markdownPreview"
+                            source={this.state.whatWasLearned}
+                          />
+                        ) : (
+                          <Mentions
+                            users={userArray}
+                            rotations={rotationArray}
+                            whatWasLearned={this.state.whatWasLearned}
+                            handleChange={this.handleChange}
+                            tagsAdded={this.tagsAdded}
+                            usersAdded={this.usersAdded}
+                          />
+                        )}
+                      </>
                     );
                   }}
                 </Query>

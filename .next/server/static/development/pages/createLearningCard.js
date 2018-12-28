@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -114,7 +114,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ErrorMessage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ErrorMessage */ "./components/ErrorMessage.js");
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! next/router */ "next/router");
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Mentions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Mentions */ "./components/Mentions.js");
+/* harmony import */ var _MarkdownEditor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MarkdownEditor */ "./components/MarkdownEditor.js");
+/* harmony import */ var _Mentions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Mentions */ "./components/Mentions.js");
+/* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-markdown */ "react-markdown");
+/* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_markdown__WEBPACK_IMPORTED_MODULE_9__);
 
 var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/CreateLearningCard.js";
 
@@ -123,6 +126,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -170,8 +181,8 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
- //import MarkdownEditor from './MarkdownEditor';
-//import DraftEditor from './DraftEditor';
+
+
 
 
 var possibleRotationTypes = [{
@@ -309,11 +320,37 @@ function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       title: '',
-      whatWasLearned: 'Learned with attending _ on date _'
+      whatWasLearned: 'Learned with attending _ on date _',
+      tags: [],
+      taggedUser: [],
+      preview: false
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "tagsAdded", function (id) {
+      _this.setState({
+        tags: _toConsumableArray(_this.state.tags).concat([id])
+      }, function () {
+        return console.log(_this.state.tags);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "usersAdded", function (id) {
+      _this.setState({
+        taggedUser: _toConsumableArray(_this.state.taggedUser).concat([id])
+      }, function () {
+        return console.log(_this.state.taggedUser);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "previewChange", function () {
+      var currentPreview = _this.state.preview;
+
+      _this.setState({
+        preview: !currentPreview
+      });
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleChange", function (e) {
-      console.log(e.target);
       var _e$target = e.target,
           name = _e$target.name,
           type = _e$target.type,
@@ -321,10 +358,6 @@ function (_React$Component) {
       var val = type === 'number' ? parseFloat(value) : value;
 
       _this.setState(_defineProperty({}, name, val));
-    });
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handelSelectChange", function (e, name) {
-      _this.setState(_defineProperty({}, name, e));
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "indiciesForWordToLeft", function (whatWasLearnedText, startPosition) {
@@ -406,6 +439,7 @@ function (_React$Component) {
 
         case 'bold':
           newText = "".concat(leftText, "**").concat(word, "**").concat(rightText);
+          console.log(newText);
 
           _this.setState({
             whatWasLearned: newText
@@ -521,10 +555,13 @@ function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "markdownButtonPressed", function (value) {
+      console.log(value);
       var whatWasLearnedText = _this.state.whatWasLearned;
       var whatWasLearnedTextArea = document.getElementById('whatWasLearned');
+      console.log(whatWasLearnedTextArea);
       var startPosition = whatWasLearnedTextArea.selectionStart;
       var endPosition = whatWasLearnedTextArea.selectionEnd;
+      console.log(startPosition, endPosition);
 
       if (startPosition == endPosition) {
         var prev = whatWasLearnedText.slice(startPosition - 1, startPosition);
@@ -598,7 +635,7 @@ function (_React$Component) {
         variables: this.state,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 362
+          lineNumber: 384
         },
         __self: this
       }, function (createCard, _ref) {
@@ -643,14 +680,14 @@ function (_React$Component) {
           }(),
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 364
+            lineNumber: 386
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
           error: error,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 376
+            lineNumber: 398
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("fieldset", {
@@ -658,17 +695,17 @@ function (_React$Component) {
           "aria-busy": loading,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 377
+            lineNumber: 399
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "title",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 378
+            lineNumber: 400
           },
           __self: this
-        }, "Title", react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
           type: "text",
           id: "title",
           name: "title",
@@ -678,27 +715,21 @@ function (_React$Component) {
           onChange: _this2.handleChange,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 380
+            lineNumber: 401
           },
           __self: this
         })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 426
-          },
-          __self: this
-        }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "whatWasLearned",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 427
+            lineNumber: 412
           },
           __self: this
-        }, "Learning point", react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Query"], {
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Query"], {
           query: ALL_USERS_QUERY,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 429
+            lineNumber: 413
           },
           __self: this
         }, function (_ref3) {
@@ -708,7 +739,7 @@ function (_React$Component) {
           if (loading) return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 431
+              lineNumber: 415
             },
             __self: this
           }, "Loading...");
@@ -724,28 +755,41 @@ function (_React$Component) {
               display: rotation.label
             };
           });
-          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Mentions__WEBPACK_IMPORTED_MODULE_7__["default"], {
-            users: userArray,
-            rotations: rotationArray,
+          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_MarkdownEditor__WEBPACK_IMPORTED_MODULE_7__["default"], {
+            preview: _this2.state.preview,
+            previewChange: _this2.previewChange,
+            markdownButtonPressed: _this2.markdownButtonPressed,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 442
+              lineNumber: 427
             },
             __self: this
-          }) // <DraftEditor residents={userArray} />
-          // <MarkdownEditor
-          //   residents={userArray}
-          //   rotationTags={possibleRotationTypes}
-          //   whatWasLearned={this.state.whatWasLearned}
-          //   handleChange={this.handleChange}
-          //   markdownButtonPressed={this.markdownButtonPressed}
-          // />
-          ;
+          }), _this2.state.preview ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_markdown__WEBPACK_IMPORTED_MODULE_9___default.a, {
+            className: "markdownPreview",
+            source: _this2.state.whatWasLearned,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 433
+            },
+            __self: this
+          }) : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Mentions__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            users: userArray,
+            rotations: rotationArray,
+            whatWasLearned: _this2.state.whatWasLearned,
+            handleChange: _this2.handleChange,
+            tagsAdded: _this2.tagsAdded,
+            usersAdded: _this2.usersAdded,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 438
+            },
+            __self: this
+          }));
         })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
           type: "submit",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 456
+            lineNumber: 453
           },
           __self: this
         }, "Submit")));
@@ -846,6 +890,413 @@ DisplayError.propTypes = {
 
 /***/ }),
 
+/***/ "./components/MarkdownEditor.js":
+/*!**************************************!*\
+  !*** ./components/MarkdownEditor.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "@fortawesome/react-fontawesome");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "@fortawesome/free-solid-svg-icons");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var reactjs_popup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactjs-popup */ "reactjs-popup");
+/* harmony import */ var reactjs_popup__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(reactjs_popup__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_4__);
+var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/MarkdownEditor.js";
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+var HeaderPopover = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
+  displayName: "MarkdownEditor__HeaderPopover",
+  componentId: "nhgaed-0"
+})(["h1,h2,h3,h4{margin:0;&:hover{color:", ";cursor:pointer;}}"], function (props) {
+  return props.theme.darkBlue;
+});
+
+var MarkdownEditor =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(MarkdownEditor, _Component);
+
+  function MarkdownEditor() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, MarkdownEditor);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(MarkdownEditor)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleClick", function (value) {
+      _this.props.markdownButtonPressed(value);
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "showEditBar", function () {
+      var preview = _this.props.preview;
+
+      if (preview) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "markdown-header",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 41
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          onClick: _this.props.previewChange,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 42
+          },
+          __self: this
+        }, "write"));
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "markdown-header",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 50
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: _this.props.previewChange,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 51
+        },
+        __self: this
+      }, "preview"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactjs_popup__WEBPACK_IMPORTED_MODULE_3___default.a, {
+        trigger: function trigger(open) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            id: "header-button",
+            name: "header-button",
+            type: "button",
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 57
+            },
+            __self: this
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+            icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faHeading"],
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 58
+            },
+            __self: this
+          }));
+        },
+        position: "bottom center",
+        closeOnDocumentClick: true,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 54
+        },
+        __self: this
+      }, function (close) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HeaderPopover, {
+          className: "header-popover",
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 66
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+          onClick: function onClick() {
+            _this.handleClick('headerTwo');
+
+            close();
+          },
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 67
+          },
+          __self: this
+        }, "Header 1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+          onClick: function onClick(e) {
+            _this.handleClick('headerThree');
+
+            close();
+          },
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 75
+          },
+          __self: this
+        }, "Header 2"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+          onClick: function onClick(e) {
+            _this.handleClick('headerFour');
+
+            close();
+          },
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 83
+          },
+          __self: this
+        }, "Header 3"));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "bold-button",
+        name: "bold-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('bold');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 95
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faBold"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 103
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "italic-button",
+        name: "italic-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('italic');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 105
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faItalic"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 113
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "strikeThrough-button",
+        name: "strikeThrough-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('strikeThrough');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 115
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faStrikethrough"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 123
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "link-button",
+        name: "link-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('link');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 125
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faLink"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 133
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "quote-button",
+        name: "quote-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('quote');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 135
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faQuoteRight"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 143
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "code-button",
+        name: "code-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('code');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 145
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faCode"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 153
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "image-button",
+        name: "image-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('image');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 155
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faImage"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 163
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "listUl-button",
+        name: "listUl-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('listUl');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 165
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faListUl"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 173
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "listOl-button",
+        name: "listOl-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('listOl');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 175
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faListOl"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 183
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "tasks-button",
+        name: "tasks-button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this.handleClick('tasks');
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 185
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faTasks"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 193
+        },
+        __self: this
+      })));
+    });
+
+    return _this;
+  }
+
+  _createClass(MarkdownEditor, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 200
+        },
+        __self: this
+      }, this.showEditBar());
+    }
+  }]);
+
+  return MarkdownEditor;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (MarkdownEditor);
+
+/***/ }),
+
 /***/ "./components/Mentions.js":
 /*!********************************!*\
   !*** ./components/Mentions.js ***!
@@ -901,30 +1352,42 @@ function (_Component) {
 
     _classCallCheck(this, Mentions);
 
-    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
-      _args[_key] = arguments[_key];
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Mentions)).call.apply(_getPrototypeOf2, [this].concat(_args)));
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Mentions)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       value: ''
     });
 
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onChange", function (e) {
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onChange", function (e, value) {
+      // console.log(e, value);
+      // console.log(this.state.value);
       _this.setState({
-        value: e.target.value
+        value: value
+      });
+
+      _this.props.handleChange({
+        target: {
+          value: value,
+          type: 'text',
+          name: 'whatWasLearned'
+        }
       });
     });
 
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onAdd", function () {
-      var _console;
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onAddUser", function (id, display) {
+      _this.props.usersAdded(id);
 
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
+      console.log('added a new user, ', display);
+    });
 
-      return (_console = console).log.apply(_console, ['added a new mention, '].concat(args));
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onAddRotation", function (id, display) {
+      _this.props.tagsAdded(id);
+
+      console.log('added a new rotation, ', display);
     });
 
     return _this;
@@ -933,17 +1396,18 @@ function (_Component) {
   _createClass(Mentions, [{
     key: "render",
     value: function render() {
-      var value = this.state.value;
       var _this$props = this.props,
           users = _this$props.users,
-          rotations = _this$props.rotations;
-      console.log(value);
+          rotations = _this$props.rotations,
+          whatWasLearned = _this$props.whatWasLearned;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_mentions__WEBPACK_IMPORTED_MODULE_1__["MentionsInput"], {
+        name: "whatWasLearned",
+        id: "whatWasLearned",
         className: "mentionInput",
-        value: value,
+        value: whatWasLearned,
         onChange: this.onChange,
         style: _defaultStyle__WEBPACK_IMPORTED_MODULE_2__["default"],
-        markup: "[__display__](__type__:__id__)",
+        markup: "@[__display__](__type__:__id__)",
         allowSpaceInQuery: true,
         placeholder: 'Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation',
         displayTransform: function displayTransform(id, display, type) {
@@ -952,7 +1416,7 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 25
+          lineNumber: 43
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_mentions__WEBPACK_IMPORTED_MODULE_1__["Mention"], {
@@ -964,16 +1428,16 @@ function (_Component) {
             className: "user ".concat(focused ? 'focused' : ''),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 51
+              lineNumber: 71
             },
             __self: this
           }, highlightedDisplay);
         },
-        onAdd: this.onAdd,
+        onAdd: this.onAddUser,
         style: _defaultMentionStyle__WEBPACK_IMPORTED_MODULE_3__["default"],
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 40
+          lineNumber: 60
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_mentions__WEBPACK_IMPORTED_MODULE_1__["Mention"], {
@@ -985,18 +1449,18 @@ function (_Component) {
             className: "user ".concat(focused ? 'focused' : ''),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 70
+              lineNumber: 90
             },
             __self: this
           }, highlightedDisplay);
         },
-        onAdd: this.onAdd,
+        onAdd: this.onAddRotation,
         style: {
           backgroundColor: '#FFEE58'
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 59
+          lineNumber: 79
         },
         __self: this
       }));
@@ -1109,7 +1573,7 @@ var loading = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["keyframes"]
 var Form = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.form.withConfig({
   displayName: "Form",
   componentId: "sc-1xszr8q-0"
-})(["box-shadow:0 0 5px 3px rgba(0,0,0,0.05);background:rgba(0,0,0,0.02);border:5px solid white;padding:20px;line-height:1.5;label{display:block;margin-bottom:1rem;}input,textarea,select{width:100%;padding:0.5rem;font-size:1rem;border:1px solid black;line-height:1em;&:focus{outline:0;border-color:", ";}}button,input[type='submit']{width:auto;background:", ";color:white;border:0;font-size:2rem;font-weight:600;padding:0.5rem 1.2rem;cursor:pointer;&:hover{color:", ";background:white;}&:focus{outline:0px;}}fieldset{border:0;padding:0;&[disabled]{opacity:0.5;}&::before{height:10px;content:'';display:block;background-image:linear-gradient( to right,#00b6de 0%,#479e65 50%,#00b6de 100% );}&[aria-busy='true']::before{background-size:50% auto;animation:", " 0.5s linear infinite;}}"], function (props) {
+})(["box-shadow:0 0 5px 3px rgba(0,0,0,0.05);background:rgba(0,0,0,0.02);border:5px solid white;padding:20px;line-height:1.5;label{display:block;margin-bottom:0.5rem;}input,textarea,select{width:100%;padding:0.5rem;margin-top:0.5rem;font-size:1rem;border:1px solid black;line-height:1em;&:focus{outline:0;border-color:", ";}}.markdownPreview{box-shadow:0 0 5px 3px rgba(0,0,0,0.05);background:white;border:5px solid white;line-height:1.5;p{margin:0;}}.markdown-header{}button,input[type='submit']{width:auto;background:", ";color:white;border:0;font-size:2rem;font-weight:600;padding:0.5rem 1.2rem;cursor:pointer;&:hover{color:", ";background:white;}&:focus{outline:0px;}}fieldset{border:0;padding:0;&[disabled]{opacity:0.5;}&::before{height:10px;content:'';display:block;background-image:linear-gradient( to right,#00b6de 0%,#479e65 50%,#00b6de 100% );}&[aria-busy='true']::before{background-size:50% auto;animation:", " 0.5s linear infinite;}}"], function (props) {
   return props.theme.darkBlue;
 }, function (props) {
   return props.theme.darkBlue;
@@ -1150,7 +1614,7 @@ var createLearningCard = function createLearningCard(props) {
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!*******************************************!*\
   !*** multi ./pages/createLearningCard.js ***!
   \*******************************************/
@@ -1170,6 +1634,28 @@ module.exports = __webpack_require__(/*! ./pages/createLearningCard.js */"./page
 /***/ (function(module, exports) {
 
 module.exports = require("@babel/runtime/regenerator");
+
+/***/ }),
+
+/***/ "@fortawesome/free-solid-svg-icons":
+/*!****************************************************!*\
+  !*** external "@fortawesome/free-solid-svg-icons" ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@fortawesome/free-solid-svg-icons");
+
+/***/ }),
+
+/***/ "@fortawesome/react-fontawesome":
+/*!*************************************************!*\
+  !*** external "@fortawesome/react-fontawesome" ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@fortawesome/react-fontawesome");
 
 /***/ }),
 
@@ -1228,6 +1714,17 @@ module.exports = require("react-apollo");
 
 /***/ }),
 
+/***/ "react-markdown":
+/*!*********************************!*\
+  !*** external "react-markdown" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-markdown");
+
+/***/ }),
+
 /***/ "react-mentions":
 /*!*********************************!*\
   !*** external "react-mentions" ***!
@@ -1236,6 +1733,17 @@ module.exports = require("react-apollo");
 /***/ (function(module, exports) {
 
 module.exports = require("react-mentions");
+
+/***/ }),
+
+/***/ "reactjs-popup":
+/*!********************************!*\
+  !*** external "reactjs-popup" ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("reactjs-popup");
 
 /***/ }),
 

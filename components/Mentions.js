@@ -9,25 +9,45 @@ export default class Mentions extends Component {
     value: ''
   };
 
-  onChange = e => {
-    this.setState({ value: e.target.value });
+  onChange = (e, value) => {
+    // console.log(e, value);
+    // console.log(this.state.value);
+
+    this.setState({ value });
+
+    this.props.handleChange({
+      target: {
+        value: value,
+        type: 'text',
+        name: 'whatWasLearned'
+      }
+    });
   };
 
-  onAdd = (...args) => console.log('added a new mention, ', ...args);
+  onAddUser = (id, display) => {
+    this.props.usersAdded(id);
+
+    console.log('added a new user, ', display);
+  };
+
+  onAddRotation = (id, display) => {
+    this.props.tagsAdded(id);
+
+    console.log('added a new rotation, ', display);
+  };
 
   render() {
-    const { value } = this.state;
-    const { users, rotations } = this.props;
-
-    console.log(value);
+    const { users, rotations, whatWasLearned } = this.props;
 
     return (
       <MentionsInput
+        name="whatWasLearned"
+        id="whatWasLearned"
         className="mentionInput"
-        value={value}
+        value={whatWasLearned}
         onChange={this.onChange}
         style={defaultStyle}
-        markup="[__display__](__type__:__id__)"
+        markup="@[__display__](__type__:__id__)"
         allowSpaceInQuery
         placeholder={
           'Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation'
@@ -52,7 +72,7 @@ export default class Mentions extends Component {
               {highlightedDisplay}
             </div>
           )}
-          onAdd={this.onAdd}
+          onAdd={this.onAddUser}
           style={defaultMentionStyle}
         />
 
@@ -71,7 +91,7 @@ export default class Mentions extends Component {
               {highlightedDisplay}
             </div>
           )}
-          onAdd={this.onAdd}
+          onAdd={this.onAddRotation}
           style={{ backgroundColor: '#FFEE58' }}
         />
       </MentionsInput>

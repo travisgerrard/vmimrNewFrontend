@@ -22,13 +22,14 @@ const Form = styled.form`
   /* font-weight: 600; */
   label {
     display: block;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
   input,
   textarea,
   select {
     width: 100%;
     padding: 0.5rem;
+    margin-top: 0.5rem;
     font-size: 1rem;
     border: 1px solid black;
     line-height: 1em;
@@ -38,27 +39,19 @@ const Form = styled.form`
     }
   }
 
-  /* .markdownPreview {
+  .markdownPreview {
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.05);
+    background: white;
+    border: 5px solid white;
+    line-height: 1.5;
+    p {
+      margin: 0;
+    }
   }
 
-  .tagSelect__control {
-    width: 100%;
-    font-size: 1rem;
-    border: 1px solid black;
-    border-radius: 0px;
-    padding: 0;
-    &:hover {
-      border: 1px solid black;
-      border-radius: 0px;
-    }
+  .markdown-header {
+    /* margin-bottom: 0.5rem; */
   }
-  .tagSelect__control--is-focused {
-    border: 1px solid ${props => props.theme.darkBlue};
-    &:hover {
-      border: 1px solid ${props => props.theme.darkBlue};
-      border-radius: 0px;
-    }
-  } */
 
   button,
   input[type='submit'] {
