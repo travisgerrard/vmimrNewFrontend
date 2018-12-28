@@ -38,7 +38,7 @@ const Form = styled.form`
     }
   }
 
-  .markdownPreview {
+  /* .markdownPreview {
   }
 
   .tagSelect__control {
@@ -58,7 +58,7 @@ const Form = styled.form`
       border: 1px solid ${props => props.theme.darkBlue};
       border-radius: 0px;
     }
-  }
+  } */
 
   button,
   input[type='submit'] {

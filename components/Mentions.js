@@ -6,7 +6,7 @@ import defaultMentionStyle from './defaultMentionStyle';
 
 export default class Mentions extends Component {
   state = {
-    value: 'Learned with attending _ on date _'
+    value: ''
   };
 
   onChange = e => {
@@ -23,22 +23,18 @@ export default class Mentions extends Component {
 
     return (
       <MentionsInput
+        className="mentionInput"
         value={value}
         onChange={this.onChange}
         style={defaultStyle}
         markup="[__display__](__type__:__id__)"
-        placeholder={"Mention people using '@'"}
-        displayTransform={id => {
-          const userWithId = users.filter(user => user.id === id);
-          //console.log(userWithId);
-          if (userWithId.length) {
-            return `@${userWithId[0].display}`;
-          } else {
-            const rotationWithId = rotations.filter(
-              rotation => rotation.id === id
-            );
-            return `#${rotationWithId[0].display}`;
-          }
+        allowSpaceInQuery
+        placeholder={
+          'Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation'
+        }
+        displayTransform={(id, display, type) => {
+          if (type === 'user') return `@${display}`;
+          if (type === 'rotation') return `#${display}`;
         }}
       >
         <Mention

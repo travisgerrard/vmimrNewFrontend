@@ -908,7 +908,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Mentions)).call.apply(_getPrototypeOf2, [this].concat(_args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      value: 'Learned with attending _ on date _'
+      value: ''
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onChange", function (e) {
@@ -939,24 +939,16 @@ function (_Component) {
           rotations = _this$props.rotations;
       console.log(value);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_mentions__WEBPACK_IMPORTED_MODULE_1__["MentionsInput"], {
+        className: "mentionInput",
         value: value,
         onChange: this.onChange,
         style: _defaultStyle__WEBPACK_IMPORTED_MODULE_2__["default"],
         markup: "[__display__](__type__:__id__)",
-        placeholder: "Mention people using '@'",
-        displayTransform: function displayTransform(id) {
-          var userWithId = users.filter(function (user) {
-            return user.id === id;
-          }); //console.log(userWithId);
-
-          if (userWithId.length) {
-            return "@".concat(userWithId[0].display);
-          } else {
-            var rotationWithId = rotations.filter(function (rotation) {
-              return rotation.id === id;
-            });
-            return "#".concat(rotationWithId[0].display);
-          }
+        allowSpaceInQuery: true,
+        placeholder: 'Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation',
+        displayTransform: function displayTransform(id, display, type) {
+          if (type === 'user') return "@".concat(display);
+          if (type === 'rotation') return "#".concat(display);
         },
         __source: {
           fileName: _jsxFileName,
@@ -972,7 +964,7 @@ function (_Component) {
             className: "user ".concat(focused ? 'focused' : ''),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 55
+              lineNumber: 51
             },
             __self: this
           }, highlightedDisplay);
@@ -981,7 +973,7 @@ function (_Component) {
         style: _defaultMentionStyle__WEBPACK_IMPORTED_MODULE_3__["default"],
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 44
+          lineNumber: 40
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_mentions__WEBPACK_IMPORTED_MODULE_1__["Mention"], {
@@ -993,7 +985,7 @@ function (_Component) {
             className: "user ".concat(focused ? 'focused' : ''),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 74
+              lineNumber: 70
             },
             __self: this
           }, highlightedDisplay);
@@ -1004,7 +996,7 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 63
+          lineNumber: 59
         },
         __self: this
       }));
@@ -1071,7 +1063,7 @@ __webpack_require__.r(__webpack_exports__);
   '&multiLine': {
     control: {
       fontFamily: 'monospace',
-      border: '1px solid silver'
+      border: '1px solid black'
     },
     highlighter: {
       padding: 9
@@ -1117,11 +1109,7 @@ var loading = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["keyframes"]
 var Form = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.form.withConfig({
   displayName: "Form",
   componentId: "sc-1xszr8q-0"
-})(["box-shadow:0 0 5px 3px rgba(0,0,0,0.05);background:rgba(0,0,0,0.02);border:5px solid white;padding:20px;line-height:1.5;label{display:block;margin-bottom:1rem;}input,textarea,select{width:100%;padding:0.5rem;font-size:1rem;border:1px solid black;line-height:1em;&:focus{outline:0;border-color:", ";}}.markdownPreview{}.tagSelect__control{width:100%;font-size:1rem;border:1px solid black;border-radius:0px;padding:0;&:hover{border:1px solid black;border-radius:0px;}}.tagSelect__control--is-focused{border:1px solid ", ";&:hover{border:1px solid ", ";border-radius:0px;}}button,input[type='submit']{width:auto;background:", ";color:white;border:0;font-size:2rem;font-weight:600;padding:0.5rem 1.2rem;cursor:pointer;&:hover{color:", ";background:white;}&:focus{outline:0px;}}fieldset{border:0;padding:0;&[disabled]{opacity:0.5;}&::before{height:10px;content:'';display:block;background-image:linear-gradient( to right,#00b6de 0%,#479e65 50%,#00b6de 100% );}&[aria-busy='true']::before{background-size:50% auto;animation:", " 0.5s linear infinite;}}"], function (props) {
-  return props.theme.darkBlue;
-}, function (props) {
-  return props.theme.darkBlue;
-}, function (props) {
+})(["box-shadow:0 0 5px 3px rgba(0,0,0,0.05);background:rgba(0,0,0,0.02);border:5px solid white;padding:20px;line-height:1.5;label{display:block;margin-bottom:1rem;}input,textarea,select{width:100%;padding:0.5rem;font-size:1rem;border:1px solid black;line-height:1em;&:focus{outline:0;border-color:", ";}}button,input[type='submit']{width:auto;background:", ";color:white;border:0;font-size:2rem;font-weight:600;padding:0.5rem 1.2rem;cursor:pointer;&:hover{color:", ";background:white;}&:focus{outline:0px;}}fieldset{border:0;padding:0;&[disabled]{opacity:0.5;}&::before{height:10px;content:'';display:block;background-image:linear-gradient( to right,#00b6de 0%,#479e65 50%,#00b6de 100% );}&[aria-busy='true']::before{background-size:50% auto;animation:", " 0.5s linear infinite;}}"], function (props) {
   return props.theme.darkBlue;
 }, function (props) {
   return props.theme.darkBlue;
