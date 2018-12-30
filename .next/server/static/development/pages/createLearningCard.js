@@ -154,7 +154,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n  mutation CREATE_CARD_MUTATION(\n    $tags: [String]!\n    $title: String!\n    $whatWasLearned: String!\n    $taggedUser: [User]\n  ) {\n    createCard(\n      tags: $tags\n      title: $title\n      whatWasLearned: $whatWasLearned\n      taggedUser: $taggedUSer\n    )\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  mutation CREATE_CARD_MUTATION(\n    $tags: [RotationTags]!\n    $title: String!\n    $whatWasLearned: String!\n    $taggedUser: [ID]!\n  ) {\n    createCard(\n      tags: $tags\n      title: $title\n      whatWasLearned: $whatWasLearned\n      taggedUser: $taggedUser\n    ) {\n      id\n    }\n  }\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -635,7 +635,7 @@ function (_React$Component) {
         variables: this.state,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 380
+          lineNumber: 382
         },
         __self: this
       }, function (createCard, _ref) {
@@ -649,24 +649,37 @@ function (_React$Component) {
             var _ref2 = _asyncToGenerator(
             /*#__PURE__*/
             _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
-              var res;
+              var _this2$state, tags, taggedUser, whatWasLearned, title, res;
+
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                 while (1) {
                   switch (_context.prev = _context.next) {
                     case 0:
                       e.preventDefault(); // call the mutation
 
-                      _context.next = 3;
-                      return createCard();
+                      _this2$state = _this2.state, tags = _this2$state.tags, taggedUser = _this2$state.taggedUser, whatWasLearned = _this2$state.whatWasLearned, title = _this2$state.title;
+                      console.log(tags, taggedUser, whatWasLearned, title);
+                      _context.next = 5;
+                      return createCard({
+                        variables: {
+                          tags: tags,
+                          taggedUser: taggedUser,
+                          whatWasLearned: whatWasLearned,
+                          title: title
+                        }
+                      }).catch(function (err) {
+                        alert(err.message);
+                      });
 
-                    case 3:
+                    case 5:
                       res = _context.sent;
-                      // change them to the home page.
+                      console.log(res); // change them to the home page.
+
                       next_router__WEBPACK_IMPORTED_MODULE_6___default.a.push({
                         pathname: '/'
                       });
 
-                    case 5:
+                    case 8:
                     case "end":
                       return _context.stop();
                   }
@@ -680,14 +693,14 @@ function (_React$Component) {
           }(),
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 382
+            lineNumber: 384
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
           error: error,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 394
+            lineNumber: 411
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("fieldset", {
@@ -695,14 +708,14 @@ function (_React$Component) {
           "aria-busy": loading,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 395
+            lineNumber: 412
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "title",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 396
+            lineNumber: 413
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
@@ -715,21 +728,21 @@ function (_React$Component) {
           onChange: _this2.handleChange,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 397
+            lineNumber: 414
           },
           __self: this
         })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "whatWasLearned",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 408
+            lineNumber: 425
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Query"], {
           query: ALL_USERS_QUERY,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 409
+            lineNumber: 426
           },
           __self: this
         }, function (_ref3) {
@@ -739,7 +752,7 @@ function (_React$Component) {
           if (loading) return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 411
+              lineNumber: 428
             },
             __self: this
           }, "Loading...");
@@ -761,7 +774,7 @@ function (_React$Component) {
             markdownButtonPressed: _this2.markdownButtonPressed,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 423
+              lineNumber: 440
             },
             __self: this
           }), _this2.state.preview ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_markdown__WEBPACK_IMPORTED_MODULE_9___default.a, {
@@ -769,7 +782,7 @@ function (_React$Component) {
             source: _this2.state.whatWasLearned,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 429
+              lineNumber: 446
             },
             __self: this
           }) : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Mentions__WEBPACK_IMPORTED_MODULE_8__["default"], {
@@ -781,7 +794,7 @@ function (_React$Component) {
             usersAdded: _this2.usersAdded,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 434
+              lineNumber: 451
             },
             __self: this
           }));
@@ -789,7 +802,7 @@ function (_React$Component) {
           type: "submit",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 449
+            lineNumber: 466
           },
           __self: this
         }, "Submit")));

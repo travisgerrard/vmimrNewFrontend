@@ -62,17 +62,19 @@ const ALL_USERS_QUERY = gql`
 
 const CREATE_CARD_MUTATION = gql`
   mutation CREATE_CARD_MUTATION(
-    $tags: [String]!
+    $tags: [RotationTags]!
     $title: String!
     $whatWasLearned: String!
-    $taggedUser: [User]
+    $taggedUser: [ID]!
   ) {
     createCard(
       tags: $tags
       title: $title
       whatWasLearned: $whatWasLearned
-      taggedUser: $taggedUSer
-    )
+      taggedUser: $taggedUser
+    ) {
+      id
+    }
   }
 `;
 
@@ -384,7 +386,22 @@ class CreateLearningCard extends React.Component {
             onSubmit={async e => {
               e.preventDefault();
               // call the mutation
-              const res = await createCard();
+              const { tags, taggedUser, whatWasLearned, title } = this.state;
+
+              console.log(tags, taggedUser, whatWasLearned, title);
+
+              const res = await createCard({
+                variables: {
+                  tags,
+                  taggedUser,
+                  whatWasLearned,
+                  title
+                }
+              }).catch(err => {
+                alert(err.message);
+              });
+              console.log(res);
+
               // change them to the home page.
               Router.push({
                 pathname: '/'
