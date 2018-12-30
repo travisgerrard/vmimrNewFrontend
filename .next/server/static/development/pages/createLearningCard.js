@@ -657,9 +657,9 @@ function (_React$Component) {
                     case 0:
                       e.preventDefault(); // call the mutation
 
-                      _this2$state = _this2.state, tags = _this2$state.tags, taggedUser = _this2$state.taggedUser, whatWasLearned = _this2$state.whatWasLearned, title = _this2$state.title;
-                      console.log(tags, taggedUser, whatWasLearned, title);
-                      _context.next = 5;
+                      _this2$state = _this2.state, tags = _this2$state.tags, taggedUser = _this2$state.taggedUser, whatWasLearned = _this2$state.whatWasLearned, title = _this2$state.title; //console.log(tags, taggedUser, whatWasLearned, title);
+
+                      _context.next = 4;
                       return createCard({
                         variables: {
                           tags: tags,
@@ -671,15 +671,15 @@ function (_React$Component) {
                         alert(err.message);
                       });
 
-                    case 5:
+                    case 4:
                       res = _context.sent;
-                      console.log(res); // change them to the home page.
-
+                      //console.log(res);
+                      // change them to the home page.
                       next_router__WEBPACK_IMPORTED_MODULE_6___default.a.push({
                         pathname: '/'
                       });
 
-                    case 8:
+                    case 6:
                     case "end":
                       return _context.stop();
                   }

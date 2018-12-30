@@ -1,3 +1,5 @@
-const Home = props => <div>The home page</div>;
+import HomeLearning from '../components/HomeLearning';
+
+const Home = props => <HomeLearning />;
 
 export default Home;

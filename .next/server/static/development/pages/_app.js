@@ -341,7 +341,7 @@ var Nav = function Nav() {
         lineNumber: 16
       },
       __self: this
-    }, "Create Card")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    }, "Learned Something!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
       href: "/",
       __source: {
         fileName: _jsxFileName,
@@ -437,18 +437,19 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 var theme = {
-  red: "#FF0000",
-  black: "#393939",
-  grey: "#3A3A3A",
-  lightBlue: "#F1F7FF",
-  middleBlue: "#FDFDFD",
-  darkBlue: "#00b6de",
-  lightGreen: "#E5F4DD",
-  darkGreen: "#479E65",
-  lightgrey: "#E1E1E1",
-  offWhite: "#EDEDED",
-  maxWidth: "1000px",
-  bs: "0 12px 24px 0 rgba(0, 0, 0, 0.99)"
+  red: '#FF0000',
+  black: '#393939',
+  grey: '#3A3A3A',
+  lightBlue: '#F1F7FF',
+  middleBlue: '#FDFDFD',
+  darkBlue: '#00b6de',
+  darkerBlue: '#3778BC',
+  lightGreen: '#E5F4DD',
+  darkGreen: '#479E65',
+  lightgrey: '#E1E1E1',
+  offWhite: '#EDEDED',
+  maxWidth: '1000px',
+  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.99)'
 };
 var StyledPage = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
   displayName: "Page__StyledPage",
@@ -482,31 +483,31 @@ function (_Component) {
         theme: theme,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 64
+          lineNumber: 65
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledPage, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 65
+          lineNumber: 66
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Meta__WEBPACK_IMPORTED_MODULE_2__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 66
+          lineNumber: 67
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_1__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 67
+          lineNumber: 68
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Inner, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 69
+          lineNumber: 70
         },
         __self: this
       }, this.props.children)));

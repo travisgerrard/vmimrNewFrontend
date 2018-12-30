@@ -388,7 +388,7 @@ class CreateLearningCard extends React.Component {
               // call the mutation
               const { tags, taggedUser, whatWasLearned, title } = this.state;
 
-              console.log(tags, taggedUser, whatWasLearned, title);
+              //console.log(tags, taggedUser, whatWasLearned, title);
 
               const res = await createCard({
                 variables: {
@@ -400,7 +400,7 @@ class CreateLearningCard extends React.Component {
               }).catch(err => {
                 alert(err.message);
               });
-              console.log(res);
+              //console.log(res);
 
               // change them to the home page.
               Router.push({
