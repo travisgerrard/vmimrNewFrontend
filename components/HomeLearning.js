@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 
 const ALL_LEARNING_QUERY = gql`
   query ALL_LEARNING_QUERY {
-    learnings {
+    learnings(orderBy: createdAt_DESC) {
       id
       title
       whatWasLearned
@@ -59,7 +59,15 @@ const CardBody = styled(ReactMarkdown)`
   }
   & > p {
     padding-left: 1rem;
+    font-size: 2rem;
+
     margin: 0;
+    a {
+      color: ${props => props.theme.darkerBlue};
+    }
+    a:hover {
+      color: hotpink;
+    }
   }
 `;
 
@@ -67,8 +75,9 @@ export default class HomeLearning extends Component {
   render() {
     return (
       <Query query={ALL_LEARNING_QUERY}>
-        {({ data, loading, errer }) => {
+        {({ data, loading, error }) => {
           if (loading) return <p>Loading...</p>;
+          if (error) return <p>Error : {error.message}</p>;
           console.log(data);
           const { learnings } = data;
           return (
@@ -88,3 +97,5 @@ export default class HomeLearning extends Component {
     );
   }
 }
+
+export { ALL_LEARNING_QUERY };

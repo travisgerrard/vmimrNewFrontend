@@ -9,6 +9,8 @@ import MarkdownEditor from './MarkdownEditor';
 import Mentions from './Mentions';
 import ReactMarkdown from 'react-markdown';
 
+import { ALL_LEARNING_QUERY } from './HomeLearning';
+
 const possibleRotationTypes = [
   { value: 'Wards', label: 'Wards' },
   { value: 'Nights', label: 'Nights' },
@@ -379,7 +381,10 @@ class CreateLearningCard extends React.Component {
 
   render() {
     return (
-      <Mutation mutation={CREATE_CARD_MUTATION} variables={this.state}>
+      <Mutation
+        mutation={CREATE_CARD_MUTATION}
+        refetchQueries={[{ query: ALL_LEARNING_QUERY }]}
+      >
         {(createCard, { loading, error }) => (
           <Form
             data-test="form"
@@ -427,11 +432,14 @@ class CreateLearningCard extends React.Component {
                   {({ data, loading, error }) => {
                     if (loading) return <p>Loading...</p>;
                     const userArray = data.users.map(user => {
-                      return { id: user.id, display: user.name };
+                      return { id: user.id, display: `@${user.name}` };
                     });
                     const rotationArray = possibleRotationTypes.map(
                       rotation => {
-                        return { id: rotation.value, display: rotation.label };
+                        return {
+                          id: rotation.value,
+                          display: `#${rotation.label}`
+                        };
                       }
                     );
 

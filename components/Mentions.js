@@ -47,15 +47,11 @@ export default class Mentions extends Component {
         value={whatWasLearned}
         onChange={this.onChange}
         style={defaultStyle}
-        markup="@[__display__](__type__:__id__)"
+        markup="[__display__](/__type__/__id__)"
         allowSpaceInQuery
         placeholder={
           'Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation'
         }
-        displayTransform={(id, display, type) => {
-          if (type === 'user') return `@${display}`;
-          if (type === 'rotation') return `#${display}`;
-        }}
       >
         <Mention
           type="user"

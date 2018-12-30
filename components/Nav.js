@@ -13,7 +13,7 @@ const Nav = () => (
               <a>Account</a>
             </Link>
             <Link href="/createLearningCard">
-              <a>Learned Something!</a>
+              <a>#pearl</a>
             </Link>
             <Link href="/">
               <a>

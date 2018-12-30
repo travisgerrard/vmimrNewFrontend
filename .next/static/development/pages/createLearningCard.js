@@ -25,6 +25,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Mentions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Mentions */ "./components/Mentions.js");
 /* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-markdown */ "./node_modules/react-markdown/lib/react-markdown.js");
 /* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_markdown__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _HomeLearning__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./HomeLearning */ "./components/HomeLearning.js");
 
 var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/CreateLearningCard.js";
 
@@ -84,6 +85,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
  //import Select from 'react-select';
+
 
 
 
@@ -539,10 +541,12 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Mutation"], {
         mutation: CREATE_CARD_MUTATION,
-        variables: this.state,
+        refetchQueries: [{
+          query: _HomeLearning__WEBPACK_IMPORTED_MODULE_10__["ALL_LEARNING_QUERY"]
+        }],
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 382
+          lineNumber: 384
         },
         __self: this
       }, function (createCard, _ref) {
@@ -600,14 +604,14 @@ function (_React$Component) {
           }(),
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 384
+            lineNumber: 389
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
           error: error,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 411
+            lineNumber: 416
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("fieldset", {
@@ -615,14 +619,14 @@ function (_React$Component) {
           "aria-busy": loading,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 412
+            lineNumber: 417
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "title",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 413
+            lineNumber: 418
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
@@ -635,21 +639,21 @@ function (_React$Component) {
           onChange: _this2.handleChange,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 414
+            lineNumber: 419
           },
           __self: this
         })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "whatWasLearned",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 425
+            lineNumber: 430
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Query"], {
           query: ALL_USERS_QUERY,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 426
+            lineNumber: 431
           },
           __self: this
         }, function (_ref3) {
@@ -659,20 +663,20 @@ function (_React$Component) {
           if (loading) return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 428
+              lineNumber: 433
             },
             __self: this
           }, "Loading...");
           var userArray = data.users.map(function (user) {
             return {
               id: user.id,
-              display: user.name
+              display: "@".concat(user.name)
             };
           });
           var rotationArray = possibleRotationTypes.map(function (rotation) {
             return {
               id: rotation.value,
-              display: rotation.label
+              display: "#".concat(rotation.label)
             };
           });
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_MarkdownEditor__WEBPACK_IMPORTED_MODULE_7__["default"], {
@@ -681,7 +685,7 @@ function (_React$Component) {
             markdownButtonPressed: _this2.markdownButtonPressed,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 440
+              lineNumber: 448
             },
             __self: this
           }), _this2.state.preview ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_markdown__WEBPACK_IMPORTED_MODULE_9___default.a, {
@@ -689,7 +693,7 @@ function (_React$Component) {
             source: _this2.state.whatWasLearned,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 446
+              lineNumber: 454
             },
             __self: this
           }) : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Mentions__WEBPACK_IMPORTED_MODULE_8__["default"], {
@@ -701,7 +705,7 @@ function (_React$Component) {
             usersAdded: _this2.usersAdded,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 451
+              lineNumber: 459
             },
             __self: this
           }));
@@ -709,7 +713,7 @@ function (_React$Component) {
           type: "submit",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 466
+            lineNumber: 474
           },
           __self: this
         }, "Submit")));
@@ -806,6 +810,171 @@ DisplayError.propTypes = {
   error: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object
 };
 /* harmony default export */ __webpack_exports__["default"] = (DisplayError);
+
+/***/ }),
+
+/***/ "./components/HomeLearning.js":
+/*!************************************!*\
+  !*** ./components/HomeLearning.js ***!
+  \************************************/
+/*! exports provided: default, ALL_LEARNING_QUERY */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HomeLearning; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ALL_LEARNING_QUERY", function() { return ALL_LEARNING_QUERY; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "./node_modules/react-apollo/react-apollo.browser.umd.js");
+/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! graphql-tag */ "./node_modules/graphql-tag/src/index.js");
+/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-markdown */ "./node_modules/react-markdown/lib/react-markdown.js");
+/* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_markdown__WEBPACK_IMPORTED_MODULE_4__);
+var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/HomeLearning.js";
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  query ALL_LEARNING_QUERY {\n    learnings(orderBy: createdAt_DESC) {\n      id\n      title\n      whatWasLearned\n    }\n  }\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+
+
+
+
+var ALL_LEARNING_QUERY = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject());
+var CardLayout = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
+  displayName: "HomeLearning__CardLayout",
+  componentId: "sc-12zs89m-0"
+})(["display:grid;grid-template-columns:1fr;grid-gap:30px;max-width:", " margin:0 auto;"], function (props) {
+  return props.theme.maxWidth;
+});
+var Card = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
+  displayName: "HomeLearning__Card",
+  componentId: "sc-12zs89m-1"
+})(["background:white;box-shadow:", ";position:relative;display:flex;flex-direction:column;img{width:100%;height:400px;object-fit:cover;}p{font-size:12px;line-height:2;font-weight:300;flex-grow:1;padding:0 3rem;font-size:1.5rem;}"], function (props) {
+  return props.theme.bs;
+});
+var CardTitle = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
+  displayName: "HomeLearning__CardTitle",
+  componentId: "sc-12zs89m-2"
+})(["font-size:2.5rem;font-weight:900;color:", ";padding-left:1rem;"], function (props) {
+  return props.theme.darkerBlue;
+});
+var CardBody = Object(styled_components__WEBPACK_IMPORTED_MODULE_3__["default"])(react_markdown__WEBPACK_IMPORTED_MODULE_4___default.a).withConfig({
+  displayName: "HomeLearning__CardBody",
+  componentId: "sc-12zs89m-3"
+})(["& > img{width:100%;height:400px;object-fit:cover;}& > p{padding-left:1rem;font-size:2rem;margin:0;a{color:", ";}a:hover{color:hotpink;}}"], function (props) {
+  return props.theme.darkerBlue;
+});
+
+var HomeLearning =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(HomeLearning, _Component);
+
+  function HomeLearning() {
+    _classCallCheck(this, HomeLearning);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HomeLearning).apply(this, arguments));
+  }
+
+  _createClass(HomeLearning, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["Query"], {
+        query: ALL_LEARNING_QUERY,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 77
+        },
+        __self: this
+      }, function (_ref) {
+        var data = _ref.data,
+            loading = _ref.loading,
+            error = _ref.error;
+        if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 79
+          },
+          __self: this
+        }, "Loading...");
+        if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 80
+          },
+          __self: this
+        }, "Error : ", error.message);
+        console.log(data);
+        var learnings = data.learnings;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CardLayout, {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 84
+          },
+          __self: this
+        }, learnings.map(function (learning) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Card, {
+            key: learning.id,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 87
+            },
+            __self: this
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CardTitle, {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 88
+            },
+            __self: this
+          }, learning.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CardBody, {
+            source: learning.whatWasLearned,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 89
+            },
+            __self: this
+          }));
+        }));
+      });
+    }
+  }]);
+
+  return HomeLearning;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
 
 /***/ }),
 
@@ -1321,13 +1490,9 @@ function (_Component) {
         value: whatWasLearned,
         onChange: this.onChange,
         style: _defaultStyle__WEBPACK_IMPORTED_MODULE_2__["default"],
-        markup: "@[__display__](__type__:__id__)",
+        markup: "[__display__](/__type__/__id__)",
         allowSpaceInQuery: true,
         placeholder: 'Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation',
-        displayTransform: function displayTransform(id, display, type) {
-          if (type === 'user') return "@".concat(display);
-          if (type === 'rotation') return "#".concat(display);
-        },
         __source: {
           fileName: _jsxFileName,
           lineNumber: 43
@@ -1342,7 +1507,7 @@ function (_Component) {
             className: "user ".concat(focused ? 'focused' : ''),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 71
+              lineNumber: 67
             },
             __self: this
           }, highlightedDisplay);
@@ -1351,7 +1516,7 @@ function (_Component) {
         style: _defaultMentionStyle__WEBPACK_IMPORTED_MODULE_3__["default"],
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 60
+          lineNumber: 56
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_mentions__WEBPACK_IMPORTED_MODULE_1__["Mention"], {
@@ -1363,7 +1528,7 @@ function (_Component) {
             className: "user ".concat(focused ? 'focused' : ''),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 90
+              lineNumber: 86
             },
             __self: this
           }, highlightedDisplay);
@@ -1374,7 +1539,7 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 79
+          lineNumber: 75
         },
         __self: this
       }));
