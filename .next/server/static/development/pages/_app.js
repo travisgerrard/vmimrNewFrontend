@@ -316,7 +316,7 @@ var Nav = function Nav() {
       },
       __self: this
     }, me && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/me",
+      href: "/createLearningCard",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 12
@@ -328,8 +328,8 @@ var Nav = function Nav() {
         lineNumber: 13
       },
       __self: this
-    }, "Account")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/createLearningCard",
+    }, "pearl")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      href: "/createPresentation",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 15
@@ -341,7 +341,7 @@ var Nav = function Nav() {
         lineNumber: 16
       },
       __self: this
-    }, "#pearl")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    }, "presentation")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
       href: "/",
       __source: {
         fileName: _jsxFileName,
@@ -448,7 +448,7 @@ var theme = {
   darkGreen: '#479E65',
   lightgrey: '#E1E1E1',
   offWhite: '#EDEDED',
-  maxWidth: '1000px',
+  maxWidth: '1200px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.99)'
 };
 var StyledPage = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({

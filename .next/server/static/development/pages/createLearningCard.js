@@ -97,11 +97,13 @@ module.exports =
 /*!******************************************!*\
   !*** ./components/CreateLearningCard.js ***!
   \******************************************/
-/*! exports provided: default */
+/*! exports provided: default, possibleRotationTypes, ALL_USERS_QUERY */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "possibleRotationTypes", function() { return possibleRotationTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ALL_USERS_QUERY", function() { return ALL_USERS_QUERY; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
@@ -155,7 +157,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n  mutation CREATE_CARD_MUTATION(\n    $tags: [RotationTags]!\n    $title: String!\n    $whatWasLearned: String!\n    $taggedUser: [ID]!\n  ) {\n    createCard(\n      tags: $tags\n      title: $title\n      whatWasLearned: $whatWasLearned\n      taggedUser: $taggedUser\n    ) {\n      id\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  mutation CREATE_CARD_MUTATION(\n    $tags: [RotationTags]!\n    $whatWasLearned: String!\n    $taggedUser: [ID]!\n  ) {\n    createCard(\n      tags: $tags\n      whatWasLearned: $whatWasLearned\n      taggedUser: $taggedUser\n    ) {\n      id\n    }\n  }\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -321,7 +323,6 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(CreateLearningCard)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      title: '',
       whatWasLearned: 'Learned with attending _ on date _',
       tags: [],
       taggedUser: [],
@@ -639,7 +640,7 @@ function (_React$Component) {
         }],
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 384
+          lineNumber: 381
         },
         __self: this
       }, function (createCard, _ref) {
@@ -653,7 +654,7 @@ function (_React$Component) {
             var _ref2 = _asyncToGenerator(
             /*#__PURE__*/
             _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
-              var _this2$state, tags, taggedUser, whatWasLearned, title, res;
+              var _this2$state, tags, taggedUser, whatWasLearned, res;
 
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                 while (1) {
@@ -661,15 +662,14 @@ function (_React$Component) {
                     case 0:
                       e.preventDefault(); // call the mutation
 
-                      _this2$state = _this2.state, tags = _this2$state.tags, taggedUser = _this2$state.taggedUser, whatWasLearned = _this2$state.whatWasLearned, title = _this2$state.title; //console.log(tags, taggedUser, whatWasLearned, title);
+                      _this2$state = _this2.state, tags = _this2$state.tags, taggedUser = _this2$state.taggedUser, whatWasLearned = _this2$state.whatWasLearned; //console.log(tags, taggedUser, whatWasLearned, title);
 
                       _context.next = 4;
                       return createCard({
                         variables: {
                           tags: tags,
                           taggedUser: taggedUser,
-                          whatWasLearned: whatWasLearned,
-                          title: title
+                          whatWasLearned: whatWasLearned
                         }
                       }).catch(function (err) {
                         alert(err.message);
@@ -697,14 +697,14 @@ function (_React$Component) {
           }(),
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 389
+            lineNumber: 386
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
           error: error,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 416
+            lineNumber: 412
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("fieldset", {
@@ -712,41 +712,21 @@ function (_React$Component) {
           "aria-busy": loading,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 417
+            lineNumber: 413
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
-          htmlFor: "title",
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 418
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
-          type: "text",
-          id: "title",
-          name: "title",
-          placeholder: "Title",
-          required: true,
-          value: _this2.state.title,
-          onChange: _this2.handleChange,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 419
-          },
-          __self: this
-        })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "whatWasLearned",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 430
+            lineNumber: 414
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Query"], {
           query: ALL_USERS_QUERY,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 431
+            lineNumber: 415
           },
           __self: this
         }, function (_ref3) {
@@ -756,7 +736,7 @@ function (_React$Component) {
           if (loading) return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 433
+              lineNumber: 417
             },
             __self: this
           }, "Loading...");
@@ -778,7 +758,7 @@ function (_React$Component) {
             markdownButtonPressed: _this2.markdownButtonPressed,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 448
+              lineNumber: 432
             },
             __self: this
           }), _this2.state.preview ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_markdown__WEBPACK_IMPORTED_MODULE_9___default.a, {
@@ -786,10 +766,11 @@ function (_React$Component) {
             source: _this2.state.whatWasLearned,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 454
+              lineNumber: 438
             },
             __self: this
           }) : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Mentions__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            name: "whatWasLearned",
             users: userArray,
             rotations: rotationArray,
             whatWasLearned: _this2.state.whatWasLearned,
@@ -798,7 +779,7 @@ function (_React$Component) {
             usersAdded: _this2.usersAdded,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 459
+              lineNumber: 443
             },
             __self: this
           }));
@@ -806,7 +787,7 @@ function (_React$Component) {
           type: "submit",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 474
+            lineNumber: 459
           },
           __self: this
         }, "Submit")));
@@ -818,6 +799,7 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (CreateLearningCard);
+
 
 /***/ }),
 
@@ -949,7 +931,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  query ALL_LEARNING_QUERY {\n    learnings(orderBy: createdAt_DESC) {\n      id\n      title\n      whatWasLearned\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  query ALL_LEARNING_QUERY {\n    learnings(orderBy: createdAt_DESC) {\n      id\n      whatWasLearned\n    }\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -978,15 +960,9 @@ var Card = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConf
 })(["background:white;box-shadow:", ";position:relative;display:flex;flex-direction:column;img{width:100%;height:400px;object-fit:cover;}p{font-size:12px;line-height:2;font-weight:300;flex-grow:1;padding:0 3rem;font-size:1.5rem;}"], function (props) {
   return props.theme.bs;
 });
-var CardTitle = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
-  displayName: "HomeLearning__CardTitle",
-  componentId: "sc-12zs89m-2"
-})(["font-size:2.5rem;font-weight:900;color:", ";padding-left:1rem;"], function (props) {
-  return props.theme.darkerBlue;
-});
 var CardBody = styled_components__WEBPACK_IMPORTED_MODULE_3___default()(react_markdown__WEBPACK_IMPORTED_MODULE_4___default.a).withConfig({
   displayName: "HomeLearning__CardBody",
-  componentId: "sc-12zs89m-3"
+  componentId: "sc-12zs89m-2"
 })(["& > img{width:100%;height:400px;object-fit:cover;}& > p{padding-left:1rem;font-size:2rem;margin:0;a{color:", ";}a:hover{color:hotpink;}}"], function (props) {
   return props.theme.darkerBlue;
 });
@@ -1009,7 +985,7 @@ function (_Component) {
         query: ALL_LEARNING_QUERY,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 77
+          lineNumber: 68
         },
         __self: this
       }, function (_ref) {
@@ -1019,14 +995,14 @@ function (_Component) {
         if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 79
+            lineNumber: 70
           },
           __self: this
         }, "Loading...");
         if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 80
+            lineNumber: 71
           },
           __self: this
         }, "Error : ", error.message);
@@ -1035,7 +1011,7 @@ function (_Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CardLayout, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 84
+            lineNumber: 75
           },
           __self: this
         }, learnings.map(function (learning) {
@@ -1043,20 +1019,14 @@ function (_Component) {
             key: learning.id,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 87
+              lineNumber: 78
             },
             __self: this
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CardTitle, {
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 88
-            },
-            __self: this
-          }, learning.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CardBody, {
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CardBody, {
             source: learning.whatWasLearned,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 89
+              lineNumber: 79
             },
             __self: this
           }));
@@ -1556,7 +1526,7 @@ function (_Component) {
         target: {
           value: value,
           type: 'text',
-          name: 'whatWasLearned'
+          name: _this.props.name
         }
       });
     });
@@ -1680,7 +1650,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   control: {
     backgroundColor: '#fff',
-    fontSize: 12,
+    fontSize: '1.7rem',
     fontWeight: 'normal'
   },
   highlighter: {
@@ -1705,7 +1675,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   '&multiLine': {
     control: {
-      fontFamily: 'monospace',
+      fontFamily: 'radnika_next',
       border: '1px solid black'
     },
     highlighter: {
@@ -1752,7 +1722,7 @@ var loading = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["keyframes"]
 var Form = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.form.withConfig({
   displayName: "Form",
   componentId: "sc-1xszr8q-0"
-})(["box-shadow:0 0 5px 3px rgba(0,0,0,0.05);background:rgba(0,0,0,0.02);border:5px solid white;padding:20px;line-height:1.5;label{display:block;margin-bottom:0.5rem;}input,textarea,select{width:100%;padding:0.5rem;margin-top:0.5rem;font-size:1rem;border:1px solid black;line-height:1em;&:focus{outline:0;border-color:", ";}}.markdownPreview{box-shadow:0 0 5px 3px rgba(0,0,0,0.05);background:white;border:5px solid white;line-height:1.5;p{margin:0;}}.markdown-header{}button,input[type='submit']{width:auto;background:", ";color:white;border:0;font-size:2rem;font-weight:600;padding:0.5rem 1.2rem;cursor:pointer;&:hover{color:", ";background:white;}&:focus{outline:0px;}}fieldset{border:0;padding:0;&[disabled]{opacity:0.5;}&::before{height:10px;content:'';display:block;background-image:linear-gradient( to right,#00b6de 0%,#479e65 50%,#00b6de 100% );}&[aria-busy='true']::before{background-size:50% auto;animation:", " 0.5s linear infinite;}}"], function (props) {
+})(["box-shadow:0 0 5px 3px rgba(0,0,0,0.05);background:rgba(0,0,0,0.02);border:5px solid white;padding:20px;line-height:1.5;label{display:block;margin-bottom:0.5rem;margin-top:0.5rem;}input,textarea,select{width:100%;padding:0.5rem;margin-top:0.5rem;font-size:1rem;border:1px solid black;line-height:1em;&:focus{outline:0;border-color:", ";}}.markdownPreview{box-shadow:0 0 5px 3px rgba(0,0,0,0.05);background:white;border:5px solid white;line-height:1.5;p{margin:0;}}.markdown-header{}button,input[type='submit']{width:auto;background:", ";color:white;border:0;font-size:2rem;font-weight:600;padding:0.5rem 1.2rem;cursor:pointer;&:hover{color:", ";background:white;}&:focus{outline:0px;}}fieldset{border:0;padding:0;&[disabled]{opacity:0.5;}&::before{height:10px;content:'';display:block;background-image:linear-gradient( to right,#00b6de 0%,#479e65 50%,#00b6de 100% );}&[aria-busy='true']::before{background-size:50% auto;animation:", " 0.5s linear infinite;}}"], function (props) {
   return props.theme.darkBlue;
 }, function (props) {
   return props.theme.darkBlue;

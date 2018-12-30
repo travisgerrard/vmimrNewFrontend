@@ -65,13 +65,11 @@ const ALL_USERS_QUERY = gql`
 const CREATE_CARD_MUTATION = gql`
   mutation CREATE_CARD_MUTATION(
     $tags: [RotationTags]!
-    $title: String!
     $whatWasLearned: String!
     $taggedUser: [ID]!
   ) {
     createCard(
       tags: $tags
-      title: $title
       whatWasLearned: $whatWasLearned
       taggedUser: $taggedUser
     ) {
@@ -82,7 +80,6 @@ const CREATE_CARD_MUTATION = gql`
 
 class CreateLearningCard extends React.Component {
   state = {
-    title: '',
     whatWasLearned: 'Learned with attending _ on date _',
     tags: [],
     taggedUser: [],
@@ -391,7 +388,7 @@ class CreateLearningCard extends React.Component {
             onSubmit={async e => {
               e.preventDefault();
               // call the mutation
-              const { tags, taggedUser, whatWasLearned, title } = this.state;
+              const { tags, taggedUser, whatWasLearned } = this.state;
 
               //console.log(tags, taggedUser, whatWasLearned, title);
 
@@ -399,8 +396,7 @@ class CreateLearningCard extends React.Component {
                 variables: {
                   tags,
                   taggedUser,
-                  whatWasLearned,
-                  title
+                  whatWasLearned
                 }
               }).catch(err => {
                 alert(err.message);
@@ -415,18 +411,6 @@ class CreateLearningCard extends React.Component {
           >
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
-              <label htmlFor="title">
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="Title"
-                  required
-                  value={this.state.title}
-                  onChange={this.handleChange}
-                />
-              </label>
-
               <label htmlFor="whatWasLearned">
                 <Query query={ALL_USERS_QUERY}>
                   {({ data, loading, error }) => {
@@ -457,6 +441,7 @@ class CreateLearningCard extends React.Component {
                           />
                         ) : (
                           <Mentions
+                            name="whatWasLearned"
                             users={userArray}
                             rotations={rotationArray}
                             whatWasLearned={this.state.whatWasLearned}
@@ -481,3 +466,4 @@ class CreateLearningCard extends React.Component {
 }
 
 export default CreateLearningCard;
+export { possibleRotationTypes, ALL_USERS_QUERY };

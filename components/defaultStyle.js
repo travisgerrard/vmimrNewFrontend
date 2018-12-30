@@ -2,7 +2,7 @@ export default {
   control: {
     backgroundColor: '#fff',
 
-    fontSize: 12,
+    fontSize: '1.7rem',
     fontWeight: 'normal'
   },
 
@@ -35,7 +35,7 @@ export default {
 
   '&multiLine': {
     control: {
-      fontFamily: 'monospace',
+      fontFamily: 'radnika_next',
 
       border: '1px solid black'
     },

@@ -9,11 +9,11 @@ const Nav = () => (
       <NavStyles data-test="nav">
         {me && (
           <>
-            <Link href="/me">
-              <a>Account</a>
-            </Link>
             <Link href="/createLearningCard">
-              <a>#pearl</a>
+              <a>pearl</a>
+            </Link>
+            <Link href="/createPresentation">
+              <a>presentation</a>
             </Link>
             <Link href="/">
               <a>

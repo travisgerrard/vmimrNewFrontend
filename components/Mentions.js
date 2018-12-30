@@ -19,7 +19,7 @@ export default class Mentions extends Component {
       target: {
         value: value,
         type: 'text',
-        name: 'whatWasLearned'
+        name: this.props.name
       }
     });
   };

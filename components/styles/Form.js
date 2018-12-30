@@ -23,6 +23,7 @@ const Form = styled.form`
   label {
     display: block;
     margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
   }
   input,
   textarea,
@@ -74,7 +75,6 @@ const Form = styled.form`
   fieldset {
     border: 0;
     padding: 0;
-
     &[disabled] {
       opacity: 0.5;
     }

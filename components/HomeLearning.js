@@ -8,7 +8,6 @@ const ALL_LEARNING_QUERY = gql`
   query ALL_LEARNING_QUERY {
     learnings(orderBy: createdAt_DESC) {
       id
-      title
       whatWasLearned
     }
   }
@@ -41,14 +40,6 @@ const Card = styled.div`
     padding: 0 3rem;
     font-size: 1.5rem;
   }
-`;
-
-const CardTitle = styled.div`
-  font-size: 2.5rem;
-  font-weight: 900;
-
-  color: ${props => props.theme.darkerBlue};
-  padding-left: 1rem;
 `;
 
 const CardBody = styled(ReactMarkdown)`
@@ -85,7 +76,6 @@ export default class HomeLearning extends Component {
               {learnings.map(learning => {
                 return (
                   <Card key={learning.id}>
-                    <CardTitle>{learning.title}</CardTitle>
                     <CardBody source={learning.whatWasLearned} />
                   </Card>
                 );
