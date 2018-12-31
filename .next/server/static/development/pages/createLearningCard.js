@@ -120,7 +120,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Mentions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Mentions */ "./components/Mentions.js");
 /* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-markdown */ "react-markdown");
 /* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_markdown__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _HomeLearning__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./HomeLearning */ "./components/HomeLearning.js");
+/* harmony import */ var _lib_markdownEditorFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../lib/markdownEditorFunctions */ "./lib/markdownEditorFunctions.js");
+/* harmony import */ var _HomeLearning__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./HomeLearning */ "./components/HomeLearning.js");
 
 var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/CreateLearningCard.js";
 
@@ -180,6 +181,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
  //import Select from 'react-select';
+
 
 
 
@@ -323,7 +325,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(CreateLearningCard)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      whatWasLearned: 'Learned with attending _ on date _',
+      whatWasLearned: '',
       tags: [],
       taggedUser: [],
       preview: false
@@ -363,250 +365,16 @@ function (_React$Component) {
       _this.setState(_defineProperty({}, name, val));
     });
 
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "indiciesForWordToLeft", function (whatWasLearnedText, startPosition) {
-      var theSubstring = whatWasLearnedText.substring(0, startPosition); // return index of all ' ' in the string
-
-      var indices = [];
-
-      for (var i = 0; i < theSubstring.length; i++) {
-        if (theSubstring[i] === ' ' || theSubstring[i] === '\n') indices.push(i);
-      } // find the last index that occurs and add one to make up for the ' ', and if non occured, make last index 0
-
-
-      return indices.length ? indices.pop() + 1 : 0;
-    });
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "indiciesForWordToRight", function (whatWasLearnedText, startPosition) {
-      // The string to the right of the blank
-      var theSubstring = whatWasLearnedText.substring(startPosition); // return index of all ' ' in the string
-
-      var indices = [];
-
-      for (var i = 0; i < theSubstring.length; i++) {
-        if (theSubstring[i] === ' ' || theSubstring[i] === '\n') indices.push(i);
-      } // find the first index that occurs, and if non occured, return length
-
-
-      return indices.length ? indices[0] : theSubstring.length;
-    });
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleButtonClickWithValue", function (whatWasLearnedText, value, word, leftIndex, rightIndex) {
-      var newText;
-      var leftText = whatWasLearnedText.slice(0, leftIndex);
-      var rightText = whatWasLearnedText.slice(rightIndex);
-
-      switch (value) {
-        case 'headerOne':
-          newText = "".concat(leftText, " # ").concat(word).concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 3);
-          });
-
-          break;
-
-        case 'headerTwo':
-          newText = "".concat(leftText, " ## ").concat(word).concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 4);
-          });
-
-          break;
-
-        case 'headerThree':
-          newText = "".concat(leftText, " ### ").concat(word).concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 4);
-          });
-
-          break;
-
-        case 'headerFour':
-          newText = "".concat(leftText, " #### ").concat(word).concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 5);
-          });
-
-          break;
-
-        case 'bold':
-          newText = "".concat(leftText, "**").concat(word, "**").concat(rightText);
-          console.log(newText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 2);
-          });
-
-          break;
-
-        case 'italic':
-          newText = "".concat(leftText, "_").concat(word, "_").concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 1);
-          });
-
-          break;
-
-        case 'strikeThrough':
-          newText = "".concat(leftText, "~~").concat(word, "~~").concat(rightText);
-          console.log(newText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 2);
-          });
-
-          break;
-
-        case 'link':
-          newText = "".concat(leftText, "[").concat(word, "](url)").concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 1);
-          });
-
-          break;
-
-        case 'quote':
-          newText = "".concat(leftText, "\n\n> ").concat(word).concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 4);
-          });
-
-          break;
-
-        case 'code':
-          newText = "".concat(leftText, "`").concat(word, "`").concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 1);
-          });
-
-          break;
-
-        case 'image':
-          newText = "".concat(leftText, "![").concat(word, "](url)").concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 2);
-          });
-
-          break;
-
-        case 'listUl':
-          newText = "".concat(leftText, "\n\n- ").concat(word).concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 4);
-          });
-
-          break;
-
-        case 'listOl':
-          newText = "".concat(leftText, "\n\n1. ").concat(word).concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 5);
-          });
-
-          break;
-
-        case 'tasks':
-          newText = "".concat(leftText, "\n\n- [ ] ").concat(word).concat(rightText);
-
-          _this.setState({
-            whatWasLearned: newText
-          }, function () {
-            _this.setCaretPosition('whatWasLearned', leftIndex + 8);
-          });
-
-          break;
-
-        default:
-          break;
-      }
-    });
-
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "markdownButtonPressed", function (value) {
-      console.log(value);
-      var whatWasLearnedText = _this.state.whatWasLearned;
-      var whatWasLearnedTextArea = document.getElementById('whatWasLearned');
-      console.log(whatWasLearnedTextArea);
-      var startPosition = whatWasLearnedTextArea.selectionStart;
-      var endPosition = whatWasLearnedTextArea.selectionEnd;
-      console.log(startPosition, endPosition);
+      var objectReturnedFromPressDown = Object(_lib_markdownEditorFunctions__WEBPACK_IMPORTED_MODULE_10__["default"])(value, _this.state.whatWasLearned, document.getElementById('whatWasLearned'));
+      var whatWasLearned = objectReturnedFromPressDown.whatWasLearned,
+          caretPosition = objectReturnedFromPressDown.caretPosition;
 
-      if (startPosition == endPosition) {
-        var prev = whatWasLearnedText.slice(startPosition - 1, startPosition);
-        var next = whatWasLearnedText.slice(startPosition, startPosition + 1);
-
-        if ((prev === '' || prev === ' ') && (next === '' || next === ' ')) {
-          console.log('blanks on EITHER side of cursor position');
-
-          var leftIndex = _this.indiciesForWordToLeft(whatWasLearnedText, startPosition);
-
-          _this.handleButtonClickWithValue(whatWasLearnedText, value, '', startPosition, startPosition);
-        } else if ((prev !== '' || prev !== ' ') && (next === '' || next === ' ')) {
-          // console.log('blanks on RIGHT side of cursor position');
-          var _leftIndex = _this.indiciesForWordToLeft(whatWasLearnedText, startPosition); // Slice the string to return the word
-
-
-          var wordToTheLeft = whatWasLearnedText.substring(0, startPosition).substring(_leftIndex, startPosition);
-
-          _this.handleButtonClickWithValue(whatWasLearnedText, value, wordToTheLeft, _leftIndex, startPosition); // console.log(wordToTheLeft);
-
-        } else if ((prev === '' || prev === ' ') && (next !== '' || next !== ' ')) {
-          // console.log('blanks on LEFT side of cursor position');
-          var lastIndex = _this.indiciesForWordToRight(whatWasLearnedText, startPosition); // Slice the string to return the word
-
-
-          var wordToTheRight = whatWasLearnedText.substring(startPosition).substring(0, lastIndex);
-
-          _this.handleButtonClickWithValue(whatWasLearnedText, value, wordToTheRight, startPosition, startPosition + lastIndex); // console.log(wordToTheRight);
-
-        } else {
-          // Letters on either side of cursor
-          // console.log('Letters on either side of cursor ');
-          var lastIndexRight = _this.indiciesForWordToRight(whatWasLearnedText, startPosition);
-
-          var lastIndexLeft = _this.indiciesForWordToLeft(whatWasLearnedText, startPosition);
-
-          var wordCursorWithin = whatWasLearnedText.substring(lastIndexLeft, startPosition + lastIndexRight);
-
-          _this.handleButtonClickWithValue(whatWasLearnedText, value, wordCursorWithin, lastIndexLeft, startPosition + lastIndexRight); // console.log(wordCursorWithin);
-
-        }
-      }
+      _this.setState({
+        whatWasLearned: whatWasLearned
+      }, function () {
+        _this.setCaretPosition('whatWasLearned', caretPosition);
+      });
     });
 
     return _this;
@@ -636,11 +404,11 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Mutation"], {
         mutation: CREATE_CARD_MUTATION,
         refetchQueries: [{
-          query: _HomeLearning__WEBPACK_IMPORTED_MODULE_10__["ALL_LEARNING_QUERY"]
+          query: _HomeLearning__WEBPACK_IMPORTED_MODULE_11__["ALL_LEARNING_QUERY"]
         }],
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 381
+          lineNumber: 144
         },
         __self: this
       }, function (createCard, _ref) {
@@ -697,14 +465,14 @@ function (_React$Component) {
           }(),
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 386
+            lineNumber: 149
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
           error: error,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 412
+            lineNumber: 175
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("fieldset", {
@@ -712,21 +480,21 @@ function (_React$Component) {
           "aria-busy": loading,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 413
+            lineNumber: 176
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
           htmlFor: "whatWasLearned",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 414
+            lineNumber: 177
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Query"], {
           query: ALL_USERS_QUERY,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 415
+            lineNumber: 178
           },
           __self: this
         }, function (_ref3) {
@@ -736,7 +504,7 @@ function (_React$Component) {
           if (loading) return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 417
+              lineNumber: 180
             },
             __self: this
           }, "Loading...");
@@ -758,7 +526,7 @@ function (_React$Component) {
             markdownButtonPressed: _this2.markdownButtonPressed,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 432
+              lineNumber: 195
             },
             __self: this
           }), _this2.state.preview ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_markdown__WEBPACK_IMPORTED_MODULE_9___default.a, {
@@ -766,11 +534,13 @@ function (_React$Component) {
             source: _this2.state.whatWasLearned,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 438
+              lineNumber: 201
             },
             __self: this
           }) : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Mentions__WEBPACK_IMPORTED_MODULE_8__["default"], {
             name: "whatWasLearned",
+            nameOfTextArea: "whatWasLearned",
+            placeholder: "Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation",
             users: userArray,
             rotations: rotationArray,
             whatWasLearned: _this2.state.whatWasLearned,
@@ -779,7 +549,7 @@ function (_React$Component) {
             usersAdded: _this2.usersAdded,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 443
+              lineNumber: 206
             },
             __self: this
           }));
@@ -787,7 +557,7 @@ function (_React$Component) {
           type: "submit",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 459
+            lineNumber: 224
           },
           __self: this
         }, "Submit")));
@@ -1466,6 +1236,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_mentions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_mentions__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _defaultStyle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./defaultStyle */ "./components/defaultStyle.js");
 /* harmony import */ var _defaultMentionStyle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./defaultMentionStyle */ "./components/defaultMentionStyle.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_4__);
 var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/Mentions.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -1487,6 +1259,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -1554,18 +1327,18 @@ function (_Component) {
           rotations = _this$props.rotations,
           whatWasLearned = _this$props.whatWasLearned;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_mentions__WEBPACK_IMPORTED_MODULE_1__["MentionsInput"], {
-        name: "whatWasLearned",
-        id: "whatWasLearned",
+        name: this.props.nameOfTextArea,
+        id: this.props.nameOfTextArea,
         className: "mentionInput",
         value: whatWasLearned,
         onChange: this.onChange,
         style: _defaultStyle__WEBPACK_IMPORTED_MODULE_2__["default"],
         markup: "[__display__](/__type__/__id__)",
         allowSpaceInQuery: true,
-        placeholder: 'Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation',
+        placeholder: this.props.placeholder,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 43
+          lineNumber: 45
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_mentions__WEBPACK_IMPORTED_MODULE_1__["Mention"], {
@@ -1650,7 +1423,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   control: {
     backgroundColor: '#fff',
-    fontSize: '1.7rem',
+    fontSize: 12,
     fontWeight: 'normal'
   },
   highlighter: {
@@ -1675,8 +1448,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   '&multiLine': {
     control: {
-      fontFamily: 'radnika_next',
-      border: '1px solid black'
+      fontSize: '16px',
+      lineHeight: 1
     },
     highlighter: {
       padding: 9
@@ -1685,14 +1458,15 @@ __webpack_require__.r(__webpack_exports__);
       padding: 9,
       minHeight: 63,
       outline: 0,
-      border: 0
+      lineHeight: 1
     }
   },
   suggestions: {
     list: {
       backgroundColor: 'white',
       border: '1px solid rgba(0,0,0,0.15)',
-      fontSize: 10
+      fontSize: 10,
+      paddingTop: -50
     },
     item: {
       padding: '5px 15px',
@@ -1730,6 +1504,321 @@ var Form = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.form.withCon
   return props.theme.darkBlue;
 }, loading);
 /* harmony default export */ __webpack_exports__["default"] = (Form);
+
+/***/ }),
+
+/***/ "./lib/markdownEditorFunctions.js":
+/*!****************************************!*\
+  !*** ./lib/markdownEditorFunctions.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return markdownButtonPressed; });
+/*
+  markdownButtonPressed takes in value, string and reference to textarea
+  return an object with evertrhing needed to get sent on and modify text
+*/
+function indiciesForWordToLeft(whatWasLearnedText, startPosition) {
+  var theSubstring = whatWasLearnedText.substring(0, startPosition); // return index of all ' ' in the string
+
+  var indices = [];
+
+  for (var i = 0; i < theSubstring.length; i++) {
+    if (theSubstring[i] === ' ' || theSubstring[i] === '\n') indices.push(i);
+  } // find the last index that occurs and add one to make up for the ' ', and if non occured, make last index 0
+
+
+  return indices.length ? indices.pop() + 1 : 0;
+}
+
+function indiciesForWordToRight(whatWasLearnedText, startPosition) {
+  // The string to the right of the blank
+  var theSubstring = whatWasLearnedText.substring(startPosition); // return index of all ' ' in the string
+
+  var indices = [];
+
+  for (var i = 0; i < theSubstring.length; i++) {
+    if (theSubstring[i] === ' ' || theSubstring[i] === '\n') indices.push(i);
+  } // find the first index that occurs, and if non occured, return length
+
+
+  return indices.length ? indices[0] : theSubstring.length;
+} // handleButtonClickWithValue
+
+
+function markdownButtonPressedStepOneTwo(_ref) {
+  var whatWasLearnedText = _ref.whatWasLearnedText,
+      value = _ref.value,
+      word = _ref.word,
+      leftIndex = _ref.leftIndex,
+      rightIndex = _ref.rightIndex;
+  var newText;
+  var leftText = whatWasLearnedText.slice(0, leftIndex);
+  var rightText = whatWasLearnedText.slice(rightIndex);
+
+  switch (value) {
+    case 'headerOne':
+      newText = "".concat(leftText, " # ").concat(word).concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 3
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 3);
+      // });
+
+      break;
+
+    case 'headerTwo':
+      newText = "".concat(leftText, " ## ").concat(word).concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 4
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 4);
+      // });
+
+      break;
+
+    case 'headerThree':
+      newText = "".concat(leftText, " ### ").concat(word).concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 4
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 4);
+      // });
+
+      break;
+
+    case 'headerFour':
+      newText = "".concat(leftText, " #### ").concat(word).concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 5
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 5);
+      // });
+
+      break;
+
+    case 'bold':
+      newText = "".concat(leftText, "**").concat(word, "**").concat(rightText);
+      console.log(newText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 2
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 2);
+      // });
+
+      break;
+
+    case 'italic':
+      newText = "".concat(leftText, "_").concat(word, "_").concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 1
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 1);
+      // });
+
+      break;
+
+    case 'strikeThrough':
+      newText = "".concat(leftText, "~~").concat(word, "~~").concat(rightText);
+      console.log(newText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 2
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 2);
+      // });
+
+      break;
+
+    case 'link':
+      newText = "".concat(leftText, "[").concat(word, "](url)").concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 1
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 1);
+      // });
+
+      break;
+
+    case 'quote':
+      newText = "".concat(leftText, "\n\n> ").concat(word).concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 4
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 4);
+      // });
+
+      break;
+
+    case 'code':
+      newText = "".concat(leftText, "`").concat(word, "`").concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 1
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 1);
+      // });
+
+      break;
+
+    case 'image':
+      newText = "".concat(leftText, "![").concat(word, "](url)").concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 2
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 2);
+      // });
+
+      break;
+
+    case 'listUl':
+      newText = "".concat(leftText, "\n\n- ").concat(word).concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 4
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 4);
+      // });
+
+      break;
+
+    case 'listOl':
+      newText = "".concat(leftText, "\n\n1. ").concat(word).concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 5
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 5);
+      // });
+
+      break;
+
+    case 'tasks':
+      newText = "".concat(leftText, "\n\n- [ ] ").concat(word).concat(rightText);
+      return {
+        whatWasLearned: newText,
+        caretPosition: leftIndex + 8
+      }; // this.setState({ whatWasLearned: newText }, () => {
+      //   this.setCaretPosition('whatWasLearned', leftIndex + 8);
+      // });
+
+      break;
+
+    default:
+      break;
+  }
+}
+
+function markdownButtonPressedStepOne(value, whatWasLearnedText, whatWasLearnedTextArea) {
+  var startPosition = whatWasLearnedTextArea.selectionStart;
+  var endPosition = whatWasLearnedTextArea.selectionEnd;
+
+  if (startPosition == endPosition) {
+    var prev = whatWasLearnedText.slice(startPosition - 1, startPosition);
+    var next = whatWasLearnedText.slice(startPosition, startPosition + 1);
+
+    if ((prev === '' || prev === ' ') && (next === '' || next === ' ')) {
+      //console.log('blanks on EITHER side of cursor position');
+      return {
+        whatWasLearnedText: whatWasLearnedText,
+        value: value,
+        word: '',
+        leftIndex: startPosition,
+        rightIndex: startPosition
+      }; // this.handleButtonClickWithValue(
+      //   whatWasLearnedText,
+      //   value,
+      //   '',
+      //   startPosition,
+      //   startPosition
+      // );
+    } else if ((prev !== '' || prev !== ' ') && (next === '' || next === ' ')) {
+      // console.log('blanks on RIGHT side of cursor position');
+      var leftIndex = indiciesForWordToLeft(whatWasLearnedText, startPosition); // Slice the string to return the word
+
+      var wordToTheLeft = whatWasLearnedText.substring(0, startPosition).substring(leftIndex, startPosition);
+      return {
+        whatWasLearnedText: whatWasLearnedText,
+        value: value,
+        word: wordToTheLeft,
+        leftIndex: leftIndex,
+        rightIndex: startPosition
+      }; // this.handleButtonClickWithValue(
+      //   whatWasLearnedText,
+      //   value,
+      //   wordToTheLeft,
+      //   leftIndex,
+      //   startPosition
+      // );
+      // console.log(wordToTheLeft);
+    } else if ((prev === '' || prev === ' ') && (next !== '' || next !== ' ')) {
+      // console.log('blanks on LEFT side of cursor position');
+      var lastIndex = indiciesForWordToRight(whatWasLearnedText, startPosition); // Slice the string to return the word
+
+      var wordToTheRight = whatWasLearnedText.substring(startPosition).substring(0, lastIndex);
+      return {
+        whatWasLearnedText: whatWasLearnedText,
+        value: value,
+        word: wordToTheRight,
+        leftIndex: startPosition,
+        rightIndex: startPosition + lastIndex
+      }; // this.handleButtonClickWithValue(
+      //   whatWasLearnedText,
+      //   value,
+      //   wordToTheRight,
+      //   startPosition,
+      //   startPosition + lastIndex
+      // );
+      // console.log(wordToTheRight);
+    } else {
+      // Letters on either side of cursor
+      // console.log('Letters on either side of cursor ');
+      var lastIndexRight = indiciesForWordToRight(whatWasLearnedText, startPosition);
+      var lastIndexLeft = indiciesForWordToLeft(whatWasLearnedText, startPosition);
+      var wordCursorWithin = whatWasLearnedText.substring(lastIndexLeft, startPosition + lastIndexRight);
+      return {
+        whatWasLearnedText: whatWasLearnedText,
+        value: value,
+        word: wordCursorWithin,
+        leftIndex: lastIndexLeft,
+        rightIndex: startPosition + lastIndexRight
+      }; // this.handleButtonClickWithValue(
+      //   whatWasLearnedText,
+      //   value,
+      //   wordCursorWithin,
+      //   lastIndexLeft,
+      //   startPosition + lastIndexRight
+      // );
+      // console.log(wordCursorWithin);
+    }
+  }
+
+  return {
+    whatWasLearnedText: whatWasLearnedText,
+    value: value,
+    word: whatWasLearnedText.substring(startPosition, endPosition),
+    leftIndex: startPosition,
+    rightIndex: endPosition
+  };
+}
+
+function markdownButtonPressed(value, whatWasLearnedText, whatWasLearnedTextArea) {
+  var stepOne = markdownButtonPressedStepOne(value, whatWasLearnedText, whatWasLearnedTextArea);
+  var stepTwo = markdownButtonPressedStepOneTwo(stepOne);
+  return stepTwo;
+}
 
 /***/ }),
 

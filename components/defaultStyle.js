@@ -2,7 +2,7 @@ export default {
   control: {
     backgroundColor: '#fff',
 
-    fontSize: '1.7rem',
+    fontSize: 12,
     fontWeight: 'normal'
   },
 
@@ -35,9 +35,8 @@ export default {
 
   '&multiLine': {
     control: {
-      fontFamily: 'radnika_next',
-
-      border: '1px solid black'
+      fontSize: '16px',
+      lineHeight: 1
     },
 
     highlighter: {
@@ -48,7 +47,7 @@ export default {
       padding: 9,
       minHeight: 63,
       outline: 0,
-      border: 0
+      lineHeight: 1
     }
   },
 
@@ -56,7 +55,8 @@ export default {
     list: {
       backgroundColor: 'white',
       border: '1px solid rgba(0,0,0,0.15)',
-      fontSize: 10
+      fontSize: 10,
+      paddingTop: -50
     },
 
     item: {

@@ -4,6 +4,8 @@ import { MentionsInput, Mention } from 'react-mentions';
 import defaultStyle from './defaultStyle';
 import defaultMentionStyle from './defaultMentionStyle';
 
+import styled from 'styled-components';
+
 export default class Mentions extends Component {
   state = {
     value: ''
@@ -41,17 +43,15 @@ export default class Mentions extends Component {
 
     return (
       <MentionsInput
-        name="whatWasLearned"
-        id="whatWasLearned"
+        name={this.props.nameOfTextArea}
+        id={this.props.nameOfTextArea}
         className="mentionInput"
         value={whatWasLearned}
         onChange={this.onChange}
         style={defaultStyle}
         markup="[__display__](/__type__/__id__)"
         allowSpaceInQuery
-        placeholder={
-          'Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation'
-        }
+        placeholder={this.props.placeholder}
       >
         <Mention
           type="user"
