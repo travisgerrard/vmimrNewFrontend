@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
 import {
   SortableContainer,
   SortableElement,
@@ -15,6 +16,33 @@ import { possibleRotationTypes, ALL_USERS_QUERY } from './CreateLearningCard';
 import MarkdownEditor from './MarkdownEditor';
 import ReactMarkdown from 'react-markdown';
 import markdownButtonPressed from '../lib/markdownEditorFunctions';
+
+import { ALL_LEARNING_QUERY } from './HomeLearning';
+
+const CREATE_PRESENTATION_MUTATION = gql`
+  mutation CREATE_PRESENTATION_MUTATION(
+    $tags: [RotationTags]!
+    $whatWasLearned: String!
+    $taggedUser: [ID]!
+    $hpi: String!
+    $physicalExam: String!
+    $summAssessment: String!
+    $ddx: [String]!
+    $presentationType: [PresentationTypes]!
+  ) {
+    createPresentation(
+      tags: $tags
+      whatWasLearned: $whatWasLearned
+      taggedUser: $taggedUser
+      hpi: $hpi
+      physicalExam: $physicalExam
+      summAssessment: $summAssessment
+      ddx: $ddx
+    ) {
+      id
+    }
+  }
+`;
 
 const CaseLayout = styled.div`
   display: grid;
@@ -39,12 +67,12 @@ const DDxListItem = styled.div`
 `;
 
 const presentationTypes = [
-  { value: 'General', label: 'general' },
-  { value: 'Morning', label: 'morning' },
-  { value: 'Case', label: 'case' },
-  { value: 'Specialist', label: 'specialist' },
-  { value: 'Primary Care', label: 'primaryCare' },
-  { value: 'Intern Survival', label: 'internSurvival' }
+  { value: 'General', label: 'General' },
+  { value: 'Morning', label: 'Morning' },
+  { value: 'Case', label: 'Case' },
+  { value: 'Specialist', label: 'Specialist' },
+  { value: 'Primary Care', label: 'PrimaryCare' },
+  { value: 'Intern Survival', label: 'InternSurvival' }
 ];
 
 const SortableItem = SortableElement(({ value }) => (
@@ -109,7 +137,7 @@ export default class Presentation extends Component {
     tags: [],
     preview: false,
     whatWasLearned: '',
-    presentaionType: 'general'
+    presentationType: 'General'
   };
 
   tagsAdded = id => {
@@ -167,7 +195,7 @@ export default class Presentation extends Component {
   enterPressed = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      s;
+
       this.setState({ ddx: [...this.state.ddx, this.state.ddxInput] }, () =>
         this.setState({ ddxInput: '' })
       );
@@ -182,148 +210,198 @@ export default class Presentation extends Component {
 
   render() {
     return (
-      <Form>
-        <label htmlFor="caseType">
-          {presentationTypes.map(presentation => {
-            return (
-              <button
-                key={presentation.label}
-                type="button"
-                name="presentationType"
-                id={presentation.label}
-                style={
-                  presentation.label === this.state.presentaionType
-                    ? { background: 'white', color: '#01B6DD' }
-                    : {}
+      <Mutation
+        mutation={CREATE_PRESENTATION_MUTATION}
+        refetchQueries={[{ query: ALL_LEARNING_QUERY }]}
+      >
+        {(createPresentation, { loading, error }) => (
+          <Form
+            data-test="form"
+            onSubmit={async e => {
+              e.preventDefault();
+              // call the mutation
+              const {
+                tags,
+                taggedUser,
+                whatWasLearned,
+                subjective,
+                objective,
+                sumAssess,
+                ddx,
+                presentationType
+              } = this.state;
+
+              //console.log(tags, taggedUser, whatWasLearned, title);
+
+              const res = await createPresentation({
+                variables: {
+                  tags,
+                  taggedUser,
+                  whatWasLearned,
+                  hpi: subjective,
+                  physicalExam: objective,
+                  summAssessment: sumAssess,
+                  ddx,
+                  presentationType
                 }
-                onClick={() => {
-                  this.setState({ presentaionType: presentation.label });
-                }}
-              >
-                {presentation.value}
-              </button>
-            );
-          })}
-        </label>
-        <Query query={ALL_USERS_QUERY}>
-          {({ data, loading, error }) => {
-            if (loading) return <p>Loading...</p>;
-            const userArray = data.users.map(user => {
-              return { id: user.id, display: `@${user.name}` };
-            });
-            const rotationArray = possibleRotationTypes.map(rotation => {
-              return {
-                id: rotation.value,
-                display: `#${rotation.label}`
-              };
-            });
+              }).catch(err => {
+                alert(err.message);
+              });
+              //console.log(res);
 
-            return (
-              <>
-                <Error error={error} />
-                {this.state.presentaionType === 'case' ? (
+              // change them to the home page.
+              Router.push({
+                pathname: '/'
+              });
+            }}
+          >
+            <Query query={ALL_USERS_QUERY}>
+              {({ data, loading, error }) => {
+                if (loading) return <p>Loading...</p>;
+                const userArray = data.users.map(user => {
+                  return { id: user.id, display: `@${user.name}` };
+                });
+                const rotationArray = possibleRotationTypes.map(rotation => {
+                  return {
+                    id: rotation.value,
+                    display: `#${rotation.label}`
+                  };
+                });
+
+                return (
                   <>
-                    <hr />
+                    <Error error={error} />
+                    <fieldset disabled={loading} aria-busy={loading}>
+                      <label htmlFor="caseType">
+                        {presentationTypes.map(presentation => {
+                          return (
+                            <button
+                              key={presentation.label}
+                              type="button"
+                              name="presentationType"
+                              id={presentation.label}
+                              style={
+                                presentation.label ===
+                                this.state.presentationType
+                                  ? { background: 'white', color: '#01B6DD' }
+                                  : {}
+                              }
+                              onClick={() => {
+                                this.setState({
+                                  presentationType: presentation.label
+                                });
+                              }}
+                            >
+                              {presentation.value}
+                            </button>
+                          );
+                        })}
+                      </label>
+                      {this.state.presentationType === 'Case' ? (
+                        <>
+                          <hr />
 
-                    <CaseLayout>
-                      <div>
-                        <label>Subjective/HPI</label>
-                        <Mentions
-                          name="subjective"
-                          nameOfTextArea={`subjective`}
-                          placeholder={SUBJECTIVE}
-                          users={userArray}
-                          rotations={rotationArray}
-                          whatWasLearned={this.state.subjective}
-                          handleChange={this.handleChange}
-                          tagsAdded={this.tagsAdded}
-                          usersAdded={this.usersAdded}
+                          <CaseLayout>
+                            <div>
+                              <label>Subjective/HPI</label>
+                              <Mentions
+                                name="subjective"
+                                nameOfTextArea={`subjective`}
+                                placeholder={SUBJECTIVE}
+                                users={userArray}
+                                rotations={rotationArray}
+                                whatWasLearned={this.state.subjective}
+                                handleChange={this.handleChange}
+                                tagsAdded={this.tagsAdded}
+                                usersAdded={this.usersAdded}
+                              />
+                            </div>
+                            <div>
+                              <label>Objective/Exam|Labs|Imaging</label>
+                              <Mentions
+                                name="objective"
+                                nameOfTextArea={`objective`}
+                                placeholder={OBJECTIVE}
+                                users={userArray}
+                                rotations={rotationArray}
+                                whatWasLearned={this.state.objective}
+                                handleChange={this.handleChange}
+                                tagsAdded={this.tagsAdded}
+                                usersAdded={this.usersAdded}
+                              />
+                            </div>
+                            <div>
+                              <label>Summary assessment</label>
+                              <Mentions
+                                name="sumAssess"
+                                nameOfTextArea={`sumAssess`}
+                                placeholder="Middle aged male with..."
+                                users={userArray}
+                                rotations={rotationArray}
+                                whatWasLearned={this.state.sumAssess}
+                                handleChange={this.handleChange}
+                                tagsAdded={this.tagsAdded}
+                                usersAdded={this.usersAdded}
+                              />
+                              <label>DDx</label>
+                              <input
+                                type="text"
+                                name="ddxInput"
+                                value={this.state.ddxInput}
+                                onChange={e =>
+                                  this.setState({ ddxInput: e.target.value })
+                                }
+                                onKeyPress={this.enterPressed}
+                              />
+                              <SortableList
+                                items={this.state.ddx}
+                                onSortEnd={this.onSortEnd}
+                              />
+                            </div>
+                          </CaseLayout>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+
+                      <hr />
+                      <label htmlFor="whatWasLearned">
+                        <MarkdownEditor
+                          preview={this.state.preview}
+                          previewChange={this.previewChange}
+                          markdownButtonPressed={this.markdownButtonPressed}
                         />
-                      </div>
-                      <div>
-                        <label>Objective/Exam|Labs|Imaging</label>
-                        <Mentions
-                          name="objective"
-                          nameOfTextArea={`objective`}
-                          placeholder={OBJECTIVE}
-                          users={userArray}
-                          rotations={rotationArray}
-                          whatWasLearned={this.state.objective}
-                          handleChange={this.handleChange}
-                          tagsAdded={this.tagsAdded}
-                          usersAdded={this.usersAdded}
-                        />
-                      </div>
-                      <div>
-                        <label>Summary assessment</label>
-                        <Mentions
-                          name="sumAssess"
-                          nameOfTextArea={`sumAssess`}
-                          placeholder="Middle aged male with..."
-                          users={userArray}
-                          rotations={rotationArray}
-                          whatWasLearned={this.state.sumAssess}
-                          handleChange={this.handleChange}
-                          tagsAdded={this.tagsAdded}
-                          usersAdded={this.usersAdded}
-                        />
-                        <label>DDx</label>
-                        <input
-                          type="text"
-                          name="ddxInput"
-                          value={this.state.ddxInput}
-                          onChange={e =>
-                            this.setState({ ddxInput: e.target.value })
-                          }
-                          onKeyPress={this.enterPressed}
-                        />
-                        <SortableList
-                          items={this.state.ddx}
-                          onSortEnd={this.onSortEnd}
-                        />
-                      </div>
-                    </CaseLayout>
+                        {this.state.preview ? (
+                          <span style={{ whiteSpace: 'pre-wrap' }}>
+                            <ReactMarkdown
+                              className="markdownPreview"
+                              source={this.state.whatWasLearned}
+                              escapeHtml={false}
+                            />{' '}
+                          </span>
+                        ) : (
+                          <Mentions
+                            name="whatWasLearned"
+                            nameOfTextArea="whatWasLearned"
+                            placeholder={`Tag Presenter with @USER, and specialty with #SPECIALTY`}
+                            users={userArray}
+                            rotations={rotationArray}
+                            whatWasLearned={this.state.whatWasLearned}
+                            handleChange={this.handleChange}
+                            tagsAdded={this.tagsAdded}
+                            usersAdded={this.usersAdded}
+                          />
+                        )}
+                      </label>
+                    </fieldset>
                   </>
-                ) : (
-                  <></>
-                )}
-
-                <hr />
-                <fieldset disabled={loading} aria-busy={loading}>
-                  <label htmlFor="whatWasLearned">
-                    <MarkdownEditor
-                      preview={this.state.preview}
-                      previewChange={this.previewChange}
-                      markdownButtonPressed={this.markdownButtonPressed}
-                    />
-                    {this.state.preview ? (
-                      <span style={{ whiteSpace: 'pre-wrap' }}>
-                        <ReactMarkdown
-                          className="markdownPreview"
-                          source={this.state.whatWasLearned}
-                          escapeHtml={false}
-                        />{' '}
-                      </span>
-                    ) : (
-                      <Mentions
-                        name="whatWasLearned"
-                        nameOfTextArea="whatWasLearned"
-                        placeholder={`Tag Presenter with @USER, and specialty with #SPECIALTY`}
-                        users={userArray}
-                        rotations={rotationArray}
-                        whatWasLearned={this.state.whatWasLearned}
-                        handleChange={this.handleChange}
-                        tagsAdded={this.tagsAdded}
-                        usersAdded={this.usersAdded}
-                      />
-                    )}
-                  </label>
-                </fieldset>
-              </>
-            );
-          }}
-        </Query>
-      </Form>
+                );
+              }}
+            </Query>
+            <button type="submit">Submit</button>
+          </Form>
+        )}
+      </Mutation>
     );
   }
 }
