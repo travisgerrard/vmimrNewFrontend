@@ -1,17 +1,23 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import Form from "./styles/Form";
-import Error from "./ErrorMessage";
-import { CURRENT_USER_QUERY } from "./User";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import Form from './styles/Form';
+import Error from './ErrorMessage';
+import { CURRENT_USER_QUERY } from './User';
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
     $email: String!
     $name: String!
     $password: String!
+    $username: String!
   ) {
-    signup(email: $email, name: $name, password: $password) {
+    signup(
+      email: $email
+      name: $name
+      password: $password
+      username: $username
+    ) {
       id
       email
       name
@@ -21,9 +27,10 @@ const SIGNUP_MUTATION = gql`
 
 class Signup extends Component {
   state = {
-    name: "",
-    password: "",
-    email: ""
+    name: '',
+    password: '',
+    email: '',
+    username: ''
   };
 
   saveToState = e => {
@@ -45,7 +52,7 @@ class Signup extends Component {
                 e.preventDefault();
                 const res = await signup();
                 // console.log(res);
-                this.setState({ name: "", email: "", password: "" });
+                this.setState({ name: '', email: '', password: '' });
               }}
             >
               <fieldset disabled={loading} aria-busy={loading}>
@@ -68,6 +75,16 @@ class Signup extends Component {
                     name="name"
                     placeholder="name"
                     value={this.state.name}
+                    onChange={this.saveToState}
+                  />
+                </label>
+                <label htmlFor="username">
+                  Username
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="username"
+                    value={this.state.username}
                     onChange={this.saveToState}
                   />
                 </label>

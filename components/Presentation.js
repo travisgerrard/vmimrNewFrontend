@@ -17,7 +17,7 @@ import MarkdownEditor from './MarkdownEditor';
 import ReactMarkdown from 'react-markdown';
 import markdownButtonPressed from '../lib/markdownEditorFunctions';
 
-import { ALL_LEARNING_QUERY } from './HomeLearning';
+import { ALL_PRESENTATIONS_QUERY } from './HomeLearning';
 
 const CREATE_PRESENTATION_MUTATION = gql`
   mutation CREATE_PRESENTATION_MUTATION(
@@ -28,7 +28,7 @@ const CREATE_PRESENTATION_MUTATION = gql`
     $physicalExam: String!
     $summAssessment: String!
     $ddx: [String]!
-    $presentationType: [PresentationTypes]!
+    $presentationType: PresentationTypes!
   ) {
     createPresentation(
       tags: $tags
@@ -38,6 +38,7 @@ const CREATE_PRESENTATION_MUTATION = gql`
       physicalExam: $physicalExam
       summAssessment: $summAssessment
       ddx: $ddx
+      presentationType: $presentationType
     ) {
       id
     }
@@ -141,15 +142,11 @@ export default class Presentation extends Component {
   };
 
   tagsAdded = id => {
-    this.setState({ tags: [...this.state.tags, id] }, () =>
-      console.log(this.state.tags)
-    );
+    this.setState({ tags: [...this.state.tags, id] });
   };
 
   usersAdded = id => {
-    this.setState({ taggedUser: [...this.state.taggedUser, id] }, () =>
-      console.log(this.state.taggedUser)
-    );
+    this.setState({ taggedUser: [...this.state.taggedUser, id] });
   };
 
   previewChange = () => {
@@ -212,7 +209,7 @@ export default class Presentation extends Component {
     return (
       <Mutation
         mutation={CREATE_PRESENTATION_MUTATION}
-        refetchQueries={[{ query: ALL_LEARNING_QUERY }]}
+        refetchQueries={[{ query: ALL_PRESENTATIONS_QUERY }]}
       >
         {(createPresentation, { loading, error }) => (
           <Form

@@ -10,7 +10,7 @@ import Mentions from './Mentions';
 import ReactMarkdown from 'react-markdown';
 import markdownButtonPressed from '../lib/markdownEditorFunctions';
 
-import { ALL_LEARNING_QUERY } from './HomeLearning';
+import { ALL_PRESENTATIONS_QUERY } from './HomeLearning';
 
 const possibleRotationTypes = [
   { value: 'Wards', label: 'Wards' },
@@ -143,7 +143,7 @@ class CreateLearningCard extends React.Component {
     return (
       <Mutation
         mutation={CREATE_CARD_MUTATION}
-        refetchQueries={[{ query: ALL_LEARNING_QUERY }]}
+        refetchQueries={[{ query: ALL_PRESENTATIONS_QUERY }]}
       >
         {(createCard, { loading, error }) => (
           <Form

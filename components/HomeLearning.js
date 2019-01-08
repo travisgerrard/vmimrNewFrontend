@@ -2,85 +2,77 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
-import ReactMarkdown from 'react-markdown';
+import Cards from './Cards';
 
-const ALL_LEARNING_QUERY = gql`
-  query ALL_LEARNING_QUERY {
-    learnings(orderBy: createdAt_DESC) {
+const ALL_PRESENTATIONS_QUERY = gql`
+  query ALL_PRESENTATIONS_QUERY($skip: Int = 0, $first: Int = 5) {
+    presentations(skip: $skip, first: $first, orderBy: createdAt_DESC) {
       id
       whatWasLearned
+      createdBy {
+        id
+        name
+      }
+      likes {
+        id
+      }
+      createdAt
     }
   }
 `;
 
-const CardLayout = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 30px;
-  max-width: ${props => props.theme.maxWidth}
-  margin: 0 auto;
-`;
-
-const Card = styled.div`
-  background: white;
-  box-shadow: ${props => props.theme.bs};
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  img {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-  }
-  p {
-    font-size: 12px;
-    line-height: 2;
-    font-weight: 300;
-    flex-grow: 1;
-    padding: 0 3rem;
-    font-size: 1.5rem;
-  }
-`;
-
-const CardBody = styled(ReactMarkdown)`
-  & > img {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-  }
-  & > p {
-    padding-left: 1rem;
-    font-size: 2rem;
-
-    margin: 0;
-    a {
-      color: ${props => props.theme.darkerBlue};
-    }
-    a:hover {
-      color: hotpink;
+const LIKE_BUTTON_CLICKED_MUTATION = gql`
+  mutation LIKE_BUTTON_CLICKED($presentation: ID!) {
+    likePresentation(presentation: $presentation) {
+      id
     }
   }
 `;
 
 export default class HomeLearning extends Component {
+  state = {
+    itemsFetched: 15
+  };
+
   render() {
     return (
-      <Query query={ALL_LEARNING_QUERY}>
-        {({ data, loading, error }) => {
+      <Query query={ALL_PRESENTATIONS_QUERY}>
+        {({ data, loading, error, fetchMore }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error : {error.message}</p>;
-          console.log(data);
-          const { learnings } = data;
+          // console.log(data);s
+          const { presentations } = data;
+          console.log(presentations);
+
           return (
-            <CardLayout>
-              {learnings.map(learning => {
-                return (
-                  <Card key={learning.id}>
-                    <CardBody source={learning.whatWasLearned} />
-                  </Card>
-                );
-              })}
-            </CardLayout>
+            <Cards
+              presentations={presentations}
+              onLoadMore={() =>
+                fetchMore({
+                  variables: {
+                    skip: this.state.itemsFetched + 5
+                  },
+                  updateQuery: (prevResult, { fetchMoreResult }) => {
+                    console.log(fetchMoreResult);
+
+                    const newPresentations = fetchMoreResult.presentations;
+                    console.log(newPresentations);
+
+                    this.setState({
+                      itemsFetched: this.state.itemsFetched + 5
+                    });
+                    return newPresentations.length
+                      ? {
+                          presentations: [
+                            ...prevResult.presentations,
+                            ...newPresentations
+                          ]
+                        }
+                      : prevResult;
+                  }
+                })
+              }
+            />
           );
         }}
       </Query>
@@ -88,4 +80,4 @@ export default class HomeLearning extends Component {
   }
 }
 
-export { ALL_LEARNING_QUERY };
+export { ALL_PRESENTATIONS_QUERY };

@@ -3,6 +3,7 @@ import { MentionsInput, Mention } from 'react-mentions';
 
 import defaultStyle from './defaultStyle';
 import defaultMentionStyle from './defaultMentionStyle';
+import _ from 'lodash';
 
 import styled from 'styled-components';
 
@@ -12,9 +13,10 @@ export default class Mentions extends Component {
   };
 
   onChange = (e, value) => {
-    // console.log(e, value);
-    // console.log(this.state.value);
+    //console.log(value);
 
+    // console.log(e, value);
+    //console.log(this.state.value);
     this.setState({ value });
 
     this.props.handleChange({
@@ -28,14 +30,28 @@ export default class Mentions extends Component {
 
   onAddUser = (id, display) => {
     this.props.usersAdded(id);
-
-    console.log('added a new user, ', display);
+    // console.log('added a new user, ', display);
   };
 
   onAddRotation = (id, display) => {
     this.props.tagsAdded(id);
+    // console.log('added a new rotation, ', display);
+  };
 
-    console.log('added a new rotation, ', display);
+  dataForUser = e => {
+    //console.log(e);
+
+    if (e === '') {
+      return [];
+    }
+
+    const { users } = this.props;
+
+    const filteredUsers = _.filter(users, function(o) {
+      return o.display.toLowerCase().includes(e.toLowerCase());
+    });
+
+    return filteredUsers;
   };
 
   render() {
@@ -56,7 +72,7 @@ export default class Mentions extends Component {
         <Mention
           type="user"
           trigger="@"
-          data={users}
+          data={this.dataForUser}
           renderSuggestion={(
             suggestion,
             search,
