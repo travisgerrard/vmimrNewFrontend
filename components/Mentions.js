@@ -65,7 +65,7 @@ export default class Mentions extends Component {
         value={whatWasLearned}
         onChange={this.onChange}
         style={defaultStyle}
-        markup="[__display__](/__type__/__id__)"
+        markup="[__display__](/__type__?id=__id__)"
         allowSpaceInQuery
         placeholder={this.props.placeholder}
       >
@@ -87,7 +87,6 @@ export default class Mentions extends Component {
           onAdd={this.onAddUser}
           style={defaultMentionStyle}
         />
-
         <Mention
           type="rotation"
           trigger="#"

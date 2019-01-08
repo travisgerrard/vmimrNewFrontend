@@ -95,7 +95,7 @@ export default class CSVImport extends Component {
       });
       if (tagsNew.length) {
         tagsNew.forEach(tag => {
-          whatWasLearned = whatWasLearned + ` [#${tag}](/rotations/${tag})`;
+          whatWasLearned = whatWasLearned + ` [#${tag}](/rotations?id=${tag})`;
         });
       }
 

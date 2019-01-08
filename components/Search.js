@@ -13,6 +13,7 @@ const SEARCH_PRESENTATIONS_QUERY = gql`
     presentations(
       where: { whatWasLearned_contains: $searchTerm }
       first: $first
+      orderBy: createdAt_DESC
     ) {
       id
       whatWasLearned

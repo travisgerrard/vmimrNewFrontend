@@ -27,7 +27,7 @@ export default class Card extends Component {
     );
 
     const { name, id } = learning.createdBy;
-    const titleMarkdown = `[@${name}](/user/${id}) - ${formatedDate}`;
+    const titleMarkdown = `[@${name}](/user?id=${id}) - ${formatedDate}`;
     return (
       <>
         <CardTitleCratedBy source={titleMarkdown} />

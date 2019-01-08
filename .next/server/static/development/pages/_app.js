@@ -188,7 +188,7 @@ function (_Component) {
       var _learning$createdBy = learning.createdBy,
           name = _learning$createdBy.name,
           id = _learning$createdBy.id;
-      var titleMarkdown = "[@".concat(name, "](/user/").concat(id, ") - ").concat(formatedDate);
+      var titleMarkdown = "[@".concat(name, "](/user?id=").concat(id, ") - ").concat(formatedDate);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_CardStyle__WEBPACK_IMPORTED_MODULE_5__["CardTitleCratedBy"], {
         source: titleMarkdown,
         __source: {
@@ -736,7 +736,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  query SEARCH_PRESENTATIONS_QUERY($searchTerm: String!, $first: Int = 5) {\n    presentations(\n      where: { whatWasLearned_contains: $searchTerm }\n      first: $first\n    ) {\n      id\n      whatWasLearned\n      createdBy {\n        id\n        name\n      }\n      likes {\n        id\n      }\n      createdAt\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  query SEARCH_PRESENTATIONS_QUERY($searchTerm: String!, $first: Int = 5) {\n    presentations(\n      where: { whatWasLearned_contains: $searchTerm }\n      first: $first\n      orderBy: createdAt_DESC\n    ) {\n      id\n      whatWasLearned\n      createdBy {\n        id\n        name\n      }\n      likes {\n        id\n      }\n      createdAt\n    }\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -861,7 +861,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_styles_DropDown__WEBPACK_IMPORTED_MODULE_7__["SearchStyles"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 70
+          lineNumber: 71
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(downshift__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -871,7 +871,7 @@ function (_React$Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 71
+          lineNumber: 72
         },
         __self: this
       }, function (_ref2) {
@@ -883,13 +883,13 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 82
+            lineNumber: 83
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_5__["ApolloConsumer"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 83
+            lineNumber: 84
           },
           __self: this
         }, function (client) {
@@ -906,14 +906,14 @@ function (_React$Component) {
           }), {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 85
+              lineNumber: 86
             },
             __self: this
           }));
         }), isOpen && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_styles_DropDown__WEBPACK_IMPORTED_MODULE_7__["DropDown"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 100
+            lineNumber: 101
           },
           __self: this
         }, _this2.state.cards.map(function (item, index) {
@@ -924,7 +924,7 @@ function (_React$Component) {
             highlighted: index === highlightedIndex,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 102
+              lineNumber: 103
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Card__WEBPACK_IMPORTED_MODULE_8__["default"], {
@@ -932,14 +932,14 @@ function (_React$Component) {
             learning: item,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 107
+              lineNumber: 108
             },
             __self: this
           }));
         }), !_this2.state.cards.length && !_this2.state.loading && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_styles_DropDown__WEBPACK_IMPORTED_MODULE_7__["DropDownItem"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 111
+            lineNumber: 112
           },
           __self: this
         }, "Nothing Found ", inputValue)));
