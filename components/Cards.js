@@ -44,7 +44,13 @@ export default class Cards extends Component {
     return (
       <CardLayout>
         {presentations.map(learning => {
-          return <Card key={learning.id} learning={learning} />;
+          return (
+            <Card
+              key={learning.id}
+              learning={learning}
+              userId={this.props.userId}
+            />
+          );
         })}
       </CardLayout>
     );

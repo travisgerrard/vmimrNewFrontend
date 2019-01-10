@@ -1,9 +1,9 @@
 ((window["webpackJsonp"] = window["webpackJsonp"] || []).push([["static/development/pages/_app.js"],{
 
-/***/ "./components/Card.js":
-/*!****************************!*\
-  !*** ./components/Card.js ***!
-  \****************************/
+/***/ "./components/CardSearch.js":
+/*!**********************************!*\
+  !*** ./components/CardSearch.js ***!
+  \**********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -17,7 +17,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
 /* harmony import */ var _styles_CardStyle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styles/CardStyle */ "./components/styles/CardStyle.js");
-var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/Card.js";
+var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/CardSearch.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -121,26 +121,27 @@ function (_Component) {
     key: "render",
     value: function render() {
       var learning = this.props.learning;
+      var firstLineOfString = learning.whatWasLearned.split(/\r?\n/);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_CardStyle__WEBPACK_IMPORTED_MODULE_5__["StyledCard"], {
         key: learning.id,
         classname: "card",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 45
+          lineNumber: 46
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_CardStyle__WEBPACK_IMPORTED_MODULE_5__["CardTitle"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 46
+          lineNumber: 47
         },
         __self: this
       }, this.cardTitle(learning)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_CardStyle__WEBPACK_IMPORTED_MODULE_5__["CardBody"], {
-        source: learning.whatWasLearned,
+        source: firstLineOfString[0],
         escapeHtml: false,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 47
+          lineNumber: 48
         },
         __self: this
       }));
@@ -174,7 +175,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var nprogress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(nprogress__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Nav__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Nav */ "./components/Nav.js");
 /* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Search */ "./components/Search.js");
+/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./User */ "./components/User.js");
 var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/Header.js";
+
 
 
 
@@ -211,58 +214,67 @@ var StyledHeader = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].hea
 });
 
 var Header = function Header() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledHeader, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 57
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "bar",
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User__WEBPACK_IMPORTED_MODULE_7__["default"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 58
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Logo, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 59
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    href: "/",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 60
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 61
-    },
-    __self: this
-  }, "VM:IMR"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Nav__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 64
-    },
-    __self: this
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "sub-bar",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 66
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Search__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 67
-    },
-    __self: this
-  })));
+  }, function (_ref) {
+    var me = _ref.data.me;
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledHeader, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 60
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "bar",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 61
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Logo, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 62
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      href: "/",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 63
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 64
+      },
+      __self: this
+    }, "VM:IMR"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Nav__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 67
+      },
+      __self: this
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "sub-bar",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 69
+      },
+      __self: this
+    }, me && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Search__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 69
+      },
+      __self: this
+    })));
+  });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Header);
@@ -423,7 +435,7 @@ var Nav = function Nav() {
       },
       __self: this
     })))), !me && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/signup",
+      href: "/signin",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 27
@@ -435,7 +447,20 @@ var Nav = function Nav() {
         lineNumber: 28
       },
       __self: this
-    }, "Sign In"))));
+    }, "Sign In")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      href: "/signup",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 30
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 31
+      },
+      __self: this
+    }, "Sign Up"))));
   });
 };
 
@@ -605,7 +630,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash.debounce/index.js");
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _styles_DropDown__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styles/DropDown */ "./components/styles/DropDown.js");
-/* harmony import */ var _Card__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Card */ "./components/Card.js");
+/* harmony import */ var _CardSearch__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./CardSearch */ "./components/CardSearch.js");
 
 var _jsxFileName = "/Users/travisgerrard/Dropbox/react-learning/VMIMRtake2/frontend/components/Search.js";
 
@@ -636,7 +661,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  query SEARCH_PRESENTATIONS_QUERY($searchTerm: String!, $first: Int = 5) {\n    presentations(\n      where: { whatWasLearned_contains: $searchTerm }\n      first: $first\n      orderBy: createdAt_DESC\n    ) {\n      id\n      whatWasLearned\n      createdBy {\n        id\n        name\n      }\n      likes {\n        id\n      }\n      createdAt\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  query SEARCH_PRESENTATIONS_QUERY($searchTerm: String!, $first: Int = 10) {\n    presentations(\n      where: { whatWasLearned_contains: $searchTerm }\n      first: $first\n      orderBy: createdAt_DESC\n    ) {\n      id\n      whatWasLearned\n      createdBy {\n        id\n        name\n      }\n      likes {\n        id\n      }\n      createdAt\n    }\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -707,7 +732,7 @@ function (_React$Component) {
 
 
                 if (!(e.target.value !== '')) {
-                  _context.next = 8;
+                  _context.next = 9;
                   break;
                 }
 
@@ -721,22 +746,23 @@ function (_React$Component) {
 
               case 4:
                 res = _context.sent;
+                console.log(res);
 
                 _this.setState({
                   cards: res.data.presentations,
                   loading: false
                 });
 
-                _context.next = 9;
+                _context.next = 10;
                 break;
 
-              case 8:
+              case 9:
                 _this.setState({
                   cards: [],
                   loading: false
                 });
 
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -761,7 +787,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_styles_DropDown__WEBPACK_IMPORTED_MODULE_7__["SearchStyles"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 71
+          lineNumber: 74
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(downshift__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -771,7 +797,7 @@ function (_React$Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 72
+          lineNumber: 75
         },
         __self: this
       }, function (_ref2) {
@@ -783,13 +809,13 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 83
+            lineNumber: 86
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_5__["ApolloConsumer"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 84
+            lineNumber: 87
           },
           __self: this
         }, function (client) {
@@ -806,14 +832,14 @@ function (_React$Component) {
           }), {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 86
+              lineNumber: 89
             },
             __self: this
           }));
         }), isOpen && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_styles_DropDown__WEBPACK_IMPORTED_MODULE_7__["DropDown"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 101
+            lineNumber: 104
           },
           __self: this
         }, _this2.state.cards.map(function (item, index) {
@@ -824,22 +850,22 @@ function (_React$Component) {
             highlighted: index === highlightedIndex,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 103
+              lineNumber: 106
             },
             __self: this
-          }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Card__WEBPACK_IMPORTED_MODULE_8__["default"], {
+          }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_CardSearch__WEBPACK_IMPORTED_MODULE_8__["default"], {
             key: item.id,
             learning: item,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 108
+              lineNumber: 111
             },
             __self: this
           }));
         }), !_this2.state.cards.length && !_this2.state.loading && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_styles_DropDown__WEBPACK_IMPORTED_MODULE_7__["DropDownItem"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 112
+            lineNumber: 115
           },
           __self: this
         }, "Nothing Found ", inputValue)));
@@ -999,7 +1025,7 @@ __webpack_require__.r(__webpack_exports__);
 var StyledCard = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div.withConfig({
   displayName: "CardStyle__StyledCard",
   componentId: "sc-121ijok-0"
-})(["background:white;box-shadow:", ";position:relative;display:flex;flex-direction:column;padding:1rem;a{color:", ";}a:hover{color:", ";text-decoration:underline;}img{width:100%;height:400px;object-fit:contain;}h1,h2,h3,h4{margin:0;}p{font-size:12px;line-height:2;font-weight:300;flex-grow:1;margin:1rem 0 1rem 0;font-size:1.5rem;}"], function (props) {
+})(["background:white;box-shadow:", ";position:relative;display:flex;flex-direction:column;padding:0.5rem 1rem 0.5rem 1rem;a{color:", ";}a:hover{color:", ";text-decoration:underline;}img{width:100%;height:400px;object-fit:contain;}h1,h2,h3,h4{font-size:22px;}p{font-size:16px;line-height:1;font-weight:300;flex-grow:1;margin:0.5rem 0 0.5rem 0;}"], function (props) {
   return props.theme.bs;
 }, function (props) {
   return props.theme.darkerBlue;
@@ -1013,11 +1039,11 @@ var CardTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div.wi
 var CardTitleCratedBy = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["default"])(react_markdown__WEBPACK_IMPORTED_MODULE_1___default.a).withConfig({
   displayName: "CardStyle__CardTitleCratedBy",
   componentId: "sc-121ijok-2"
-})(["p{margin:0;a{color:black;font-style:bold;}}"]);
+})(["p{a{color:black;font-style:bold;}}"]);
 var CardBody = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["default"])(react_markdown__WEBPACK_IMPORTED_MODULE_1___default.a).withConfig({
   displayName: "CardStyle__CardBody",
   componentId: "sc-121ijok-3"
-})(["& > img{width:100%;height:400px;object-fit:cover;}& > p{font-size:1.5rem;}"]);
+})(["& > img{width:100%;height:400px;object-fit:cover;}"]);
 
 
 /***/ }),
@@ -1100,7 +1126,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "endpoint", function() { return endpoint; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "perPage", function() { return perPage; });
 // This is client side config only - don't put anything in here that shouldn't be public!
-var endpoint = "http://localhost:4444";
+var endpoint = "http://192.168.86.20:4444";
 var perPage = 4;
 
 /***/ }),

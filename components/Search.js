@@ -6,10 +6,10 @@ import { ApolloConsumer } from 'react-apollo';
 import debounce from 'lodash.debounce';
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 
-import Card from './Card';
+import CardSearch from './CardSearch';
 
 const SEARCH_PRESENTATIONS_QUERY = gql`
-  query SEARCH_PRESENTATIONS_QUERY($searchTerm: String!, $first: Int = 5) {
+  query SEARCH_PRESENTATIONS_QUERY($searchTerm: String!, $first: Int = 10) {
     presentations(
       where: { whatWasLearned_contains: $searchTerm }
       first: $first
@@ -53,6 +53,9 @@ class AutoComplete extends React.Component {
         query: SEARCH_PRESENTATIONS_QUERY,
         variables: { searchTerm: e.target.value }
       });
+
+      console.log(res);
+
       this.setState({
         cards: res.data.presentations,
         loading: false
@@ -105,7 +108,7 @@ class AutoComplete extends React.Component {
                       key={item.id}
                       highlighted={index === highlightedIndex}
                     >
-                      <Card key={item.id} learning={item} />
+                      <CardSearch key={item.id} learning={item} />
                     </DropDownItem>
                   ))}
                   {!this.state.cards.length && !this.state.loading && (

@@ -7,7 +7,7 @@ const StyledCard = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
 
   a {
     color: ${props => props.theme.darkerBlue};
@@ -25,15 +25,14 @@ const StyledCard = styled.div`
   h2,
   h3,
   h4 {
-    margin: 0;
+    font-size: 22px;
   }
   p {
-    font-size: 12px;
-    line-height: 2;
+    font-size: 16px;
+    line-height: 1;
     font-weight: 300;
     flex-grow: 1;
-    margin: 1rem 0 1rem 0;
-    font-size: 1.5rem;
+    margin: 0.5rem 0 0.5rem 0;
   }
 `;
 
@@ -48,8 +47,6 @@ const CardTitle = styled.div`
 
 const CardTitleCratedBy = styled(ReactMarkdown)`
   p {
-    margin: 0;
-
     a {
       color: black;
       font-style: bold;
@@ -62,9 +59,6 @@ const CardBody = styled(ReactMarkdown)`
     width: 100%;
     height: 400px;
     object-fit: cover;
-  }
-  & > p {
-    font-size: 1.5rem;
   }
 `;
 

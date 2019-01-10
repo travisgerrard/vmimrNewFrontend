@@ -4,6 +4,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import Nav from './Nav';
 import Search from './Search';
+import User from './User';
 
 Router.onRouteChangeStart = () => {
   NProgress.start();
@@ -54,18 +55,20 @@ const StyledHeader = styled.header`
 `;
 
 const Header = () => (
-  <StyledHeader>
-    <div className="bar">
-      <Logo>
-        <Link href="/">
-          <a>VM:IMR</a>
-        </Link>
-      </Logo>
-      <Nav />
-    </div>
-    <div className="sub-bar">
-      <Search />
-    </div>
-  </StyledHeader>
+  <User>
+    {({ data: { me } }) => (
+      <StyledHeader>
+        <div className="bar">
+          <Logo>
+            <Link href="/">
+              <a>VM:IMR</a>
+            </Link>
+          </Logo>
+          <Nav />
+        </div>
+        <div className="sub-bar">{me && <Search />}</div>
+      </StyledHeader>
+    )}
+  </User>
 );
 export default Header;
