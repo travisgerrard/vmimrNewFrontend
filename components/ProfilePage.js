@@ -5,41 +5,27 @@ import Error from './ErrorMessage';
 import styled from 'styled-components';
 import Head from 'next/head';
 import Cards from './Cards';
-
-// const ALL_USER_PRESENTATIONS_QUERY = gql`
-//   query ALL_USER_PRESENTATIONS_QUERY(
-//     $skip: Int = 0
-//     $first: Int = 5
-//     $id: ID!
-//     $idString: String!
-//   ) {
-//     presentations(
-//       where: {
-//         OR: [{ createdBy: { id: $id } }, { whatWasLearned_contains: $idString }]
-//       }
-//       first: $first
-//       skip: $skip
-//       orderBy: createdAt_DESC
-//     ) {
-//       id
-//       whatWasLearned
-//       createdBy {
-//         id
-//         name
-//       }
-//       likes {
-//         id
-//       }
-//       createdAt
-//     }
-//   }
-// `;
+import User from './User';
 
 const ALL_USER_PRESENTATIONS_QUERY = gql`
   query ALL_USER_PRESENTATIONS_QUERY($id: ID!) {
     user(where: { id: $id }) {
       id
       name
+      likedPresentations {
+        id
+        whatWasLearned
+        createdBy {
+          id
+          name
+        }
+        likes {
+          id
+        }
+        createdAt
+        updatedAt
+        myCreatedAt
+      }
       presentations {
         id
         whatWasLearned
@@ -52,6 +38,7 @@ const ALL_USER_PRESENTATIONS_QUERY = gql`
         }
         createdAt
         updatedAt
+        myCreatedAt
       }
       taggedPresentation {
         id
@@ -64,6 +51,7 @@ const ALL_USER_PRESENTATIONS_QUERY = gql`
           id
         }
         createdAt
+        myCreatedAt
         updatedAt
       }
     }
@@ -77,68 +65,69 @@ export default class ProfilePage extends Component {
 
   render() {
     return (
-      <Query
-        query={ALL_USER_PRESENTATIONS_QUERY}
-        variables={{
-          id: this.props.id,
-          idString: this.props.id
-        }}
-      >
-        {({ error, loading, data, fetchMore }) => {
-          if (error) return <Error error={error} />;
-          if (loading) return <p>Loading...</p>;
+      <User>
+        {({ data: { me } }) => (
+          <Query
+            query={ALL_USER_PRESENTATIONS_QUERY}
+            variables={{
+              id: this.props.id,
+              idString: this.props.id
+            }}
+          >
+            {({ error, loading, data, fetchMore }) => {
+              if (error) return <Error error={error} />;
+              if (loading) return <p>Loading...</p>;
 
-          // console.log(data);
+              console.log(data);
 
-          if (!data.user) return <p>No User Found for {this.props.id}</p>;
+              if (!data.user) return <p>No User Found for {this.props.id}</p>;
 
-          const { user } = data;
-          const { presentations, taggedPresentation } = user;
+              const { user } = data;
+              const {
+                presentations,
+                taggedPresentation,
+                likedPresentations
+              } = user;
 
-          const combinedArray = [...presentations, ...taggedPresentation];
+              console.log(likedPresentations);
 
-          const combinedArraySort = combinedArray.sort((a, b) =>
-            b.updatedAt > a.updatedAt ? 1 : a.updatedAt > b.updatedAt ? -1 : 0
-          );
+              const combinedArray = [...presentations, ...taggedPresentation];
 
-          return (
-            <>
-              <h2>{user.name}</h2>
-              <hr />
-              <Cards
-                presentations={combinedArraySort}
-                onLoadMore={
-                  () => null
-                  // Need tp design a fetchmore for this...
-                  // fetchMore({
-                  //   variables: {
-                  //     skip: this.state.itemsFetched + 5
-                  //   },
-                  //   updateQuery: (prevResult, { fetchMoreResult }) => {
-                  //     console.log(fetchMoreResult);
+              const combinedArraySort = combinedArray.sort((a, b) =>
+                b.myCreatedAt > a.myCreatedAt
+                  ? 1
+                  : a.myCreatedAt > b.myCreatedAt
+                  ? -1
+                  : 0
+              );
 
-                  //     const newPresentations = fetchMoreResult.presentations;
-                  //     console.log(newPresentations);
+              return (
+                <>
+                  <h2>{user.name}</h2>
+                  <hr />
+                  {likedPresentations.length > 0 && (
+                    <>
+                      <Cards
+                        presentations={likedPresentations}
+                        userId={me.id}
+                        onLoadMore={() => null}
+                      />
+                      <br />
 
-                  //     this.setState({
-                  //       itemsFetched: this.state.itemsFetched + 5
-                  //     });
-                  //     return newPresentations.length
-                  //       ? {
-                  //           presentations: [
-                  //             ...prevResult.presentations,
-                  //             ...newPresentations
-                  //           ]
-                  //         }
-                  //       : prevResult;
-                  //   }
-                  // })
-                }
-              />
-            </>
-          );
-        }}
-      </Query>
+                      <hr />
+                    </>
+                  )}
+                  <Cards
+                    presentations={combinedArraySort}
+                    userId={me.id}
+                    onLoadMore={() => null}
+                  />
+                </>
+              );
+            }}
+          </Query>
+        )}
+      </User>
     );
   }
 }

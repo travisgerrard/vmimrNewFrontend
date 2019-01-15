@@ -19,8 +19,9 @@ import markdownButtonPressed from '../lib/markdownEditorFunctions';
 
 import { ALL_PRESENTATIONS_QUERY } from './HomeLearning';
 
-const CREATE_PRESENTATION_MUTATION = gql`
-  mutation CREATE_PRESENTATION_MUTATION(
+const UPDATE_PRESENTATION_MUTATION = gql`
+  mutation UPDATE_PRESENTATION_MUTATION(
+    $id: ID!
     $tags: [RotationTags]!
     $whatWasLearned: String!
     $taggedUser: [ID]!
@@ -29,9 +30,11 @@ const CREATE_PRESENTATION_MUTATION = gql`
     $summAssessment: String!
     $ddx: [String]!
     $presentationType: PresentationTypes!
+    $createdBy: ID!
     $myCreatedAt: DateTime!
   ) {
-    createPresentation(
+    updatePresentation(
+      id: $id
       tags: $tags
       whatWasLearned: $whatWasLearned
       taggedUser: $taggedUser
@@ -40,8 +43,17 @@ const CREATE_PRESENTATION_MUTATION = gql`
       summAssessment: $summAssessment
       ddx: $ddx
       presentationType: $presentationType
+      createdBy: $createdBy
       myCreatedAt: $myCreatedAt
     ) {
+      id
+    }
+  }
+`;
+
+const DELETE_PRESENTATION_MUTATION = gql`
+  mutation DELETE_PRESENTATION_MUTATION($id: ID!) {
+    deletePresentation(id: $id) {
       id
     }
   }
@@ -91,56 +103,22 @@ const SortableList = SortableContainer(({ items }) => {
     </DdxList>
   );
 });
-const SUBJECTIVE = `HPI:
-45F p/w ...
-
-
-
-PMH/PSH:
-MEDS:
-SOCIAL: Tobacco/EtOH/Illicits
-Fam Hx:`;
-
-const OBJECTIVE = `Vitals:
-Tmax: HR: BP: / RR:
-
-Physical Exam
-Const:
-HEENT:
-Neck:
-Heart:
-Lungs:
-Abd:
-Extremities:
-Neuro:
-Skin:
-Psych:
-
----Labs---
-CBC: WBC / Hg / Plt
-BMP: Na / K / Cl / HCO2 / BUN / Cr / Glu
-LFTs: AP / ALT / AST / Tbili
-
-
-
----Imaging---
-
-
-
-`;
 
 export default class Presentation extends Component {
   state = {
-    subjective: SUBJECTIVE,
-    objective: OBJECTIVE,
-    sumAssess: '',
-    ddx: ['test1', 'test2'],
+    id: this.props.learning.id,
+    subjective: this.props.learning.hpi,
+    objective: this.props.learning.physicalExam,
+    sumAssess: this.props.learning.summAssessment,
+    ddx: this.props.learning.ddx,
     ddxInput: '',
-    taggedUser: [],
-    tags: [],
+    taggedUser: this.props.learning.taggedUser,
+    tags: this.props.learning.tags,
     preview: false,
-    whatWasLearned: '',
-    presentationType: 'General'
+    whatWasLearned: this.props.learning.whatWasLearned,
+    presentationType: this.props.learning.presentationType,
+    myCreatedAt: this.props.learning.myCreatedAt,
+    createdBy: this.props.learning.createdBy.id
   };
 
   tagsAdded = id => {
@@ -207,19 +185,22 @@ export default class Presentation extends Component {
     });
   };
 
+  deletePresentation = () => {};
+
   render() {
     return (
       <Mutation
-        mutation={CREATE_PRESENTATION_MUTATION}
+        mutation={UPDATE_PRESENTATION_MUTATION}
         refetchQueries={[{ query: ALL_PRESENTATIONS_QUERY }]}
       >
-        {(createPresentation, { loading, error }) => (
+        {(updatePresentation, { loading, error }) => (
           <Form
             data-test="form"
             onSubmit={async e => {
               e.preventDefault();
               // call the mutation
               const {
+                id,
                 tags,
                 taggedUser,
                 whatWasLearned,
@@ -227,15 +208,16 @@ export default class Presentation extends Component {
                 objective,
                 sumAssess,
                 ddx,
-                presentationType
+                presentationType,
+                myCreatedAt,
+                createdBy
               } = this.state;
 
-              const myCreatedAt = new Date();
+              // console.log(id);
 
-              //console.log(tags, taggedUser, whatWasLearned, title);
-
-              const res = await createPresentation({
+              const res = await updatePresentation({
                 variables: {
+                  id,
                   tags,
                   taggedUser,
                   whatWasLearned,
@@ -244,7 +226,8 @@ export default class Presentation extends Component {
                   summAssessment: sumAssess,
                   ddx,
                   presentationType,
-                  myCreatedAt
+                  myCreatedAt,
+                  createdBy
                 }
               }).catch(err => {
                 alert(err.message);
@@ -309,7 +292,6 @@ export default class Presentation extends Component {
                               <Mentions
                                 name="subjective"
                                 nameOfTextArea={`subjective`}
-                                placeholder={SUBJECTIVE}
                                 users={userArray}
                                 rotations={rotationArray}
                                 whatWasLearned={this.state.subjective}
@@ -323,7 +305,6 @@ export default class Presentation extends Component {
                               <Mentions
                                 name="objective"
                                 nameOfTextArea={`objective`}
-                                placeholder={OBJECTIVE}
                                 users={userArray}
                                 rotations={rotationArray}
                                 whatWasLearned={this.state.objective}
@@ -400,7 +381,31 @@ export default class Presentation extends Component {
                 );
               }}
             </Query>
-            <button type="submit">Submit</button>
+            <button type="submit">Save Changes</button>
+            <Mutation
+              mutation={DELETE_PRESENTATION_MUTATION}
+              variables={{ id: this.props.learning.id }}
+            >
+              {(deletePresentation, { loading, error }) => (
+                <button
+                  type="button"
+                  style={{ background: 'red', marginLeft: '5px' }}
+                  onClick={() => {
+                    if (confirm('Are you sure you want to delete this?')) {
+                      deletePresentation().catch(err => {
+                        alert(err.message);
+                      });
+
+                      Router.push({
+                        pathname: '/'
+                      });
+                    }
+                  }}
+                >
+                  Delete
+                </button>
+              )}
+            </Mutation>
           </Form>
         )}
       </Mutation>

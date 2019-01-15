@@ -26,6 +26,71 @@ const StyledCard = styled.div`
   h3,
   h4 {
     font-size: 22px;
+    margin: 0px;
+  }
+  p {
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 300;
+    flex-grow: 1;
+    margin: 0.5rem 0 0.5rem 0;
+  }
+  .slideShowPlaceHolder {
+    background-color: ${props => props.theme.darkBlue};
+    color: white;
+    font-size: 17px;
+    font-weight: 300;
+    padding: 30px 5px;
+    margin: 0;
+    width: 300px;
+    height: 100px;
+  }
+  .showSlidesButton {
+    width: auto;
+    background: ${props => props.theme.darkBlue};
+    color: white;
+    border: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    &:hover {
+      color: ${props => props.theme.darkBlue};
+      background: white;
+    }
+    &:focus {
+      outline: 0px;
+    }
+  }
+  .bodyWrapper {
+    white-space: pre-wrap;
+  }
+`;
+
+const StyledSearchCard = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  a {
+    color: ${props => props.theme.darkerBlue};
+  }
+  a:hover {
+    color: ${props => props.theme.darkerBlue};
+    text-decoration: underline;
+  }
+  img {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-size: 22px;
+    padding: 0;
+    margin: 0;
   }
   p {
     font-size: 16px;
@@ -37,11 +102,25 @@ const StyledCard = styled.div`
 `;
 
 const CardTitle = styled.div`
-  grid-template-columns: 1fr;
-  display: grid;
-  grid-auto-flow: column;
-  svg {
-    color: red;
+  display: flex;
+  .createdBy {
+    flex-basis: auto;
+  }
+  .distanceFrom {
+    flex-basis: auto;
+    cursor: default;
+    padding-left: 3px;
+    vertical-align: middle;
+  }
+  .likes {
+    svg {
+      vertical-align: middle;
+    }
+    span {
+      padding-right: 5px;
+      vertical-align: middle;
+    }
+    margin-left: auto;
   }
 `;
 
@@ -62,4 +141,4 @@ const CardBody = styled(ReactMarkdown)`
   }
 `;
 
-export { CardBody, CardTitleCratedBy, CardTitle, StyledCard };
+export { CardBody, CardTitleCratedBy, CardTitle, StyledCard, StyledSearchCard };

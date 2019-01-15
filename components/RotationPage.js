@@ -5,6 +5,7 @@ import Error from './ErrorMessage';
 import styled from 'styled-components';
 import Head from 'next/head';
 import Cards from './Cards';
+import User from './User';
 
 const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
   query ALL_ROTATION_PRESENTATIONS_QUERY(
@@ -16,7 +17,7 @@ const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
       where: { whatWasLearned_contains: $rotation }
       first: $first
       skip: $skip
-      orderBy: createdAt_DESC
+      orderBy: myCreatedAt_DESC
     ) {
       id
       whatWasLearned
@@ -28,6 +29,7 @@ const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
         id
       }
       createdAt
+      myCreatedAt
     }
   }
 `;
@@ -57,38 +59,44 @@ export default class RotationPage extends Component {
           const { presentations } = data;
 
           return (
-            <>
-              <h2>{this.props.id}</h2>
-              <hr />
-              <Cards
-                presentations={presentations}
-                onLoadMore={() =>
-                  fetchMore({
-                    variables: {
-                      skip: this.state.itemsFetched + 5
-                    },
-                    updateQuery: (prevResult, { fetchMoreResult }) => {
-                      console.log(fetchMoreResult);
+            <User>
+              {({ data: { me } }) => (
+                <>
+                  <h2>{this.props.id}</h2>
+                  <hr />
+                  <Cards
+                    presentations={presentations}
+                    userId={me.id}
+                    onLoadMore={() =>
+                      fetchMore({
+                        variables: {
+                          skip: this.state.itemsFetched + 5
+                        },
+                        updateQuery: (prevResult, { fetchMoreResult }) => {
+                          console.log(fetchMoreResult);
 
-                      const newPresentations = fetchMoreResult.presentations;
-                      console.log(newPresentations);
+                          const newPresentations =
+                            fetchMoreResult.presentations;
+                          console.log(newPresentations);
 
-                      this.setState({
-                        itemsFetched: this.state.itemsFetched + 5
-                      });
-                      return newPresentations.length
-                        ? {
-                            presentations: [
-                              ...prevResult.presentations,
-                              ...newPresentations
-                            ]
-                          }
-                        : prevResult;
+                          this.setState({
+                            itemsFetched: this.state.itemsFetched + 5
+                          });
+                          return newPresentations.length
+                            ? {
+                                presentations: [
+                                  ...prevResult.presentations,
+                                  ...newPresentations
+                                ]
+                              }
+                            : prevResult;
+                        }
+                      })
                     }
-                  })
-                }
-              />
-            </>
+                  />
+                </>
+              )}
+            </User>
           );
         }}
       </Query>

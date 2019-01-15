@@ -59,6 +59,7 @@ const ALL_USERS_QUERY = gql`
       name
       email
       permissions
+      visible
     }
   }
 `;
@@ -68,11 +69,13 @@ const CREATE_CARD_MUTATION = gql`
     $tags: [RotationTags]!
     $whatWasLearned: String!
     $taggedUser: [ID]!
+    $myCreatedAt: DateTime!
   ) {
     createCard(
       tags: $tags
       whatWasLearned: $whatWasLearned
       taggedUser: $taggedUser
+      myCreatedAt: $myCreatedAt
     ) {
       id
     }
@@ -152,6 +155,7 @@ class CreateLearningCard extends React.Component {
               e.preventDefault();
               // call the mutation
               const { tags, taggedUser, whatWasLearned } = this.state;
+              const myCreatedAt = new Date();
 
               //console.log(tags, taggedUser, whatWasLearned, title);
 
@@ -159,7 +163,8 @@ class CreateLearningCard extends React.Component {
                 variables: {
                   tags,
                   taggedUser,
-                  whatWasLearned
+                  whatWasLearned,
+                  myCreatedAt
                 }
               }).catch(err => {
                 alert(err.message);
@@ -206,7 +211,7 @@ class CreateLearningCard extends React.Component {
                           <Mentions
                             name="whatWasLearned"
                             nameOfTextArea={`whatWasLearned`}
-                            placeholder={`Learned with attending _ on date _ \n\nUse @ to tag other users and # to tag a rotation`}
+                            placeholder={`Title\nLearned with attending _ on date _ \nUse @ to tag users and # to tag a rotation`}
                             users={userArray}
                             rotations={rotationArray}
                             whatWasLearned={this.state.whatWasLearned}

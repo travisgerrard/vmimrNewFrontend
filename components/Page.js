@@ -16,7 +16,8 @@ const theme = {
   darkGreen: '#479E65',
   lightgrey: '#E1E1E1',
   offWhite: '#EDEDED',
-  maxWidth: '1200px',
+  maxWidthLarge: '90vw',
+  maxWidthSmall: '100vw',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.99)'
 };
 
@@ -29,6 +30,9 @@ const Inner = styled.div`
   max-width: ${props => props.theme.maxWidth};
   margin: auto;
   padding: 2rem;
+  @media (max-width: 800px) {
+    max-width: ${props => props.theme.maxWidthSmall};
+  }
 `;
 
 injectGlobal`

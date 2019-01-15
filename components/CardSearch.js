@@ -3,38 +3,51 @@ import { format, formatDistance } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import Popup from 'reactjs-popup';
 
 import {
   CardBody,
   CardTitleCratedBy,
   CardTitle,
-  StyledCard
+  StyledSearchCard
 } from './styles/CardStyle';
+
+const ExactDate = ({ title }) => <div className="card">{title}</div>;
 
 export default class Card extends Component {
   state = {
-    like: false
+    like: this.props.learning.likes
+      ? this.props.learning.likes.some(e => e.id === this.props.userId)
+      : false
   };
 
   cardTitle = learning => {
-    const { createdAt } = learning;
-    const formatedDate = formatDistance(createdAt, new Date());
-
-    const heartIconButton = (
-      <button id="heart-button" name="heart-button" type="button">
-        <FontAwesomeIcon icon={faHeart} />
-      </button>
-    );
+    const { myCreatedAt } = learning;
+    const distanceFrom = formatDistance(myCreatedAt, new Date());
+    const formattedDate = format(myCreatedAt, 'MMMM d, yyyy h:mm a');
 
     const { name, id } = learning.createdBy;
-    const titleMarkdown = `[@${name}](/user?id=${id}) - ${formatedDate}`;
+    const titleMarkdown = `[@${name}](/user?id=${id}) - `;
     return (
       <>
-        <CardTitleCratedBy source={titleMarkdown} />
-        <FontAwesomeIcon
-          icon={this.state.like ? faHeartSolid : faHeart}
-          onClick={() => this.setState({ like: !this.state.like })}
-        />
+        <CardTitleCratedBy className="createdBy" source={titleMarkdown} />
+        <Popup
+          trigger={<div className="distanceFrom"> {distanceFrom} </div>}
+          position="top center"
+          on="hover"
+        >
+          <ExactDate title={formattedDate} />
+        </Popup>
+        <div className="likes">
+          {this.props.learning.likes.length > 0 && (
+            <span>{this.props.learning.likes.length}</span>
+          )}
+          <FontAwesomeIcon
+            style={{ color: 'red' }}
+            icon={this.state.like ? faHeartSolid : faHeart}
+            // onClick={() => this.likedClicked(likePresentation)}
+          />
+        </div>
       </>
     );
   };
@@ -43,10 +56,10 @@ export default class Card extends Component {
     const { learning } = this.props;
     const firstLineOfString = learning.whatWasLearned.split(/\r?\n/);
     return (
-      <StyledCard key={learning.id} classname="card">
+      <StyledSearchCard key={learning.id} classname="card">
         <CardTitle>{this.cardTitle(learning)}</CardTitle>
         <CardBody source={firstLineOfString[0]} escapeHtml={false} />
-      </StyledCard>
+      </StyledSearchCard>
     );
   }
 }

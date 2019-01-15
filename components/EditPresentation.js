@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+
 import Error from './ErrorMessage';
-import styled from 'styled-components';
-import Head from 'next/head';
+import EditCard from './EditCard';
 
-import Card from './Card';
-
-const SINGLE_PRESENTATION_QUERY = gql`
-  query SINGLE_PRESENTATION_QUERY($id: ID!) {
+const EDIT_PRESENTATION_QUERY = gql`
+  query EDIT_PRESENTATION_QUERY($id: ID!) {
     presentation(where: { id: $id }) {
       id
       whatWasLearned
       createdBy {
         id
-        name
       }
       likes {
         id
@@ -34,11 +31,11 @@ const SINGLE_PRESENTATION_QUERY = gql`
   }
 `;
 
-class SingleCard extends Component {
+export default class Presentation extends Component {
   render() {
     return (
       <Query
-        query={SINGLE_PRESENTATION_QUERY}
+        query={EDIT_PRESENTATION_QUERY}
         variables={{
           id: this.props.id
         }}
@@ -51,12 +48,11 @@ class SingleCard extends Component {
             return <p>No Card Found for {this.props.id}</p>;
 
           const { presentation } = data;
+          console.log(presentation);
 
-          return <Card key={presentation.id} learning={presentation} />;
+          return <EditCard learning={presentation} />;
         }}
       </Query>
     );
   }
 }
-
-export default SingleCard;

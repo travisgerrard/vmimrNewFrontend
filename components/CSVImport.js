@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import CSVReader from 'react-csv-reader';
-import { Mutation } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { SIGNUP_MUTATION } from './Signup';
 import { parse } from 'date-fns';
+import { SIGNUP_MUTATION } from './Signup';
+import { ALL_USERS_QUERY } from './CreateLearningCard';
+
+const DELETE_ALL_PRESENTATIONS = gql`
+  mutation DELETE_ALL_PRESENTATIONS($presentationType: PresentationTypes!) {
+    deleteAllPresentations(presentationType: $presentationType) {
+      id
+    }
+  }
+`;
 
 const BATCH_CREATE_PRESENTATION_MUTATION = gql`
   mutation BATCH_CREATE_PRESENTATION_MUTATION(
@@ -16,7 +25,7 @@ const BATCH_CREATE_PRESENTATION_MUTATION = gql`
     $whatWasLearned: String!
     $taggedUser: [ID]!
     $createdBy: String!
-    $myCreatedAt: DateTime
+    $myCreatedAt: DateTime!
   ) {
     batchLoadPresentation(
       presentationType: $presentationType
@@ -24,6 +33,28 @@ const BATCH_CREATE_PRESENTATION_MUTATION = gql`
       physicalExam: $physicalExam
       summAssessment: $summAssessment
       ddx: $ddx
+      tags: $tags
+      whatWasLearned: $whatWasLearned
+      taggedUser: $taggedUser
+      createdBy: $createdBy
+      myCreatedAt: $myCreatedAt
+    ) {
+      id
+    }
+  }
+`;
+
+const BATCH_CREATE_LEARNING_MUTATION = gql`
+  mutation BATCH_CREATE_LEARNING_MUTATION(
+    $presentationType: PresentationTypes!
+    $tags: [RotationTags]!
+    $whatWasLearned: String!
+    $taggedUser: [ID]!
+    $createdBy: String!
+    $myCreatedAt: DateTime!
+  ) {
+    batchLoadLearning(
+      presentationType: $presentationType
       tags: $tags
       whatWasLearned: $whatWasLearned
       taggedUser: $taggedUser
@@ -83,8 +114,8 @@ export default class CSVImport extends Component {
         _presentor
       } = newData;
 
-      console.log(tags);
-      console.log(ddx);
+      // console.log(tags);
+      // console.log(ddx);
 
       const physicalExamNew = `${physicalExam} \n--Labs--\nCBC: ${wbc}/${hgb}/${plt}\nBMP: ${Na}/${K}/${Cl}/${HCO2}/${BUN}/${Cr}/${Glu}\nLFTs: ${AP}/${ALT}/${AST}/${Tbili}\n${additionalLabs}\n---Imaging---\n${imaging}`;
       const taggedUser = [];
@@ -95,7 +126,7 @@ export default class CSVImport extends Component {
       });
       if (tagsNew.length) {
         tagsNew.forEach(tag => {
-          whatWasLearned = whatWasLearned + ` [#${tag}](/rotations?id=${tag})`;
+          whatWasLearned = whatWasLearned + ` [#${tag}](/rotation?id=${tag})`;
         });
       }
 
@@ -104,7 +135,7 @@ export default class CSVImport extends Component {
       const createdBy = _presentor;
       const createdAt = parse(presentationDate, 'MM/dd/yy', new Date());
 
-      console.log('running');
+      //  console.log(createdAt);
 
       return batchLoadPresentation({
         variables: {
@@ -122,43 +153,136 @@ export default class CSVImport extends Component {
           myCreatedAt: createdAt
         }
       });
+    });
+  };
 
-      // console.log(
-      //   tagsNew,
-      //   whatWasLearned,
-      //   presentationType.charAt(0).toUpperCase() + presentationType.slice(1)
-      // );
+  handlelearning = (e, userArray, batchLoadLearning) => {
+    // console.log(userArray);
+    e.map(newData => {
+      const {
+        dateField,
+        seenWith,
+        tags,
+        usersTagged,
+        whatWasLearned,
+        _condition,
+        _creator
+      } = newData;
 
-      // return title;
+      var whatWasLearnedNew = `## ${_condition}\nLearned with attending ${seenWith} on ${dateField}`;
+
+      var usersTaggedNew = JSON.parse('[' + usersTagged + ']');
+      // console.log(usersTaggedNew[0]);
+
+      var usersTaggedText = [];
+
+      if (usersTaggedNew.length) {
+        whatWasLearnedNew = whatWasLearnedNew + ` with`;
+        usersTaggedText = usersTaggedNew[0].map(taggedUser => {
+          //console.log(taggedUser);
+          const userData = userArray.find(e => e.display === taggedUser);
+          //console.log(userData);
+          whatWasLearnedNew =
+            whatWasLearnedNew +
+            ` [${userData.display}](/user?id=${userData.id})`;
+          return userData.id;
+        });
+      }
+
+      var tagsNew = JSON.parse('[' + tags + ']');
+      tagsNew = tagsNew[0].map(tag => {
+        return tag.charAt(0).toUpperCase() + tag.slice(1);
+      });
+      if (tagsNew.length) {
+        tagsNew.forEach(tag => {
+          whatWasLearnedNew =
+            whatWasLearnedNew + ` [#${tag}](/rotation?id=${tag})`;
+        });
+      }
+
+      whatWasLearnedNew = whatWasLearnedNew + `\n\n${whatWasLearned}`;
+      // console.log(whatWasLearnedNew);
+
+      const createdBy = _creator;
+      const createdAt = parse(dateField, 'MM/dd/yy', new Date());
+      console.log(tagsNew, usersTaggedText, createdBy, createdAt);
+
+      return batchLoadLearning({
+        variables: {
+          presentationType: 'Pearl',
+          tags: tagsNew,
+          whatWasLearned: whatWasLearnedNew,
+          taggedUser: usersTaggedText,
+          createdBy,
+          myCreatedAt: createdAt
+        }
+      });
     });
   };
 
   render() {
     return (
-      <>
-        <Mutation mutation={SIGNUP_MUTATION}>
-          {(signup, { loading, error }) => (
-            <CSVReader
-              cssClass="react-csv-input"
-              label="Select CSV with users"
-              onFileLoaded={e => this.handleForce(e, signup)}
-              parserOptions={{ header: true }}
-            />
-          )}
-        </Mutation>
-        <Mutation mutation={BATCH_CREATE_PRESENTATION_MUTATION}>
-          {(batchLoadPresentation, { loading, error }) => (
-            <CSVReader
-              cssClass="react-csv-input"
-              label="Select CSV with presentations"
-              onFileLoaded={e =>
-                this.handlePresntation(e, batchLoadPresentation)
-              }
-              parserOptions={{ header: true }}
-            />
-          )}
-        </Mutation>
-      </>
+      <Query query={ALL_USERS_QUERY}>
+        {({ data, loading, error }) => {
+          if (loading) return <p>Loading...</p>;
+          const userArray = data.users.map(user => {
+            return { id: user.id, display: `@${user.name}` };
+          });
+          return (
+            <>
+              <Mutation mutation={SIGNUP_MUTATION}>
+                {(signup, { loading, error }) => (
+                  <CSVReader
+                    cssClass="react-csv-input"
+                    label="Select CSV with users"
+                    onFileLoaded={e => this.handleForce(e, signup)}
+                    parserOptions={{ header: true }}
+                  />
+                )}
+              </Mutation>
+              <Mutation mutation={BATCH_CREATE_PRESENTATION_MUTATION}>
+                {(batchLoadPresentation, { loading, error }) => (
+                  <CSVReader
+                    cssClass="react-csv-input"
+                    label="Select CSV with presentations"
+                    onFileLoaded={e =>
+                      this.handlePresntation(e, batchLoadPresentation)
+                    }
+                    parserOptions={{ header: true }}
+                  />
+                )}
+              </Mutation>
+              <Mutation mutation={BATCH_CREATE_LEARNING_MUTATION}>
+                {(batchLoadLearning, { loading, error }) => (
+                  <CSVReader
+                    cssClass="react-csv-input"
+                    label="Select CSV with learning"
+                    onFileLoaded={e =>
+                      this.handlelearning(e, userArray, batchLoadLearning)
+                    }
+                    parserOptions={{ header: true }}
+                  />
+                )}
+              </Mutation>
+              <Mutation mutation={DELETE_ALL_PRESENTATIONS}>
+                {(deleteAllPresentations, { loading, error }) => (
+                  <button
+                    onClick={() =>
+                      deleteAllPresentations({
+                        variables: {
+                          presentationType: 'Case'
+                        }
+                      })
+                    }
+                  >
+                    Delete All
+                  </button>
+                )}
+              </Mutation>
+            </>
+          );
+        }}
+      </Query>
     );
   }
 }

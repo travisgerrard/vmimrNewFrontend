@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 import { format, formatDistance } from 'date-fns';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import Router from 'next/router';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHeart as faHeartSolid,
+  faPencilAlt
+} from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
+
+import Popup from 'reactjs-popup';
+import User from './User';
 
 import {
   CardBody,
@@ -13,6 +20,7 @@ import {
   CardTitle,
   StyledCard
 } from './styles/CardStyle';
+import editPresentation from '../pages/editPresentation';
 
 const LIKE_BUTTON_CLICKED_MUTATION = gql`
   mutation LIKE_BUTTON_CLICKED($id: ID!) {
@@ -24,6 +32,8 @@ const LIKE_BUTTON_CLICKED_MUTATION = gql`
     }
   }
 `;
+
+const ExactDate = ({ title }) => <div className="card">{title}</div>;
 
 export default class Card extends Component {
   state = {
@@ -44,30 +54,60 @@ export default class Card extends Component {
     this.setState({ like: !this.state.like });
   };
 
-  cardTitle = learning => {
-    const { createdAt } = learning;
-    const formatedDate = formatDistance(createdAt, new Date());
+  editPresentation = ({ id }) => {
+    Router.push({
+      pathname: '/editPresentation',
+      query: { id }
+    });
+  };
 
-    const heartIconButton = (
-      <button id="heart-button" name="heart-button" type="button">
-        <FontAwesomeIcon icon={faHeart} />
-      </button>
-    );
+  cardTitle = learning => {
+    const { myCreatedAt, presentationType } = learning;
+    const distanceFrom = formatDistance(myCreatedAt, new Date());
+    const formattedDate = format(myCreatedAt, 'MMMM d, yyyy h:mm a');
 
     const { name, id } = learning.createdBy;
-    const titleMarkdown = `[@${name}](/user?id=${id}) - ${formatedDate}`;
+    const titleMarkdown = `[@${name}](/user?id=${id}) - `;
     return (
-      <Mutation mutation={LIKE_BUTTON_CLICKED_MUTATION}>
-        {(likePresentation, { loading, error }) => (
-          <>
-            <CardTitleCratedBy source={titleMarkdown} />
-            <FontAwesomeIcon
-              icon={this.state.like ? faHeartSolid : faHeart}
-              onClick={() => this.likedClicked(likePresentation)}
-            />
-          </>
+      <User>
+        {({ data: { me } }) => (
+          <Mutation mutation={LIKE_BUTTON_CLICKED_MUTATION}>
+            {(likePresentation, { loading, error }) => (
+              <>
+                <CardTitleCratedBy
+                  className="createdBy"
+                  source={titleMarkdown}
+                />
+                <Popup
+                  trigger={<div className="distanceFrom"> {distanceFrom} </div>}
+                  position="top center"
+                  on="hover"
+                >
+                  <ExactDate title={formattedDate} />
+                </Popup>
+                <div className="likes">
+                  {this.props.learning.likes.length > 0 && (
+                    <span>{this.props.learning.likes.length}</span>
+                  )}
+                  <FontAwesomeIcon
+                    style={{ color: 'red' }}
+                    icon={this.state.like ? faHeartSolid : faHeart}
+                    onClick={() => this.likedClicked(likePresentation)}
+                  />
+                  {me.permissions.includes('ADMIN') &&
+                    presentationType !== 'Pearl' && (
+                      <FontAwesomeIcon
+                        style={{ color: 'black', paddingLeft: '5px' }}
+                        icon={faPencilAlt}
+                        onClick={() => this.editPresentation(learning)}
+                      />
+                    )}
+                </div>
+              </>
+            )}
+          </Mutation>
         )}
-      </Mutation>
+      </User>
     );
   };
 
@@ -76,7 +116,7 @@ export default class Card extends Component {
 
     const learningWithOutIframe = learning.whatWasLearned.replace(
       /<iframe.+?<\/iframe>/g,
-      ''
+      '<div class="slideShowPlaceHolder">Tap button on bottom to reveal slideshow</div>'
     );
 
     const containsIframe = learningWithOutIframe !== learning.whatWasLearned;
@@ -84,17 +124,21 @@ export default class Card extends Component {
     //Hide slides on load...
 
     return (
-      <StyledCard key={learning.id} classname="card">
+      <StyledCard key={learning.id} className="card">
         <CardTitle>{this.cardTitle(learning)}</CardTitle>
-        <CardBody
-          source={showSlide ? learning.whatWasLearned : learningWithOutIframe}
-          escapeHtml={false}
-        />
+        <span className="bodyWrapper">
+          <CardBody
+            source={showSlide ? learning.whatWasLearned : learningWithOutIframe}
+            escapeHtml={false}
+          />
+        </span>
         {containsIframe && (
           <button
+            type="button"
+            className="showSlidesButton"
             onClick={() => this.setState({ showSlide: !this.state.showSlide })}
           >
-            {showSlide ? `Hide Slide` : `Show Slide`}
+            {showSlide ? `Hide Slides` : `Show Slides`}
           </button>
         )}
       </StyledCard>

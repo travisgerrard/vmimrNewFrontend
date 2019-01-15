@@ -8,7 +8,7 @@ import User from './User';
 
 const ALL_PRESENTATIONS_QUERY = gql`
   query ALL_PRESENTATIONS_QUERY($skip: Int = 0, $first: Int = 5) {
-    presentations(skip: $skip, first: $first, orderBy: createdAt_DESC) {
+    presentations(skip: $skip, first: $first, orderBy: myCreatedAt_DESC) {
       id
       whatWasLearned
       createdBy {
@@ -19,6 +19,16 @@ const ALL_PRESENTATIONS_QUERY = gql`
         id
       }
       createdAt
+      myCreatedAt
+      tags
+      taggedUser {
+        id
+      }
+      hpi
+      physicalExam
+      summAssessment
+      ddx
+      presentationType
     }
   }
 `;
@@ -52,11 +62,11 @@ export default class HomeLearning extends Component {
                             skip: this.state.itemsFetched + 5
                           },
                           updateQuery: (prevResult, { fetchMoreResult }) => {
-                            console.log(fetchMoreResult);
+                            // console.log(fetchMoreResult);
 
                             const newPresentations =
                               fetchMoreResult.presentations;
-                            console.log(newPresentations);
+                            // console.log(newPresentations);
 
                             this.setState({
                               itemsFetched: this.state.itemsFetched + 5
