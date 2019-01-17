@@ -134,7 +134,7 @@ export default class Presentation extends Component {
     subjective: SUBJECTIVE,
     objective: OBJECTIVE,
     sumAssess: '',
-    ddx: ['test1', 'test2'],
+    ddx: [],
     ddxInput: '',
     taggedUser: [],
     tags: [],
