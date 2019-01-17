@@ -83,6 +83,10 @@ const CREATE_CARD_MUTATION = gql`
 `;
 
 class CreateLearningCard extends React.Component {
+  static defaultProps = {
+    ownWindow: true
+  };
+
   state = {
     whatWasLearned: '',
     tags: [],
@@ -155,6 +159,7 @@ class CreateLearningCard extends React.Component {
               e.preventDefault();
               // call the mutation
               const { tags, taggedUser, whatWasLearned } = this.state;
+              const { ownWindow } = this.props;
               const myCreatedAt = new Date();
 
               //console.log(tags, taggedUser, whatWasLearned, title);
@@ -171,10 +176,14 @@ class CreateLearningCard extends React.Component {
               });
               //console.log(res);
 
-              // change them to the home page.
-              Router.push({
-                pathname: '/'
-              });
+              if (ownWindow) {
+                // change them to the home page.
+                Router.push({
+                  pathname: '/'
+                });
+              } else {
+                this.props.toggleCreatePearl();
+              }
             }}
           >
             <Error error={error} />
@@ -227,6 +236,16 @@ class CreateLearningCard extends React.Component {
               </label>
 
               <button type="submit">Submit</button>
+              {!this.props.ownWindow && (
+                <button
+                  style={{ background: 'red', marginLeft: '7px' }}
+                  onClick={() => {
+                    this.props.toggleCreatePearl();
+                  }}
+                >
+                  Cancel
+                </button>
+              )}
             </fieldset>
           </Form>
         )}

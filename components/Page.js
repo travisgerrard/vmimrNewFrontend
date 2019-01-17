@@ -18,7 +18,7 @@ const theme = {
   offWhite: '#EDEDED',
   maxWidthLarge: '90vw',
   maxWidthSmall: '100vw',
-  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.99)'
+  bs: '0 12px 16px 0 rgba(0, 0, 0, 0.5)'
 };
 
 const StyledPage = styled.div`

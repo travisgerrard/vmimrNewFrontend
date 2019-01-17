@@ -12,9 +12,11 @@ const Nav = () => (
             <Link href="/createLearningCard">
               <a>pearl</a>
             </Link>
-            <Link href="/createPresentation">
-              <a>presentation</a>
-            </Link>
+            {me.permissions.includes('ADMIN') && (
+              <Link href="/createPresentation">
+                <a>presentation</a>
+              </Link>
+            )}
             <Link href="/">
               <a>
                 <Signout />

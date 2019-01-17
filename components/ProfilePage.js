@@ -25,6 +25,11 @@ const ALL_USER_PRESENTATIONS_QUERY = gql`
         createdAt
         updatedAt
         myCreatedAt
+        presentationType
+        hpi
+        physicalExam
+        summAssessment
+        ddx
       }
       presentations {
         id
@@ -39,6 +44,11 @@ const ALL_USER_PRESENTATIONS_QUERY = gql`
         createdAt
         updatedAt
         myCreatedAt
+        presentationType
+        hpi
+        physicalExam
+        summAssessment
+        ddx
       }
       taggedPresentation {
         id
@@ -53,6 +63,11 @@ const ALL_USER_PRESENTATIONS_QUERY = gql`
         createdAt
         myCreatedAt
         updatedAt
+        presentationType
+        hpi
+        physicalExam
+        summAssessment
+        ddx
       }
     }
   }

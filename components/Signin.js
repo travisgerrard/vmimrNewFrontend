@@ -50,7 +50,7 @@ class Signin extends Component {
                   <h2>Sign into your Account</h2>
                   <Error error={error} />
                   <label htmlFor="email">
-                    Email
+                    Virginia Mason Email
                     <input
                       type="text"
                       name="email"
@@ -60,7 +60,7 @@ class Signin extends Component {
                     />
                   </label>
                   <label htmlFor="password">
-                    Password
+                    Password (Cerner Login)
                     <input
                       type="password"
                       name="password"

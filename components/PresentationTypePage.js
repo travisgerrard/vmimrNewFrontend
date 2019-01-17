@@ -12,10 +12,10 @@ const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
   query ALL_ROTATION_PRESENTATIONS_QUERY(
     $skip: Int = 0
     $first: Int = ${perPage}
-    $rotation: String!
+    $rotation: PresentationTypes!
   ) {
     presentations(
-      where: { whatWasLearned_contains: $rotation }
+      where: { presentationType: $rotation }
       first: $first
       skip: $skip
       orderBy: myCreatedAt_DESC
@@ -44,7 +44,7 @@ const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
   }
 `;
 
-export default class RotationPage extends Component {
+export default class PresentationTypePage extends Component {
   state = {
     itemsFetched: perPage
   };

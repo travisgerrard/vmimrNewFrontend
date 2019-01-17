@@ -52,7 +52,14 @@ class SingleCard extends Component {
 
           const { presentation } = data;
 
-          return <Card key={presentation.id} learning={presentation} />;
+          return (
+            <Card
+              key={presentation.id}
+              learning={presentation}
+              singleCard={true}
+              showSlide={true}
+            />
+          );
         }}
       </Query>
     );
