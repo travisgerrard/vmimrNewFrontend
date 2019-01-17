@@ -232,8 +232,6 @@ export default class Presentation extends Component {
 
               const myCreatedAt = new Date();
 
-              //console.log(tags, taggedUser, whatWasLearned, title);
-
               const res = await createPresentation({
                 variables: {
                   tags,

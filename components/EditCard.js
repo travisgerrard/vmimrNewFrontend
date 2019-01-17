@@ -112,7 +112,9 @@ export default class Presentation extends Component {
     sumAssess: this.props.learning.summAssessment,
     ddx: this.props.learning.ddx,
     ddxInput: '',
-    taggedUser: this.props.learning.taggedUser,
+    taggedUser: this.props.learning.taggedUser.map(user => {
+      return user.id;
+    }),
     tags: this.props.learning.tags,
     preview: false,
     whatWasLearned: this.props.learning.whatWasLearned,
@@ -213,7 +215,7 @@ export default class Presentation extends Component {
                 createdBy
               } = this.state;
 
-              // console.log(id);
+              console.log(taggedUser);
 
               const res = await updatePresentation({
                 variables: {
