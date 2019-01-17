@@ -35,7 +35,7 @@ export default {
 
   '&multiLine': {
     control: {
-      fontSize: '16px',
+      fontSize: '22px',
       lineHeight: 1
     },
 
@@ -45,7 +45,7 @@ export default {
 
     input: {
       padding: 9,
-      minHeight: 63,
+      minHeight: 80,
       outline: 0,
       lineHeight: 1
     }
@@ -55,7 +55,7 @@ export default {
     list: {
       backgroundColor: 'white',
       border: '1px solid rgba(0,0,0,0.15)',
-      fontSize: 10,
+      fontSize: '22px',
       paddingTop: -50
     },
 
