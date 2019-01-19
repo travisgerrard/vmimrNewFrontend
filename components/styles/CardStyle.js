@@ -76,9 +76,6 @@ const StyledCard = styled.div`
       margin: 0px;
       padding: 0px 0px 5px 0px;
     }
-    p {
-      font-size: 3.3vw;
-    }
   }
 `;
 
