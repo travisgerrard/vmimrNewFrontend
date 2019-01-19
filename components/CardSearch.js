@@ -4,13 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import Popup from 'reactjs-popup';
+import ReactMarkdown from 'react-markdown';
 
-import {
-  CardBody,
-  CardTitleCratedBy,
-  CardTitle,
-  StyledSearchCard
-} from './styles/CardStyle';
+import { CardBody, StyledSearchCard } from './styles/CardStyle';
+
+import { CardTitleStyle } from './styles/CardTitleStyle';
 
 const ExactDate = ({ title }) => <div className="card">{title}</div>;
 
@@ -30,7 +28,7 @@ export default class Card extends Component {
     const titleMarkdown = `[@${name}](/user?id=${id}) - `;
     return (
       <>
-        <CardTitleCratedBy className="createdBy" source={titleMarkdown} />
+        <ReactMarkdown className="createdBy" source={titleMarkdown} />
         <Popup
           trigger={<div className="distanceFrom"> {distanceFrom} </div>}
           position="top center"
@@ -57,7 +55,7 @@ export default class Card extends Component {
     const firstLineOfString = learning.whatWasLearned.split(/\r?\n/);
     return (
       <StyledSearchCard key={learning.id} classname="card">
-        <CardTitle>{this.cardTitle(learning)}</CardTitle>
+        <CardTitleStyle>{this.cardTitle(learning)}</CardTitleStyle>
         <CardBody source={firstLineOfString[0]} escapeHtml={false} />
       </StyledSearchCard>
     );

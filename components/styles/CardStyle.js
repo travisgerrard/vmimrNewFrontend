@@ -27,9 +27,10 @@ const StyledCard = styled.div`
   h4 {
     font-size: 22px;
     margin: 0px;
+    line-height: 30px;
   }
   p {
-    font-size: 16px;
+    font-size: 2rem;
     line-height: 1;
     font-weight: 300;
     flex-grow: 1;
@@ -64,6 +65,20 @@ const StyledCard = styled.div`
   }
   .bodyWrapper {
     white-space: pre-wrap;
+  }
+  @media (max-width: 600px) {
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-size: 4vw;
+      line-height: 25px;
+      margin: 0px;
+      padding: 0px 0px 5px 0px;
+    }
+    p {
+      font-size: 3.3vw;
+    }
   }
 `;
 
@@ -101,38 +116,6 @@ const StyledSearchCard = styled.div`
   }
 `;
 
-const CardTitle = styled.div`
-  display: flex;
-  .createdBy {
-    flex-basis: auto;
-  }
-  .distanceFrom {
-    flex-basis: auto;
-    cursor: default;
-    padding-left: 3px;
-    vertical-align: middle;
-  }
-  .likes {
-    svg {
-      vertical-align: middle;
-    }
-    span {
-      padding-right: 5px;
-      vertical-align: middle;
-    }
-    margin-left: auto;
-  }
-`;
-
-const CardTitleCratedBy = styled(ReactMarkdown)`
-  p {
-    a {
-      color: black;
-      font-style: bold;
-    }
-  }
-`;
-
 const CardBody = styled(ReactMarkdown)`
   & > img {
     width: 100%;
@@ -141,4 +124,4 @@ const CardBody = styled(ReactMarkdown)`
   }
 `;
 
-export { CardBody, CardTitleCratedBy, CardTitle, StyledCard, StyledSearchCard };
+export { CardBody, CardTitle, StyledCard, StyledSearchCard };

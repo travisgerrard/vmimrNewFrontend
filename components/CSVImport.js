@@ -137,6 +137,22 @@ export default class CSVImport extends Component {
 
       //  console.log(createdAt);
 
+      const objectForReturn = {
+        presentationType:
+          presentationType.charAt(0).toUpperCase() + presentationType.slice(1),
+        hpi,
+        physicalExam: physicalExamNew,
+        summAssessment,
+        ddx: ddxNew[0],
+        tags: tagsNew,
+        whatWasLearned,
+        taggedUser,
+        createdBy,
+        myCreatedAt: createdAt
+      };
+
+      console.log(objectForReturn);
+
       return batchLoadPresentation({
         variables: {
           presentationType:

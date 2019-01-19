@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { format, formatDistance } from 'date-fns';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
-import Link from 'next/link';
 
 import _ from 'lodash';
 import {
@@ -13,24 +11,10 @@ import {
 } from 'react-sortable-hoc';
 import styled from 'styled-components';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faHeart as faHeartSolid,
-  faPencilAlt,
-  faEye
-} from '@fortawesome/free-solid-svg-icons';
-import { faHeart, faWindowMaximize } from '@fortawesome/free-regular-svg-icons';
-
-import Popup from 'reactjs-popup';
 import User from './User';
 
-import {
-  CardBody,
-  CardTitleCratedBy,
-  CardTitle,
-  StyledCard
-} from './styles/CardStyle';
-import editPresentation from '../pages/editPresentation';
+import { CardBody, StyledCard } from './styles/CardStyle';
+import CardTitle from './CardTitle';
 
 const LIKE_BUTTON_CLICKED_MUTATION = gql`
   mutation LIKE_BUTTON_CLICKED($id: ID!, $addLike: Boolean!) {
@@ -42,8 +26,6 @@ const LIKE_BUTTON_CLICKED_MUTATION = gql`
     }
   }
 `;
-
-const ExactDate = ({ title }) => <div className="card">{title}</div>;
 
 const DdxList = styled.div`
   margin-top: 1rem;
@@ -116,87 +98,30 @@ export default class Card extends Component {
     });
   };
 
+  toggleShowSlide = () => {
+    console.log('this ran');
+
+    this.setState({ showSlide: !this.state.showSlide });
+  };
+
   cardTitle = (learning, containsIframe, notCaseOrPearl) => {
-    const { myCreatedAt, presentationType } = learning;
-    const distanceFrom = formatDistance(myCreatedAt, new Date());
-    const formattedDate = format(myCreatedAt, 'MMMM d, yyyy h:mm a');
-
-    const { name, id } = learning.createdBy;
-    const titleMarkdown = `[@${name}](/user?id=${id}) - `;
-
-    const likesExist = this.props.learning.likes;
-    const likesLength = likesExist && this.props.learning.likes.length > 0;
-
-    const showEye = containsIframe || notCaseOrPearl;
-
     return (
       <User>
         {({ data: { me } }) => (
           <Mutation mutation={LIKE_BUTTON_CLICKED_MUTATION}>
             {(likePresentation, { loading, error }) => (
-              <>
-                <CardTitleCratedBy
-                  className="createdBy"
-                  source={titleMarkdown}
-                />
-                <Popup
-                  trigger={<div className="distanceFrom"> {distanceFrom} </div>}
-                  position="top center"
-                  on="hover"
-                >
-                  <ExactDate title={formattedDate} />
-                </Popup>
-                <Link href={`/presentationType?id=${presentationType}`}>
-                  <a
-                    style={{ paddingLeft: '5px' }}
-                  >{` - ${presentationType}`}</a>
-                </Link>
-                <div className="likes">
-                  {!this.props.singleCard && (
-                    <FontAwesomeIcon
-                      icon={faWindowMaximize}
-                      style={{ marginRight: '5px' }}
-                      onClick={() => {
-                        const id = learning.id;
-                        Router.push({
-                          pathname: `/card`,
-                          query: { id }
-                        });
-                      }}
-                    />
-                  )}
-
-                  {showEye && (
-                    <FontAwesomeIcon
-                      style={
-                        this.state.showSlide
-                          ? { color: 'grey', marginRight: '7px' }
-                          : { color: 'black', marginRight: '7px' }
-                      }
-                      icon={faEye}
-                      onClick={() =>
-                        this.setState({ showSlide: !this.state.showSlide })
-                      }
-                    />
-                  )}
-                  {likesLength && (
-                    <span>{this.props.learning.likes.length}</span>
-                  )}
-                  <FontAwesomeIcon
-                    style={{ color: 'red' }}
-                    icon={this.state.like ? faHeartSolid : faHeart}
-                    onClick={() => this.likedClicked(likePresentation)}
-                  />
-                  {me.permissions.includes('ADMIN') &&
-                    presentationType !== 'Pearl' && (
-                      <FontAwesomeIcon
-                        style={{ color: 'black', paddingLeft: '5px' }}
-                        icon={faPencilAlt}
-                        onClick={() => this.editPresentation(learning)}
-                      />
-                    )}
-                </div>
-              </>
+              <CardTitle
+                learning={learning}
+                containsIframe={containsIframe}
+                notCaseOrPearl={notCaseOrPearl}
+                showSlide={this.state.showSlide}
+                toggleShowSlide={() => this.toggleShowSlide()}
+                like={this.state.like}
+                likePresentation={likePresentation}
+                toggleLike={e => this.likedClicked(e)}
+                editPresentation={e => this.editPresentation(e)}
+                me={me}
+              />
             )}
           </Mutation>
         )}
@@ -230,9 +155,7 @@ export default class Card extends Component {
     return (
       // <Link href={`/card?id=${learning.id}`}>
       <StyledCard key={learning.id} className="card">
-        <CardTitle>
-          {this.cardTitle(learning, containsIframe, notCaseOrPearl)}
-        </CardTitle>
+        {this.cardTitle(learning, containsIframe, notCaseOrPearl)}
         <span className="bodyWrapper">
           {notCaseOrPearl && !showSlide ? (
             <CardBody source={firstLineOfString[0]} escapeHtml={false} />
