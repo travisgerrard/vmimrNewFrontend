@@ -77,6 +77,50 @@ const StyledCard = styled.div`
       padding: 0px 0px 5px 0px;
     }
   }
+
+  /*
+    1792x828px
+    at
+    326ppi
+    iphone xr
+    */
+  @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) {
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-size: 4vw;
+      line-height: 25px;
+      margin: 0px;
+      padding: 0px 0px 5px 0px;
+    }
+  }
+
+  /* 2436x1125px at 458ppi iphone xs */
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-size: 4vw;
+      line-height: 25px;
+      margin: 0px;
+      padding: 0px 0px 5px 0px;
+    }
+  }
+
+  /* 2688x1242px at 458ppi iphone xsmax */
+  @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-size: 4vw;
+      line-height: 25px;
+      margin: 0px;
+      padding: 0px 0px 5px 0px;
+    }
+  }
 `;
 
 const StyledSearchCard = styled.div`
