@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { format, formatDistance } from 'date-fns';
+import Router from 'next/router';
 
 import Popup from 'reactjs-popup';
 import Link from 'next/link';
@@ -47,47 +48,6 @@ export default class CardTitle extends Component {
             <a>{`${presentationType}`}</a>
           </span>
         </Link>
-        <div className="likes">
-          {!this.props.singleCard && (
-            <FontAwesomeIcon
-              icon={faWindowMaximize}
-              style={{ marginRight: '5px' }}
-              onClick={() => {
-                const id = learning.id;
-                Router.push({
-                  pathname: `/card`,
-                  query: { id }
-                });
-              }}
-            />
-          )}
-
-          {showEye && (
-            <FontAwesomeIcon
-              style={
-                this.props.showSlide
-                  ? { color: 'grey', marginRight: '7px' }
-                  : { color: 'black', marginRight: '7px' }
-              }
-              icon={faEye}
-              onClick={() => this.props.toggleShowSlide()}
-            />
-          )}
-          {likesLength && <span>{learning.likes.length}</span>}
-          <FontAwesomeIcon
-            style={{ color: 'red' }}
-            icon={this.props.like ? faHeartSolid : faHeart}
-            onClick={() => this.props.toggleLike(this.props.likePresentation)}
-          />
-          {this.props.me.permissions.includes('ADMIN') &&
-            presentationType !== 'Pearl' && (
-              <FontAwesomeIcon
-                style={{ color: 'black', paddingLeft: '5px' }}
-                icon={faPencilAlt}
-                onClick={() => this.props.editPresentation(learning)}
-              />
-            )}
-        </div>
       </CardTitleStyle>
     );
   }

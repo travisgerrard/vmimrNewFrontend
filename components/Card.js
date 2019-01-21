@@ -15,6 +15,12 @@ import User from './User';
 
 import { CardBody, StyledCard } from './styles/CardStyle';
 import CardTitle from './CardTitle';
+import { ALL_PRESENTATIONS_QUERY } from './HomeLearning';
+
+import LikeButton from './LikeButton';
+import ExpandButton from './ExpandButton';
+import ViewSlidesButton from './ViewSlidesButton';
+import EditCardButtion from './EditCardButton';
 
 const LIKE_BUTTON_CLICKED_MUTATION = gql`
   mutation LIKE_BUTTON_CLICKED($id: ID!, $addLike: Boolean!) {
@@ -70,7 +76,7 @@ export default class Card extends Component {
   };
 
   likedClicked = async likePresentation => {
-    console.log(this.props.learning.likes);
+    //console.log(this.props.learning.likes);
 
     let addLike;
     if (this.state.like) {
@@ -131,6 +137,7 @@ export default class Card extends Component {
 
   render() {
     const { learning } = this.props;
+    const { presentationType } = learning;
 
     const learningWithOutIframe = learning.whatWasLearned.replace(
       /<iframe.+?<\/iframe>/g,
@@ -139,56 +146,102 @@ export default class Card extends Component {
 
     const containsIframe =
       learningWithOutIframe !== learning.whatWasLearned ||
-      learning.presentationType === 'Case';
+      presentationType === 'Case';
     const { showSlide } = this.state;
     //Hide slides on load...
 
     const notCaseOrPearl =
-      learning.presentationType !== 'Case' &&
-      learning.presentationType !== 'Pearl';
+      presentationType !== 'Case' && presentationType !== 'Pearl';
 
     let firstLineOfString;
     if (notCaseOrPearl) {
       firstLineOfString = learning.whatWasLearned.split(/\r?\n/);
     }
 
+    const showEye = containsIframe || notCaseOrPearl;
+
     return (
-      // <Link href={`/card?id=${learning.id}`}>
-      <StyledCard key={learning.id} className="card">
-        {this.cardTitle(learning, containsIframe, notCaseOrPearl)}
-        <span className="bodyWrapper">
-          {notCaseOrPearl && !showSlide ? (
-            <CardBody source={firstLineOfString[0]} escapeHtml={false} />
-          ) : (
-            <CardBody
-              source={
-                showSlide ? learning.whatWasLearned : learningWithOutIframe
-              }
-              escapeHtml={false}
-            />
-          )}
-        </span>
-        {learning.presentationType === 'Case' && (
-          <>
-            {showSlide && (
+      <User>
+        {({ data: { me } }) => (
+          // <Link href={`/card?id=${learning.id}`}>
+          <StyledCard key={learning.id} className="card">
+            {this.cardTitle(learning, containsIframe, notCaseOrPearl)}
+            <span className="bodyWrapper">
+              {notCaseOrPearl && !showSlide ? (
+                <CardBody source={firstLineOfString[0]} escapeHtml={false} />
+              ) : (
+                <CardBody
+                  source={
+                    showSlide ? learning.whatWasLearned : learningWithOutIframe
+                  }
+                  escapeHtml={false}
+                />
+              )}
+            </span>
+            {learning.presentationType === 'Case' && (
               <>
-                <span className="bodyWrapper">
-                  <h3 style={{ textDecoration: 'underline' }}>HPI</h3>
-                  <CardBody source={learning.hpi} />
-                  <h3 style={{ textDecoration: 'underline' }}>Exam</h3>
-                  <CardBody source={learning.physicalExam} />
-                  <h3 style={{ textDecoration: 'underline' }}>
-                    Summary Assessment
-                  </h3>
-                  <CardBody source={learning.summAssessment} />
-                  <h3 style={{ textDecoration: 'underline' }}>DDx</h3>
-                  <SortableList items={learning.ddx} />
-                </span>
+                {showSlide && (
+                  <>
+                    <span className="bodyWrapper">
+                      <h3 style={{ textDecoration: 'underline' }}>HPI</h3>
+                      <CardBody source={learning.hpi} />
+                      <h3 style={{ textDecoration: 'underline' }}>Exam</h3>
+                      <CardBody source={learning.physicalExam} />
+                      <h3 style={{ textDecoration: 'underline' }}>
+                        Summary Assessment
+                      </h3>
+                      <CardBody source={learning.summAssessment} />
+                      <h3 style={{ textDecoration: 'underline' }}>DDx</h3>
+                      <SortableList items={learning.ddx} />
+                    </span>
+                  </>
+                )}
               </>
             )}
-          </>
+            <div className="buttonList">
+              <div>
+                <Mutation
+                  mutation={LIKE_BUTTON_CLICKED_MUTATION}
+                  refetchQueries={[{ query: ALL_PRESENTATIONS_QUERY }]}
+                >
+                  {(likePresentation, { loading, error }) => (
+                    <div>
+                      <LikeButton
+                        learning={learning}
+                        like={this.state.like}
+                        toggleLike={e => this.likedClicked(e)}
+                        likePresentation={likePresentation}
+                      >
+                        Like
+                      </LikeButton>
+                    </div>
+                  )}
+                </Mutation>
+              </div>
+
+              {!this.props.singleCard && (
+                <ExpandButton id={learning.id}>Expand</ExpandButton>
+              )}
+              {showEye && (
+                <ViewSlidesButton
+                  toggleShowSlide={() => this.toggleShowSlide()}
+                  showSlide={this.state.showSlide}
+                >
+                  {this.state.showSlide ? <strike>Slides</strike> : `Slides`}
+                </ViewSlidesButton>
+              )}
+              {me.permissions.includes('ADMIN') && (
+                <EditCardButtion
+                  editPresentation={e => this.editPresentation(e)}
+                  learning={learning}
+                >
+                  Edit
+                </EditCardButtion>
+              )}
+            </div>
+          </StyledCard>
         )}
-      </StyledCard>
+      </User>
       // </Link>
     );
   }

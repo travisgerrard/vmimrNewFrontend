@@ -74,9 +74,12 @@ const CardTitleStyle = styled.div`
 
   /* 2436x1125px at 458ppi iphone xs */
   @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
-    font-size: 4.5vw;
+    font-size: 5vw;
     p {
-      font-size: 4.5vw;
+      font-size: 5vw;
+    }
+    .likes {
+      height: 3rem;
     }
   }
 

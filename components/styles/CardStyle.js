@@ -7,7 +7,7 @@ const StyledCard = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 1rem 0.5rem 1rem;
+  padding: 0.5rem 1rem 75px 1rem;
 
   a {
     color: ${props => props.theme.darkerBlue};
@@ -66,6 +66,27 @@ const StyledCard = styled.div`
   .bodyWrapper {
     white-space: pre-wrap;
   }
+
+  .buttonList {
+    display: grid;
+    width: 97%;
+    border-top: 1px solid ${props => props.theme.lightgrey};
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 1px;
+    background: white;
+    justify-items: center;
+
+    & > * {
+      background: white;
+      border: 0;
+      font-size: 2rem;
+      vertical-align: middle;
+      padding: 1rem;
+    }
+    position: absolute;
+    bottom: 0;
+  }
+
   @media (max-width: 600px) {
     h1,
     h2,
@@ -90,7 +111,7 @@ const StyledCard = styled.div`
     h3,
     h4 {
       font-size: 4vw;
-      line-height: 25px;
+      line-height: 35px;
       margin: 0px;
       padding: 0px 0px 5px 0px;
     }
@@ -103,7 +124,7 @@ const StyledCard = styled.div`
     h3,
     h4 {
       font-size: 4vw;
-      line-height: 25px;
+      line-height: 35px;
       margin: 0px;
       padding: 0px 0px 5px 0px;
     }
@@ -116,7 +137,7 @@ const StyledCard = styled.div`
     h3,
     h4 {
       font-size: 4vw;
-      line-height: 25px;
+      line-height: 35px;
       margin: 0px;
       padding: 0px 0px 5px 0px;
     }

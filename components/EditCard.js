@@ -259,31 +259,33 @@ export default class Presentation extends Component {
                   <>
                     <Error error={error} />
                     <fieldset disabled={loading} aria-busy={loading}>
-                      <label htmlFor="caseType">
-                        {presentationTypes.map(presentation => {
-                          return (
-                            <button
-                              key={presentation.label}
-                              type="button"
-                              name="presentationType"
-                              id={presentation.label}
-                              style={
-                                presentation.label ===
-                                this.state.presentationType
-                                  ? { background: 'white', color: '#01B6DD' }
-                                  : {}
-                              }
-                              onClick={() => {
-                                this.setState({
-                                  presentationType: presentation.label
-                                });
-                              }}
-                            >
-                              {presentation.value}
-                            </button>
-                          );
-                        })}
-                      </label>
+                      {this.state.presentationType !== 'Pearl' && (
+                        <label htmlFor="caseType">
+                          {presentationTypes.map(presentation => {
+                            return (
+                              <button
+                                key={presentation.label}
+                                type="button"
+                                name="presentationType"
+                                id={presentation.label}
+                                style={
+                                  presentation.label ===
+                                  this.state.presentationType
+                                    ? { background: 'white', color: '#01B6DD' }
+                                    : {}
+                                }
+                                onClick={() => {
+                                  this.setState({
+                                    presentationType: presentation.label
+                                  });
+                                }}
+                              >
+                                {presentation.value}
+                              </button>
+                            );
+                          })}
+                        </label>
+                      )}
                       {this.state.presentationType === 'Case' ? (
                         <>
                           <hr />
@@ -387,6 +389,7 @@ export default class Presentation extends Component {
             <Mutation
               mutation={DELETE_PRESENTATION_MUTATION}
               variables={{ id: this.props.learning.id }}
+              refetchQueries={[{ query: ALL_PRESENTATIONS_QUERY }]}
             >
               {(deletePresentation, { loading, error }) => (
                 <button
