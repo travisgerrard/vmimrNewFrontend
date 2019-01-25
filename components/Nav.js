@@ -9,6 +9,9 @@ const Nav = () => (
       <NavStyles data-test="nav">
         {me && (
           <>
+            <Link href={`/user?id=${me.id}`}>
+              <a>me</a>
+            </Link>
             <Link href="/createLearningCard">
               <a>pearl</a>
             </Link>

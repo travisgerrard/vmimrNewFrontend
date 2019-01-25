@@ -25,9 +25,10 @@ const StyledCard = styled.div`
   h2,
   h3,
   h4 {
-    font-size: 22px;
+    font-size: 2.5rem;
     margin: 0px;
     line-height: 30px;
+    padding: 0px 0px 5px 0px;
   }
   p {
     font-size: 2rem;
