@@ -10,9 +10,12 @@ import User from './User';
 import CardSearch from './CardSearch';
 
 const SEARCH_PRESENTATIONS_QUERY = gql`
-  query SEARCH_PRESENTATIONS_QUERY($searchTerm: String!, $first: Int = 10) {
+  query SEARCH_PRESENTATIONS_QUERY(
+    $searchTerm: [PresentationWhereInput!]
+    $first: Int = 10
+  ) {
     presentations(
-      where: { whatWasLearned_contains: $searchTerm }
+      where: { AND: $searchTerm }
       first: $first
       orderBy: myCreatedAt_DESC
     ) {
@@ -62,10 +65,14 @@ class AutoComplete extends React.Component {
     if (e.target.value !== '') {
       const res = await client.query({
         query: SEARCH_PRESENTATIONS_QUERY,
-        variables: { searchTerm: e.target.value }
+        variables: {
+          searchTerm: e.target.value.split(' ').map(value => {
+            return { whatWasLearned_contains: value };
+          })
+        }
       });
 
-      console.log(res);
+      //console.log(res);
 
       this.setState({
         cards: res.data.presentations,

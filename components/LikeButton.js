@@ -10,8 +10,6 @@ const LikeButton = ({
   likePresentation,
   children
 }) => {
-  console.log(learning.likes);
-
   const likesExist = learning.likes;
   const likesLength = likesExist && learning.likes.length > 0;
 
