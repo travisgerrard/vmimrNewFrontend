@@ -1,9 +1,12 @@
 // The root web page
 
 import App, { Container } from 'next/app';
+import Router from 'next/router';
+
 import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
 import withData from '../lib/withData';
+import { trackPageView } from '../lib/googleAnalytics';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -15,6 +18,12 @@ class MyApp extends App {
     pageProps.query = ctx.query;
 
     return { pageProps };
+  }
+
+  componentDidMount() {
+    Router.onRouteChangeComplete = url => {
+      trackPageView(url);
+    };
   }
 
   render() {
