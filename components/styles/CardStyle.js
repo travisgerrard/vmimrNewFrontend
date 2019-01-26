@@ -37,6 +37,13 @@ const StyledCard = styled.div`
     flex-grow: 1;
     margin: 0.5rem 0 0.5rem 0;
   }
+  li {
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 300;
+    flex-grow: 1;
+    margin: 0.5rem 0 0.5rem 0;
+  }
   .slideShowPlaceHolder {
     background-color: ${props => props.theme.darkBlue};
     color: white;
