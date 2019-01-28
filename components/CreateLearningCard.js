@@ -9,6 +9,7 @@ import MarkdownEditor from './MarkdownEditor';
 import Mentions from './Mentions';
 import ReactMarkdown from 'react-markdown';
 import markdownButtonPressed from '../lib/markdownEditorFunctions';
+import _ from 'lodash';
 
 import { ALL_PRESENTATIONS_QUERY } from './HomeLearning';
 
@@ -192,9 +193,14 @@ class CreateLearningCard extends React.Component {
                 <Query query={ALL_USERS_QUERY}>
                   {({ data, loading, error }) => {
                     if (loading) return <p>Loading...</p>;
-                    const userArray = data.users.map(user => {
+
+                    const filteredUsers = _.filter(data.users, function(o) {
+                      return o.visible === true;
+                    });
+                    const userArray = filteredUsers.map(user => {
                       return { id: user.id, display: `@${user.name}` };
                     });
+
                     const rotationArray = possibleRotationTypes.map(
                       rotation => {
                         return {

@@ -35,7 +35,7 @@ export default {
 
   '&multiLine': {
     control: {
-      fontSize: '22px',
+      fontSize: '2rem',
       lineHeight: 1
     },
 

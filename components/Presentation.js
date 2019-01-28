@@ -6,6 +6,7 @@ import {
   SortableElement,
   arrayMove
 } from 'react-sortable-hoc';
+import _ from 'lodash';
 
 import Form from './styles/Form';
 import Error from './ErrorMessage';
@@ -258,9 +259,13 @@ export default class Presentation extends Component {
             <Query query={ALL_USERS_QUERY}>
               {({ data, loading, error }) => {
                 if (loading) return <p>Loading...</p>;
-                const userArray = data.users.map(user => {
+                const filteredUsers = _.filter(data.users, function(o) {
+                  return o.visible === true;
+                });
+                const userArray = filteredUsers.map(user => {
                   return { id: user.id, display: `@${user.name}` };
                 });
+
                 const rotationArray = possibleRotationTypes.map(rotation => {
                   return {
                     id: rotation.value,

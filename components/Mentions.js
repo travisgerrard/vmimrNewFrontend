@@ -39,8 +39,6 @@ export default class Mentions extends Component {
   };
 
   dataForUser = e => {
-    //console.log(e);
-
     if (e === '') {
       return [];
     }
