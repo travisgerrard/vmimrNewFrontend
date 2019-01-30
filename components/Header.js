@@ -6,15 +6,16 @@ import Nav from './Nav';
 import Search from './Search';
 import User from './User';
 
-Router.onRouteChangeStart = () => {
-  NProgress.start();
-};
-Router.onRouteChangeComplete = () => {
-  NProgress.done();
-};
-Router.onRouteChangeError = () => {
-  NProgress.done();
-};
+// Router.onRouteChangeStart = () => {
+//   NProgress.start();
+// };
+// Router.onRouteChangeComplete = () => {
+//   NProgress.done();
+// };
+
+// Router.onRouteChangeError = () => {
+//   NProgress.done();
+// };
 
 const Logo = styled.h1`
   font-size: 4rem;

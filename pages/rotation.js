@@ -1,4 +1,4 @@
-import RotationPage from '../components/RotationPage';
+import RotationPage from '../components/GroupPages/RotationPage';
 
 const Rotation = props => (
   <div>

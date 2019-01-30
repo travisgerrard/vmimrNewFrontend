@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import Error from './ErrorMessage';
+import Error from '../ErrorMessage';
 import styled from 'styled-components';
 import Head from 'next/head';
-import Cards from './Cards';
-import User from './User';
-import { perPage } from '../config';
+import Cards from '../Cards';
+import User from '../User';
+import { perPage } from '../../config';
 
 const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
   query ALL_ROTATION_PRESENTATIONS_QUERY(
     $skip: Int = 0
     $first: Int = ${perPage}
-    $rotation: String!
+    $rotation: PresentationTypes!
   ) {
     presentations(
-      where: { whatWasLearned_contains: $rotation }
+      where: { presentationType: $rotation }
       first: $first
       skip: $skip
       orderBy: myCreatedAt_DESC
@@ -44,7 +44,7 @@ const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
   }
 `;
 
-export default class RotationPage extends Component {
+export default class PresentationTypePage extends Component {
   state = {
     itemsFetched: perPage
   };
@@ -61,8 +61,6 @@ export default class RotationPage extends Component {
           if (error) return <Error error={error} />;
           if (loading) return <p>Loading...</p>;
 
-          console.log(data);
-
           if (!data.presentations)
             return <p>No User Found for {this.props.id}</p>;
 
@@ -72,6 +70,9 @@ export default class RotationPage extends Component {
             <User>
               {({ data: { me } }) => (
                 <>
+                  <Head>
+                    <title>VM:IMR - {this.props.id}</title>
+                  </Head>
                   <h2>{this.props.id}</h2>
                   <hr />
                   <Cards

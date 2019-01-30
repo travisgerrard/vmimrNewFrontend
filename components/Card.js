@@ -17,10 +17,11 @@ import { CardBody, StyledCard } from './styles/CardStyle';
 import CardTitle from './CardTitle';
 import { ALL_PRESENTATIONS_QUERY } from './HomeLearning';
 
-import LikeButton from './LikeButton';
+import LikeButton from './CardButtons/LikeButton';
 import ExpandButton from './ExpandButton';
-import ViewSlidesButton from './ViewSlidesButton';
-import EditCardButtion from './EditCardButton';
+import ViewSlidesButton from './CardButtons/ViewSlidesButton';
+import EditCardButtion from './CardButtons/EditCardButton';
+import PinButton from './CardButtons/PinButton';
 
 const LIKE_BUTTON_CLICKED_MUTATION = gql`
   mutation LIKE_BUTTON_CLICKED($id: ID!, $addLike: Boolean!) {
@@ -102,6 +103,10 @@ export default class Card extends Component {
       pathname: '/editPresentation',
       query: { id }
     });
+  };
+
+  pinCard = () => {
+    alert('Hey admin, you pressed pin button which should function shortly.');
   };
 
   toggleShowSlide = () => {
@@ -231,12 +236,15 @@ export default class Card extends Component {
                 </ViewSlidesButton>
               )}
               {me.permissions.includes('ADMIN') && (
-                <EditCardButtion
-                  editPresentation={e => this.editPresentation(e)}
-                  learning={learning}
-                >
-                  Edit
-                </EditCardButtion>
+                <>
+                  <EditCardButtion
+                    editPresentation={e => this.editPresentation(e)}
+                    learning={learning}
+                  >
+                    Edit
+                  </EditCardButtion>
+                  <PinButton pinCard={e => this.pinCard(e)} />
+                </>
               )}
             </div>
           </StyledCard>

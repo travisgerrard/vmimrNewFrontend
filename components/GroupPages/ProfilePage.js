@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import Error from './ErrorMessage';
+import Error from '../ErrorMessage';
 import styled from 'styled-components';
 import Head from 'next/head';
-import Cards from './Cards';
-import User from './User';
+import Cards from '../Cards';
+import User from '../User';
 
 const ALL_USER_PRESENTATIONS_QUERY = gql`
   query ALL_USER_PRESENTATIONS_QUERY($id: ID!) {
@@ -93,8 +93,6 @@ export default class ProfilePage extends Component {
               if (error) return <Error error={error} />;
               if (loading) return <p>Loading...</p>;
 
-              console.log(data);
-
               if (!data.user) return <p>No User Found for {this.props.id}</p>;
 
               const { user } = data;
@@ -118,6 +116,9 @@ export default class ProfilePage extends Component {
 
               return (
                 <>
+                  <Head>
+                    <title>VM:IMR - {user.name}</title>
+                  </Head>
                   <h2>{user.name}</h2>
                   <hr />
                   {likedPresentations.length > 0 && (

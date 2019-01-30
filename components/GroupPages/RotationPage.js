@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import Error from './ErrorMessage';
+import Error from '../ErrorMessage';
 import styled from 'styled-components';
 import Head from 'next/head';
-import Cards from './Cards';
-import User from './User';
-import { perPage } from '../config';
+import Cards from '../Cards';
+import User from '../User';
+import { perPage } from '../../config';
 
 const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
   query ALL_ROTATION_PRESENTATIONS_QUERY(
     $skip: Int = 0
     $first: Int = ${perPage}
-    $rotation: PresentationTypes!
+    $rotation: String!
   ) {
     presentations(
-      where: { presentationType: $rotation }
+      where: { whatWasLearned_contains: $rotation }
       first: $first
       skip: $skip
       orderBy: myCreatedAt_DESC
@@ -44,7 +44,7 @@ const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
   }
 `;
 
-export default class PresentationTypePage extends Component {
+export default class RotationPage extends Component {
   state = {
     itemsFetched: perPage
   };
@@ -72,6 +72,9 @@ export default class PresentationTypePage extends Component {
             <User>
               {({ data: { me } }) => (
                 <>
+                  <Head>
+                    <title>VM:IMR - {this.props.id}</title>
+                  </Head>
                   <h2>{this.props.id}</h2>
                   <hr />
                   <Cards

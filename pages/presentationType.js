@@ -1,4 +1,4 @@
-import PresentationTypePage from '../components/PresentationTypePage';
+import PresentationTypePage from '../components/GroupPages/PresentationTypePage';
 
 const presentatinType = props => (
   <div>
