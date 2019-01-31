@@ -8,7 +8,7 @@ const CardLayout = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(40vw, 1fr));
   grid-gap: 30px;
   max-width: ${props => props.theme.maxWidth}
-  margin: 0 auto;
+  margin: 0 auto 20px auto;
   /* .card:hover {
     background-color: #f5f8fa;
   } */

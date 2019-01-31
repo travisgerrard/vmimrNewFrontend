@@ -9,6 +9,12 @@ import User from './User';
 import { perPage } from '../config';
 import CreateLearningCard from './CreateLearningCard';
 
+import PinnedPresentations from './GroupPages/PinnedPresentations';
+
+// Places where cards querys take place
+// This file, HomeLearning
+// SingleCard
+// GroupPages => PresentationTypePage, ProfilePage & RotationPage
 const ALL_PRESENTATIONS_QUERY = gql`
   query ALL_PRESENTATIONS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
     presentations(skip: $skip, first: $first, orderBy: myCreatedAt_DESC) {
@@ -32,6 +38,7 @@ const ALL_PRESENTATIONS_QUERY = gql`
       summAssessment
       ddx
       presentationType
+      isPinned
     }
   }
 `;
@@ -77,11 +84,16 @@ export default class HomeLearning extends Component {
 
                   return (
                     <>
+                      <PinnedPresentations me={me} />
+
                       <div
                         style={
                           showCreatePearl
                             ? { marginBottom: '20px' }
-                            : { textAlign: 'center', marginBottom: '20px' }
+                            : {
+                                textAlign: 'center',
+                                marginBottom: '20px'
+                              }
                         }
                       >
                         {showCreatePearl ? (
@@ -163,6 +175,7 @@ export default class HomeLearning extends Component {
                   </a>
                 </Link>
                 !
+                <PinnedPresentations />
               </>
             )}
           </div>

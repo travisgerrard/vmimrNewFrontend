@@ -16,6 +16,7 @@ import User from './User';
 import { CardBody, StyledCard } from './styles/CardStyle';
 import CardTitle from './CardTitle';
 import { ALL_PRESENTATIONS_QUERY } from './HomeLearning';
+import { PINNED_PRESENTATIONS_QUERY } from './GroupPages/PinnedPresentations';
 
 import LikeButton from './CardButtons/LikeButton';
 import ExpandButton from './ExpandButton';
@@ -30,6 +31,15 @@ const LIKE_BUTTON_CLICKED_MUTATION = gql`
       likes {
         id
       }
+    }
+  }
+`;
+
+const PIN_BUTTON_CLICKED_MUTATION = gql`
+  mutation PIN_BUTTON_CLICKED_MUTATION($id: ID!, $isPinned: Boolean!) {
+    changedPinnedStatus(id: $id, isPinned: $isPinned) {
+      id
+      isPinned
     }
   }
 `;
@@ -105,8 +115,18 @@ export default class Card extends Component {
     });
   };
 
-  pinCard = () => {
-    alert('Hey admin, you pressed pin button which should function shortly.');
+  pinCard = async changedPinnedStatus => {
+    const isPinnedToggle = this.props.learning.isPinned ? false : true;
+
+    const res = await changedPinnedStatus({
+      variables: {
+        id: this.props.learning.id,
+        isPinned: isPinnedToggle
+      }
+    }).catch(err => {
+      alert(err.message);
+    });
+    // alert('Hey admin, you pressed pin button which should function shortly.');
   };
 
   toggleShowSlide = () => {
@@ -203,50 +223,67 @@ export default class Card extends Component {
                 )}
               </>
             )}
-            <div className="buttonList">
-              <div>
-                <Mutation
-                  mutation={LIKE_BUTTON_CLICKED_MUTATION}
-                  refetchQueries={[{ query: ALL_PRESENTATIONS_QUERY }]}
-                >
-                  {(likePresentation, { loading, error }) => (
-                    <div>
-                      <LikeButton
-                        learning={learning}
-                        like={this.state.like}
-                        toggleLike={e => this.likedClicked(e)}
-                        likePresentation={likePresentation}
-                      >
-                        Like
-                      </LikeButton>
-                    </div>
-                  )}
-                </Mutation>
-              </div>
-
-              {!this.props.singleCard && (
-                <ExpandButton id={learning.id}>Expand</ExpandButton>
-              )}
-              {showEye && (
-                <ViewSlidesButton
-                  toggleShowSlide={() => this.toggleShowSlide()}
-                  showSlide={this.state.showSlide}
-                >
-                  {this.state.showSlide ? <strike>Slides</strike> : `Slides`}
-                </ViewSlidesButton>
-              )}
-              {me.permissions.includes('ADMIN') && (
-                <>
-                  <EditCardButtion
-                    editPresentation={e => this.editPresentation(e)}
-                    learning={learning}
+            {me && (
+              <div className="buttonList">
+                <div>
+                  <Mutation
+                    mutation={LIKE_BUTTON_CLICKED_MUTATION}
+                    refetchQueries={[{ query: ALL_PRESENTATIONS_QUERY }]}
                   >
-                    Edit
-                  </EditCardButtion>
-                  <PinButton pinCard={e => this.pinCard(e)} />
-                </>
-              )}
-            </div>
+                    {(likePresentation, { loading, error }) => (
+                      <div>
+                        <LikeButton
+                          learning={learning}
+                          like={this.state.like}
+                          toggleLike={e => this.likedClicked(e)}
+                          likePresentation={likePresentation}
+                        >
+                          Like
+                        </LikeButton>
+                      </div>
+                    )}
+                  </Mutation>
+                </div>
+
+                {!this.props.singleCard && (
+                  <ExpandButton id={learning.id}>Expand</ExpandButton>
+                )}
+                {showEye && (
+                  <ViewSlidesButton
+                    toggleShowSlide={() => this.toggleShowSlide()}
+                    showSlide={this.state.showSlide}
+                  >
+                    {this.state.showSlide ? <strike>Slides</strike> : `Slides`}
+                  </ViewSlidesButton>
+                )}
+
+                {me.permissions.includes('ADMIN') && (
+                  <>
+                    <EditCardButtion
+                      editPresentation={e => this.editPresentation(e)}
+                      learning={learning}
+                    >
+                      Edit
+                    </EditCardButtion>
+                    <Mutation
+                      mutation={PIN_BUTTON_CLICKED_MUTATION}
+                      refetchQueries={[
+                        { query: ALL_PRESENTATIONS_QUERY },
+                        { query: PINNED_PRESENTATIONS_QUERY }
+                      ]}
+                    >
+                      {(changedPinnedStatus, { loading, error }) => (
+                        <PinButton
+                          changedPinnedStatus={changedPinnedStatus}
+                          pinCard={e => this.pinCard(e)}
+                          isPinned={learning.isPinned}
+                        />
+                      )}
+                    </Mutation>
+                  </>
+                )}
+              </div>
+            )}
           </StyledCard>
         )}
       </User>

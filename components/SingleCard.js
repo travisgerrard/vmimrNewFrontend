@@ -30,6 +30,7 @@ const SINGLE_PRESENTATION_QUERY = gql`
       summAssessment
       ddx
       presentationType
+      isPinned
     }
   }
 `;

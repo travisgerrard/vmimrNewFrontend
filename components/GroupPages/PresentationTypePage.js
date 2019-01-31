@@ -40,6 +40,7 @@ const ALL_ROTATION_PRESENTATIONS_QUERY = gql`
       summAssessment
       ddx
       presentationType
+      isPinned
     }
   }
 `;

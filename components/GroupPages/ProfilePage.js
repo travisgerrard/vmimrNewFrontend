@@ -30,6 +30,7 @@ const ALL_USER_PRESENTATIONS_QUERY = gql`
         physicalExam
         summAssessment
         ddx
+        isPinned
       }
       presentations {
         id
@@ -49,6 +50,7 @@ const ALL_USER_PRESENTATIONS_QUERY = gql`
         physicalExam
         summAssessment
         ddx
+        isPinned
       }
       taggedPresentation {
         id
@@ -68,6 +70,7 @@ const ALL_USER_PRESENTATIONS_QUERY = gql`
         physicalExam
         summAssessment
         ddx
+        isPinned
       }
     }
   }
