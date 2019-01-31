@@ -215,8 +215,6 @@ export default class Presentation extends Component {
                 createdBy
               } = this.state;
 
-              console.log(taggedUser);
-
               const res = await updatePresentation({
                 variables: {
                   id,

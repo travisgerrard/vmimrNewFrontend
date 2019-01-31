@@ -48,7 +48,6 @@ export default class Presentation extends Component {
             return <p>No Card Found for {this.props.id}</p>;
 
           const { presentation } = data;
-          console.log(presentation);
 
           return <EditCard learning={presentation} />;
         }}

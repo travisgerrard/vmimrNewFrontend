@@ -130,8 +130,6 @@ export default class Card extends Component {
   };
 
   toggleShowSlide = () => {
-    console.log('this ran');
-
     this.setState({ showSlide: !this.state.showSlide });
   };
 
