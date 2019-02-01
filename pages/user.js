@@ -1,8 +1,11 @@
 import ProfilePage from '../components/GroupPages/ProfilePage';
+import PleaseSignIn from '../components/PleaesSignIn';
 
 const User = props => (
   <div>
-    <ProfilePage id={props.query.id} />
+    <PleaseSignIn>
+      <ProfilePage id={props.query.id} />
+    </PleaseSignIn>
   </div>
 );
 

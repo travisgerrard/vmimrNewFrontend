@@ -14,6 +14,9 @@ import styled from 'styled-components';
 import User from './User';
 
 import { CardBody, StyledCard } from './styles/CardStyle';
+import htmlParser from 'react-markdown/plugins/html-parser';
+import Popup from 'reactjs-popup';
+
 import CardTitle from './CardTitle';
 import { ALL_PRESENTATIONS_QUERY } from './HomeLearning';
 import { PINNED_PRESENTATIONS_QUERY } from './GroupPages/PinnedPresentations';
@@ -72,6 +75,12 @@ const SortableList = SortableContainer(({ items }) => {
     </DdxList>
   );
 });
+
+const Modal = ({ node }) => (
+  <Popup trigger={node} modal closeOnDocumentClick>
+    <span>node</span>
+  </Popup>
+);
 
 export default class Card extends Component {
   static defaultProps = {
@@ -182,6 +191,30 @@ export default class Card extends Component {
     }
 
     const showEye = containsIframe || notCaseOrPearl;
+
+    const parseHtml = htmlParser({
+      isValidNode: node => {
+        if (node.children) {
+          node.children.map(node => {
+            return console.log(node);
+          });
+        }
+        return node.type === 'script';
+      },
+      processingInstructions: [
+        {
+          // Custom <h1> processing
+          shouldProcessNode: function(node) {
+            return node.type !== 'script';
+          },
+          processNode: function(node, children) {
+            //console.log(node);
+
+            return 'node.data.toUpperCase()';
+          }
+        }
+      ]
+    });
 
     return (
       <User>

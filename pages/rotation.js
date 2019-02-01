@@ -1,8 +1,11 @@
 import RotationPage from '../components/GroupPages/RotationPage';
+import PleaseSignIn from '../components/PleaesSignIn';
 
 const Rotation = props => (
   <div>
-    <RotationPage id={props.query.id} />
+    <PleaseSignIn>
+      <RotationPage id={props.query.id} />
+    </PleaseSignIn>
   </div>
 );
 
