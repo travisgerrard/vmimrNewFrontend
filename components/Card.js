@@ -76,9 +76,14 @@ const SortableList = SortableContainer(({ items }) => {
   );
 });
 
-const Modal = ({ node }) => (
-  <Popup trigger={node} modal closeOnDocumentClick>
-    <span>node</span>
+const Modal = ({ src }) => (
+  <Popup trigger={<img src={src} />} modal closeOnDocumentClick>
+    <>
+      {' '}
+      <a href={src}>
+        <img src={src} />
+      </a>{' '}
+    </>
   </Popup>
 );
 
@@ -192,45 +197,32 @@ export default class Card extends Component {
 
     const showEye = containsIframe || notCaseOrPearl;
 
-    const parseHtml = htmlParser({
-      isValidNode: node => {
-        if (node.children) {
-          node.children.map(node => {
-            return console.log(node);
-          });
-        }
-        return node.type === 'script';
-      },
-      processingInstructions: [
-        {
-          // Custom <h1> processing
-          shouldProcessNode: function(node) {
-            return node.type !== 'script';
-          },
-          processNode: function(node, children) {
-            //console.log(node);
+    function imageRenderer({ src, ...props }) {
+      return <Modal src={src} />;
+    }
 
-            return 'node.data.toUpperCase()';
-          }
-        }
-      ]
-    });
+    const renderers = {};
+    renderers['image'] = imageRenderer;
 
     return (
       <User>
         {({ data: { me } }) => (
-          // <Link href={`/card?id=${learning.id}`}>
           <StyledCard key={learning.id} className="card">
             {this.cardTitle(learning, containsIframe, notCaseOrPearl)}
             <span className="bodyWrapper">
               {notCaseOrPearl && !showSlide ? (
-                <CardBody source={firstLineOfString[0]} escapeHtml={false} />
+                <CardBody
+                  source={firstLineOfString[0]}
+                  escapeHtml={false}
+                  renderers={renderers}
+                />
               ) : (
                 <CardBody
                   source={
                     showSlide ? learning.whatWasLearned : learningWithOutIframe
                   }
                   escapeHtml={false}
+                  renderers={renderers}
                 />
               )}
             </span>
@@ -318,7 +310,6 @@ export default class Card extends Component {
           </StyledCard>
         )}
       </User>
-      // </Link>
     );
   }
 }

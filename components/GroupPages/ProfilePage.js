@@ -105,7 +105,7 @@ export default class ProfilePage extends Component {
                 likedPresentations
               } = user;
 
-              console.log(likedPresentations);
+              // console.log(likedPresentations);
 
               const combinedArray = [...presentations, ...taggedPresentation];
 
