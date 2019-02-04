@@ -77,13 +77,20 @@ const SortableList = SortableContainer(({ items }) => {
 });
 
 const Modal = ({ src }) => (
-  <Popup trigger={<img src={src} />} modal closeOnDocumentClick>
-    <>
-      {' '}
-      <a href={src}>
-        <img src={src} />
-      </a>{' '}
-    </>
+  <Popup
+    trigger={<img src={src} />}
+    modal
+    closeOnDocumentClick
+    contentStyle={{ width: '80vw', height: '80vh' }}
+  >
+    <span
+      style={{
+        display: 'inline-block',
+        height: '100%',
+        verticalAlign: 'middle'
+      }}
+    />
+    <a href={src}><img src={src} style={{ height: '100%', verticalAlign: 'middle', objectFit: 'contain' }} /></a>
   </Popup>
 );
 
