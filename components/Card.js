@@ -222,6 +222,8 @@ export default class Card extends Component {
     const renderers = {};
     renderers['image'] = imageRenderer;
 
+    const firstHundred = learningWithOutIframe.length > 200 ? true : false;
+
     return (
       <User>
         {({ data: { me } }) => (
@@ -230,7 +232,14 @@ export default class Card extends Component {
             <span className="bodyWrapper">
               {notCaseOrPearl && !showSlide ? (
                 <CardBody
-                  source={firstLineOfString[0]}
+                  source={
+                    firstHundred
+                      ? `${learningWithOutIframe.substring(
+                          0,
+                          200
+                        )} - **Tap "Expand" to see full text**`
+                      : `${learningWithOutIframe.substring(0, 200)}`
+                  }
                   escapeHtml={false}
                   renderers={renderers}
                 />

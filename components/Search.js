@@ -67,7 +67,14 @@ class AutoComplete extends React.Component {
         query: SEARCH_PRESENTATIONS_QUERY,
         variables: {
           searchTerm: e.target.value.split(' ').map(value => {
-            return { whatWasLearnedLowerCase_contains: value };
+            return (
+              {
+                whatWasLearnedLowerCase_contains: value
+              },
+              {
+                summAssessment_contains: value
+              }
+            );
           })
         }
       });
