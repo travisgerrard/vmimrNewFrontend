@@ -27,6 +27,8 @@ import ViewSlidesButton from './CardButtons/ViewSlidesButton';
 import EditCardButtion from './CardButtons/EditCardButton';
 import PinButton from './CardButtons/PinButton';
 
+const CHARS_TO_EXPOSE = 400;
+
 const LIKE_BUTTON_CLICKED_MUTATION = gql`
   mutation LIKE_BUTTON_CLICKED($id: ID!, $addLike: Boolean!) {
     likePresentation(id: $id, addLike: $addLike) {
@@ -222,7 +224,8 @@ export default class Card extends Component {
     const renderers = {};
     renderers['image'] = imageRenderer;
 
-    const firstHundred = learningWithOutIframe.length > 400 ? true : false;
+    const firstHundred =
+      learningWithOutIframe.length > CHARS_TO_EXPOSE ? true : false;
 
     return (
       <User>
@@ -236,9 +239,9 @@ export default class Card extends Component {
                     firstHundred
                       ? `${learningWithOutIframe.substring(
                           0,
-                          200
+                          CHARS_TO_EXPOSE
                         )} - **Tap "Expand" to see full text**`
-                      : `${learningWithOutIframe.substring(0, 400)}`
+                      : `${learningWithOutIframe.substring(0, CHARS_TO_EXPOSE)}`
                   }
                   escapeHtml={false}
                   renderers={renderers}
