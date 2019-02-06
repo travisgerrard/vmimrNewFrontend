@@ -79,8 +79,6 @@ class AutoComplete extends React.Component {
         }
       });
 
-      //console.log(res);
-
       this.setState({
         cards: res.data.presentations,
         loading: false

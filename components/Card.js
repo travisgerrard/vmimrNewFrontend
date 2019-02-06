@@ -222,7 +222,7 @@ export default class Card extends Component {
     const renderers = {};
     renderers['image'] = imageRenderer;
 
-    const firstHundred = learningWithOutIframe.length > 200 ? true : false;
+    const firstHundred = learningWithOutIframe.length > 400 ? true : false;
 
     return (
       <User>
@@ -238,7 +238,7 @@ export default class Card extends Component {
                           0,
                           200
                         )} - **Tap "Expand" to see full text**`
-                      : `${learningWithOutIframe.substring(0, 200)}`
+                      : `${learningWithOutIframe.substring(0, 400)}`
                   }
                   escapeHtml={false}
                   renderers={renderers}
