@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const NavStyles = styled.ul`
   margin: 0;
@@ -6,6 +6,40 @@ const NavStyles = styled.ul`
   display: flex;
   justify-self: end;
   font-size: 2rem;
+  p {
+    padding: 1rem 3rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-size: 1em;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    &:before {
+    }
+    &:after {
+      height: 2px;
+      background: ${props => props.theme.darkBlue};
+      content: '';
+      width: 0;
+      position: absolute;
+      transform: translateX(-50%);
+      transition: width 0.4s;
+      transition-timing-function: cubic-bezier(1, -0.65, 0, 2.31);
+      left: 50%;
+      margin-top: 2rem;
+    }
+    &:hover,
+    &:focus {
+      outline: none;
+      &:after {
+        width: calc(100% - 60px);
+      }
+      @media (max-width: 700px) {
+      }
+    }
+  }
+
   a,
   button {
     padding: 1rem 3rem;
@@ -23,7 +57,7 @@ const NavStyles = styled.ul`
       padding: 0 10px;
     } */
     &:before {
-      content: "";
+      content: '';
       width: 2px;
       background: ${props => props.theme.lightgrey};
       height: 100%;
@@ -36,7 +70,7 @@ const NavStyles = styled.ul`
     &:after {
       height: 2px;
       background: ${props => props.theme.darkBlue};
-      content: "";
+      content: '';
       width: 0;
       position: absolute;
       transform: translateX(-50%);
