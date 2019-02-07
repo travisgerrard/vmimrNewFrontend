@@ -80,7 +80,7 @@ const SortableList = SortableContainer(({ items }) => {
 
 const Modal = ({ src }) => (
   <Popup
-    trigger={<img src={src} />}
+    trigger={<img src={src} style={{ cursor: 'pointer' }} />}
     modal
     closeOnDocumentClick
     contentStyle={{ width: '80vw', height: '80vh', background: '#403933' }}
