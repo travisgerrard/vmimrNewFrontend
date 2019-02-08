@@ -59,7 +59,7 @@ class Signup extends Component {
                 <h2>Sign up for an Account</h2>
                 <Error error={error} />
                 <label htmlFor="email">
-                  Email
+                  Email (Your VM email)
                   <input
                     type="text"
                     name="email"
@@ -69,7 +69,7 @@ class Signup extends Component {
                   />
                 </label>
                 <label htmlFor="name">
-                  Name
+                  Name (Eg. Travis Gerrard)
                   <input
                     type="text"
                     name="name"

@@ -1,3 +1,6 @@
+// Aggregates all the presentations by a specific user
+// id = the user id
+
 import ProfilePage from '../components/GroupPages/ProfilePage';
 import PleaseSignIn from '../components/PleaesSignIn';
 

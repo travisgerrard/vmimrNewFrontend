@@ -34,7 +34,6 @@ class MyApp extends App {
         <ApolloProvider client={apollo}>
           <Page>
             <Component {...pageProps} />
-            <div id="modal" />
           </Page>
         </ApolloProvider>
       </Container>

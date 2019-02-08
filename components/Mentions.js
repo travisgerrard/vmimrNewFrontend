@@ -13,10 +13,8 @@ export default class Mentions extends Component {
   };
 
   onChange = (e, value) => {
-    //console.log(value);
+    console.log(e.target.value);
 
-    // console.log(e, value);
-    //console.log(this.state.value);
     this.setState({ value });
 
     this.props.handleChange({

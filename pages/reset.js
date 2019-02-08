@@ -1,4 +1,5 @@
-import Reset from "../components/Reset";
+// The resent password email landing site
+import Reset from '../components/Reset';
 
 const ResetPage = props => (
   <div>

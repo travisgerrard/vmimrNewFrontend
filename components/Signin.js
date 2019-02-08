@@ -89,6 +89,12 @@ class Signin extends Component {
                     </Form>
                     <Link href="/resetPassword">
                       <a style={{ color: 'blue' }}>Reset Password</a>
+                    </Link>{' '}
+                    <Link href="/signup">
+                      <a style={{ color: 'blue' }}>
+                        <span style={{ color: 'black' }}>No account?</span> Sign
+                        Up
+                      </a>
                     </Link>
                   </>
                 );

@@ -11,7 +11,7 @@ const Tooltip = () => (
     on="hover"
   >
     <>
-      <Link href="/email">
+      <Link href="/specialistEmailTemplateCreator">
         <p>Specialist email</p>
       </Link>
       <Link href="/createWeeklyEmail">

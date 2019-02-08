@@ -1,3 +1,6 @@
+// Aggregates all the presentations of a certain type
+// id = presentation type
+
 import PresentationTypePage from '../components/GroupPages/PresentationTypePage';
 import PleaseSignIn from '../components/PleaesSignIn';
 

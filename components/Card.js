@@ -301,7 +301,7 @@ export default class Card extends Component {
                 {!this.props.singleCard && (
                   <ExpandButton id={learning.id}>Expand</ExpandButton>
                 )}
-                {showEye && (
+                {showEye && !this.props.singleCard && (
                   <ViewSlidesButton
                     toggleShowSlide={() => this.toggleShowSlide()}
                     showSlide={this.state.showSlide}
