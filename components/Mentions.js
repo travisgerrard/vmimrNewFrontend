@@ -13,8 +13,6 @@ export default class Mentions extends Component {
   };
 
   onChange = (e, value) => {
-    console.log(e.target.value);
-
     this.setState({ value });
 
     this.props.handleChange({
@@ -28,12 +26,10 @@ export default class Mentions extends Component {
 
   onAddUser = (id, display) => {
     this.props.usersAdded(id);
-    // console.log('added a new user, ', display);
   };
 
   onAddRotation = (id, display) => {
     this.props.tagsAdded(id);
-    // console.log('added a new rotation, ', display);
   };
 
   dataForUser = e => {
