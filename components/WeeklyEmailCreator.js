@@ -92,7 +92,7 @@ export default class WeeklyEmailCreator extends Component {
           if (presentations.length > 0) {
             return (
               <div>
-                {`<h1>The Week That Was</h1>
+                {`<h1>VMIMR: This Week</h1>
                 <h2>
                   <a href="https://www.vmimr.com/presentationType?id=Case">
                     Resident Cases
@@ -112,7 +112,16 @@ export default class WeeklyEmailCreator extends Component {
                       {`</a>
                       </b>
                       </p>`}
-                      {converter.makeHtml(presentation.summAssessment)}
+                      <div>
+                        {converter.makeHtml(presentation.summAssessment)}
+                      </div>
+                      <div>
+                        {`<p><a
+                          href=https://www.vmimr.com/card?id=${presentation.id}
+                        >
+                        <img src="imgURL" alt="TextIfImageCantLoad" border="2">
+                        </a></p>`}
+                      </div>
                     </div>
                   );
                 })}
@@ -139,6 +148,13 @@ export default class WeeklyEmailCreator extends Component {
                       {`</a>
                         </b>
                       </p>`}
+                      <div>
+                        {`<p><a
+                          href=https://www.vmimr.com/card?id=${presentation.id}
+                        >
+                        <img src="imgURL" alt="TextIfImageCantLoad" border="2">
+                        </a></p>`}
+                      </div>
                     </div>
                   );
                 })}
@@ -163,6 +179,13 @@ export default class WeeklyEmailCreator extends Component {
                       {` </a>
                         </b>
                       </p>`}
+                      <div>
+                        {`<p><a
+                          href=https://www.vmimr.com/card?id=${presentation.id}
+                        >
+                        <img src="imgURL" alt="TextIfImageCantLoad" border="2">
+                        </a></p>`}
+                      </div>
                     </div>
                   );
                 })}
@@ -187,6 +210,13 @@ export default class WeeklyEmailCreator extends Component {
                       {`</a>
                         </b>
                       </p>`}
+                      <div>
+                        {`<p><a
+                          href=https://www.vmimr.com/card?id=${presentation.id}
+                        >
+                        <img src="imgURL" alt="TextIfImageCantLoad" border="2">
+                        </a></p>`}
+                      </div>
                     </div>
                   );
                 })}
