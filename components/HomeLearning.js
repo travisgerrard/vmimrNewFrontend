@@ -45,10 +45,13 @@ const ALL_PRESENTATIONS_QUERY = gql`
 
 const Button = styled.button`
   width: 90vw;
+  height: 4.5rem;
+  border-radius: 5px;
+
   background: ${props => props.theme.darkBlue};
   color: white;
   border: 0;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 600;
   padding: 0.5rem 1.2rem;
   cursor: pointer;

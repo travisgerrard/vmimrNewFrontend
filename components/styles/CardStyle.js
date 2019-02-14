@@ -8,6 +8,7 @@ const StyledCard = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0.5rem 1rem 75px 1rem;
+  border-radius: 5px;
 
   a {
     color: ${props => props.theme.darkerBlue};

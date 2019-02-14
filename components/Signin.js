@@ -75,7 +75,8 @@ class Signin extends Component {
                           />
                         </label>
                         <label htmlFor="password">
-                          Password (default is cerner login eg. j39877)
+                          Password (default is cerner login eg. j39877 [Lower
+                          case letter!])
                           <input
                             type="password"
                             name="password"

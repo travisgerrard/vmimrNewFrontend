@@ -3,7 +3,9 @@ import ReactMarkdown from 'react-markdown';
 
 const CardTitleStyle = styled.div`
   display: flex;
-  font-size: 2rem;
+  font-size: 1.8rem;
+  font-style: bold;
+
   .createdBy {
     flex-basis: auto;
   }
@@ -25,16 +27,16 @@ const CardTitleStyle = styled.div`
   }
 
   span {
+    font-size: 1.8rem;
     vertical-align: middle;
   }
   p {
     display: inline-block;
     position: static;
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   a {
     color: black;
-    font-style: bold;
     cursor: pointer;
   }
 
