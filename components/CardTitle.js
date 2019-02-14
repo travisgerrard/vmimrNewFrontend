@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import { format, formatDistance } from 'date-fns';
-import Router from 'next/router';
 
 import Popup from 'reactjs-popup';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faHeart as faHeartSolid,
-  faPencilAlt,
-  faEye
-} from '@fortawesome/free-solid-svg-icons';
-import { faHeart, faWindowMaximize } from '@fortawesome/free-regular-svg-icons';
+
 import ReactMarkdown from 'react-markdown';
 import styled from 'styled-components';
 

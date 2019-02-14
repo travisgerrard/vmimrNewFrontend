@@ -1,21 +1,8 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import Router from 'next/router';
-import NProgress from 'nprogress';
 import Nav from './Nav';
 import Search from './Search';
 import User from './User';
-
-// Router.onRouteChangeStart = () => {
-//   NProgress.start();
-// };
-// Router.onRouteChangeComplete = () => {
-//   NProgress.done();
-// };
-
-// Router.onRouteChangeError = () => {
-//   NProgress.done();
-// };
 
 const Logo = styled.h1`
   font-size: 4rem;
@@ -37,6 +24,8 @@ const Logo = styled.h1`
 `;
 
 const StyledHeader = styled.header`
+  background: white;
+
   .bar {
     border-bottom: 10px solid ${props => props.theme.black};
     display: grid;

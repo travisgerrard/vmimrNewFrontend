@@ -7,6 +7,7 @@ import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
 import withData from '../lib/withData';
 import { trackPageView } from '../lib/googleAnalytics';
+import NProgress from 'nprogress';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -21,8 +22,29 @@ class MyApp extends App {
   }
 
   componentDidMount() {
+    Router.onRouteChangeStart = () => {
+      NProgress.start();
+    };
+
     Router.onRouteChangeComplete = url => {
-      trackPageView(url);
+      NProgress.done();
+
+      try {
+        //console.log(`the url ${url}`);
+
+        window.gtag('config', 'UA-122837373-1', {
+          page_location: url
+        });
+      } catch (error) {
+        //console.log(error);
+        // silences the error in dev mode
+        // and/or if gtag fails to load
+      }
+      //trackPageView(url);
+    };
+
+    Router.onRouteChangeError = () => {
+      NProgress.done();
     };
   }
 

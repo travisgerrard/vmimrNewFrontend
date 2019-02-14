@@ -22,7 +22,7 @@ const theme = {
 };
 
 const StyledPage = styled.div`
-  background: white;
+  background: #f4f6f7;
   color: ${props => props.theme.black};
 `;
 

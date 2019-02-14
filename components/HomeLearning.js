@@ -44,7 +44,7 @@ const ALL_PRESENTATIONS_QUERY = gql`
 `;
 
 const Button = styled.button`
-  width: auto;
+  width: 90vw;
   background: ${props => props.theme.darkBlue};
   color: white;
   border: 0;
@@ -52,6 +52,8 @@ const Button = styled.button`
   font-weight: 600;
   padding: 0.5rem 1.2rem;
   cursor: pointer;
+  box-shadow: ${props => props.theme.bs};
+
   &:hover {
     color: ${props => props.theme.darkBlue};
     background: white;

@@ -68,7 +68,7 @@ class AutoComplete extends React.Component {
         variables: {
           searchTerm: e.target.value.split(' ').map(value => {
             return {
-              whatWasLearnedLowerCase_contains: value
+              whatWasLearnedLowerCase_contains: value.toLowerCase()
             };
           })
         }

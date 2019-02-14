@@ -53,7 +53,7 @@ export default class PinnedPresentations extends Component {
           if (presentations.length > 0) {
             return (
               <div style={{ marginBottom: '20px' }}>
-                <h2>Pinned Card</h2>
+                <b>Pinned</b>
                 <Cards
                   presentations={presentations}
                   userId={this.props.me.id}

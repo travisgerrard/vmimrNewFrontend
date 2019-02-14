@@ -10,6 +10,7 @@ import Mentions from './Mentions';
 import ReactMarkdown from 'react-markdown';
 import markdownButtonPressed from '../lib/markdownEditorFunctions';
 import _ from 'lodash';
+import FileUpload from './FileUpload';
 
 import { ALL_PRESENTATIONS_QUERY } from './HomeLearning';
 
@@ -147,6 +148,14 @@ class CreateLearningCard extends React.Component {
     });
   };
 
+  addImageToCard = ({ imageUrl, imageName }) => {
+    const { whatWasLearned } = this.state;
+
+    this.setState({
+      whatWasLearned: `${whatWasLearned} ![${imageName}](${imageUrl})`
+    });
+  };
+
   render() {
     return (
       <Mutation
@@ -239,8 +248,8 @@ class CreateLearningCard extends React.Component {
                     );
                   }}
                 </Query>
+                <FileUpload addImageToCard={this.addImageToCard} />
               </label>
-
               <button type="submit">Submit</button>
               {!this.props.ownWindow && (
                 <button
